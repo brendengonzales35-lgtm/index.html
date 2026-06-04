@@ -30,6 +30,11 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .hidden{display:none!important}.authPage{min-height:70vh;display:grid;place-items:center}.authCard{background:white;padding:20px;border-radius:20px;width:100%;max-width:440px;box-shadow:0 2px 20px #0001;text-align:center}
 .pinInput{font-size:32px!important;text-align:center;letter-spacing:14px;font-weight:900}.materialGrid{display:grid;grid-template-columns:1fr 88px;gap:8px;align-items:end;margin-top:8px;padding:8px;border:1px solid #e5e7eb;border-radius:12px;background:#fafafa}.materialNumber{font-weight:900;color:#6b7280;font-size:12px;margin-bottom:4px}
 .drivePill{display:inline-block;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800;margin:5px 5px 0 0;text-decoration:none}
+
+.moveOverlay{position:fixed;inset:0;background:#0008;z-index:9999;display:grid;place-items:center;padding:18px}
+.moveModal{background:white;border-radius:18px;padding:16px;width:100%;max-width:460px;box-shadow:0 10px 40px #0005}
+.moveModal h2{margin-bottom:8px}
+
 </style>
 </head>
 <body>
@@ -58,8 +63,20 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <section id="settingsPage" class="page"><div class="card"><h2>Settings</h2><p id="signedInAs" class="small"></p><div id="adminPanel" class="hidden"><h3>Admin: Employees</h3><label>Employee Name</label><input id="empName"><label>4-Digit PIN</label><input id="empPin" maxlength="4" inputmode="numeric"><button id="addEmployeeBtn" class="green">Add Employee</button><div id="employeeList"></div></div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button></div></section>
 </div>
 
+
+<div id="moveOverlay" class="moveOverlay hidden">
+  <div class="moveModal">
+    <h2>Move Ticket</h2>
+    <p id="moveTicketName" class="small"></p>
+    <label>Select New Folder</label>
+    <select id="moveFolderSelect"></select>
+    <button id="confirmMoveBtn" class="green">Move Ticket</button>
+    <button id="cancelMoveBtn" class="gray">Cancel</button>
+  </div>
+</div>
+
 <script>
-let supabaseClient=null,currentEmployee=null,currentFolder=null,selectedTicket=null,createMaterialLineCount=10;
+let supabaseClient=null,currentEmployee=null,currentFolder=null,selectedTicket=null,selectedMoveTicket=null,createMaterialLineCount=10;
 let data={employees:[],folders:[],tickets:[],inventory:[],used:[],drive:[]};
 const statuses=["Ready for Halo Inspection","Inspection Not Ready","Inspection Not Needed","Ready for Partial Inspection","Ready for Final Inspection"];
 function $(id){return document.getElementById(id)}function show(x){x&&x.classList.remove("hidden")}function hide(x){x&&x.classList.add("hidden")}
@@ -109,19 +126,28 @@ function safeEditTicket(id){
 
 async function saveEdit(){if(!selectedTicket)return error("No ticket selected.");let upd={builder:$("editBuilder").value.trim(),job_address:$("editJobAddress").value.trim(),ticket_date:$("editDate").value||today(),folder_id:$("editFolder").value||null,inspection_status:$("editInspection").value,notes:$("editNotes").value,need_to_complete:$("editNeed").value};let r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);if(r.error)return error(r.error.message);let id=selectedTicket.id;notice("Ticket updated.");await loadAll();openTicket(id)}
 
-async function moveTicket(id){
- let t=ticket(id);
- if(!t)return error("Ticket not found.");
- let choices=[{id:null,name:"General"}].concat(data.folders.map(f=>({id:f.id,name:folderPath(f.id)||f.name})));
- let list=choices.map((f,i)=>`${i+1}. ${f.name}`).join("\\n");
- let ans=prompt("Move ticket to which folder?\\n\\n"+list+"\\n\\nEnter folder number:");
- if(ans===null)return;
- let num=parseInt(ans,10);
- if(!num||num<1||num>choices.length)return error("Invalid folder number.");
- let folderId=choices[num-1].id;
- let r=await supabaseClient.from("tickets").update({folder_id:folderId}).eq("id",id);
+
+
+function moveTicket(id){
+ selectedMoveTicket=ticket(id);
+ if(!selectedMoveTicket)return error("Ticket not found.");
+ $("moveTicketName").textContent=(selectedMoveTicket.builder||"Ticket")+" • "+(selectedMoveTicket.job_address||"");
+ let options='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)||f.name}</option>`).join("");
+ $("moveFolderSelect").innerHTML=options;
+ $("moveFolderSelect").value=selectedMoveTicket.folder_id||"";
+ show($("moveOverlay"));
+}
+function cancelMoveTicket(){
+ selectedMoveTicket=null;
+ hide($("moveOverlay"));
+}
+async function confirmMoveTicket(){
+ if(!selectedMoveTicket)return cancelMoveTicket();
+ let folderId=$("moveFolderSelect").value||null;
+ let r=await supabaseClient.from("tickets").update({folder_id:folderId}).eq("id",selectedMoveTicket.id);
  if(r.error)return error(r.error.message);
  notice("Ticket moved.");
+ cancelMoveTicket();
  await loadAll();
 }
 
@@ -172,7 +198,7 @@ $("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").
    return showPage(p);
   }
  }
-});$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;$("addDriveBtn").onclick=addDrive;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;init();
+});$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;$("addDriveBtn").onclick=addDrive;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 </body>
 </html>
