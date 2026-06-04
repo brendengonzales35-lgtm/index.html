@@ -48,7 +48,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <label>Job Address</label><input id="editJobAddress">
 <label>Date</label><input id="editDate" type="date">
 <label>Folder</label><select id="editFolder"></select>
-<label>Inspection Status</label><select id="editInspection"><option>Ready for Halo Inspection</option><option><option>Inspection Not Ready</option><option>Inspection Not Needed</option><option>Ready for Partial Inspection</option>
+<label>Inspection Status</label><select id="editInspection"><option>Ready for Halo Inspection</option><option>Inspection Not Ready</option><option>Inspection Not Needed</option><option>Ready for Partial Inspection</option><option>Ready for Final Inspection</option></select>
 <label>Notes</label><textarea id="editNotes"></textarea>
 <label>Need to Complete</label><textarea id="editNeed"></textarea>
 <button class="green" id="saveEditBtn">Save Changes</button>
@@ -66,7 +66,7 @@ let data={employees:[],folders:[],tickets:[],inventory:[],used:[],drive:[]};
 function $(id){return document.getElementById(id)}function show(x){x.classList.remove("hidden")}function hide(x){x.classList.add("hidden")}
 function notice(m){$("noticeBox").textContent=m;show($("noticeBox"));setTimeout(()=>hide($("noticeBox")),3000)}function error(m){$("errorBox").textContent=m;show($("errorBox"));window.scrollTo(0,0)}
 function today(){return new Date().toISOString().slice(0,10)}function displayDate(iso){if(!iso)return"";let p=iso.split("-");return p.length===3?p[1]+"/"+p[2]+"/"+p[0]:iso}
-function inspectClass(s){if(s==="Ready for Halo Inspection")return"inspectHalo";if(s==="Ready for Partial Inspection")return"inspectPartial";if(s==="Ready for Final Inspection")return"inspectFinal";return"inspectNotReady"}
+function inspectClass(s){if(s==="Ready for Halo Inspection")return"inspectHalo";if(s==="Inspection Not Needed")return"gray";if(s==="Ready for Partial Inspection")return"inspectPartial";if(s==="Ready for Final Inspection")return"inspectFinal";return"inspectNotReady"}
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>t.id===id)}function folderPath(id){let arr=[],f=data.folders.find(x=>x.id===id);while(f){arr.unshift(f.name);f=data.folders.find(x=>x.id===f.parent_id)}return arr.join(" / ")}
 async function init(){$("newDate").value=today();let c=cfg(), saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()} else show($("pinPage"))}
 async function pinLogin(){let pin=$("pinInput").value.trim();if(pin.length!==4)return error("Enter 4 digit PIN.");let r=await supabaseClient.from("employees").select("*").eq("pin",pin).eq("active",true).maybeSingle();if(r.error)return error(r.error.message);if(!r.data)return error("PIN not found.");currentEmployee=r.data;localStorage.setItem("neu_current_employee",JSON.stringify(currentEmployee));showApp()}
