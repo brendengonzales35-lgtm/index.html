@@ -1,0 +1,10 @@
+{
+  "name":"NEU Tickets",
+  "short_name":"NEU Tickets",
+  "start_url":"./index.html",
+  "display":"standalone",
+  "background_color":"#06243b",
+  "theme_color":"#06243b",
+  "orientation":"portrait",
+  "icons":[{"src":"neu-logo.png","sizes":"512x512","type":"image/png"}]
+}
