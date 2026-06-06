@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NEU Tickets</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--navy:#06243b;--green:#8cc63f;--bg:#f3f4f6;--text:#111827;--line:#e5e7eb}
 *{box-sizing:border-box}body{margin:0;padding:14px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -52,52 +52,20 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .headerSub{font-size:12px;opacity:.85;font-weight:700}
 
 
-.archiveBadge{background:#e0e7ff;color:#3730a3}
-.workflowOpen{background:#dcfce7;color:#166534}
-.workflowProgress{background:#fef3c7;color:#92400e}
-.workflowComplete{background:#e0e7ff;color:#3730a3}
-.reportBox{font-family:Arial,sans-serif;padding:24px;color:#111}
-.reportHeader{border-bottom:3px solid #06243b;padding-bottom:12px;margin-bottom:16px}
-.reportSection{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}
-.legalText{font-size:13px;line-height:1.5;color:#374151}
-.filterRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.proVersion{font-size:12px;color:#6b7280;margin-top:10px;text-align:center}
-
-
-#splashScreen{
- position:fixed;inset:0;z-index:99999;
- background:radial-gradient(circle at 50% 35%, #0b3b5a 0%, #06243b 45%, #031523 100%);
- display:flex;align-items:center;justify-content:center;flex-direction:column;
- transition:opacity .45s ease, visibility .45s ease;
-}
-#splashScreen.splashHide{opacity:0;visibility:hidden;pointer-events:none}
-.splashOrb{position:absolute;width:230px;height:230px;border-radius:50%;background:rgba(140,198,63,.13);animation:orbFloat 2.6s ease-in-out infinite alternate}
-.splashLogo{width:142px;height:142px;border-radius:32px;object-fit:cover;box-shadow:0 18px 60px rgba(0,0,0,.38);animation:logoEnter 1.15s cubic-bezier(.2,.9,.2,1) forwards, logoFloat 2.2s ease-in-out 1.15s infinite alternate;transform:translateY(34px) scale(.82);opacity:0}
-.splashTitle{color:white;font-size:30px;font-weight:900;margin-top:20px;opacity:0;transform:translateY(14px);animation:titleEnter .75s ease forwards .5s}
-.splashBar{width:160px;height:6px;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden;margin-top:22px;opacity:0;animation:titleEnter .75s ease forwards .75s}
-.splashBar span{display:block;width:45%;height:100%;border-radius:999px;background:#8cc63f;animation:barMove 1.15s ease-in-out infinite}
-@keyframes logoEnter{0%{transform:translateY(50px) scale(.74) rotate(-7deg);opacity:0}70%{transform:translateY(-8px) scale(1.04) rotate(2deg);opacity:1}100%{transform:translateY(0) scale(1) rotate(0);opacity:1}}
-@keyframes titleEnter{to{opacity:1;transform:translateY(0)}}
-@keyframes logoFloat{from{transform:translateY(0)}to{transform:translateY(-8px)}}
-@keyframes orbFloat{from{transform:translate(-18px,12px) scale(.95)}to{transform:translate(18px,-12px) scale(1.08)}}
-@keyframes barMove{0%{transform:translateX(-120%)}100%{transform:translateX(260%)}}
+#splashScreen{position:fixed;inset:0;z-index:99999;background:#06243b;display:flex;align-items:center;justify-content:center;flex-direction:column;animation:splashOut .45s ease 1.65s forwards}
+.splashLogo{width:140px;height:140px;border-radius:30px;object-fit:cover;box-shadow:0 18px 50px #0006;animation:splashLogoIn .9s ease forwards}
+.splashTitle{color:white;font-weight:900;font-size:30px;margin-top:20px;animation:splashTextIn 1s ease forwards}
+@keyframes splashLogoIn{from{opacity:0;transform:translateY(28px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes splashTextIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
 
 </style>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#06243b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NEU Tickets">
-
 </head>
 <body>
 
 <div id="splashScreen">
-  <div class="splashOrb"></div>
   <img class="splashLogo" src="neu-logo.png" alt="NEU Tickets">
   <div class="splashTitle">NEU Tickets</div>
-  <div class="splashBar"><span></span></div>
 </div>
 
 <header><div class="logoRow"><img class="logo" src="neu-logo.png"><div><h1>NEU Tickets</h1></div></div></header>
@@ -107,7 +75,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <section id="pinPage" class="authPage hidden"><div class="authCard"><img class="authLogo" src="neu-logo.png"><h2>Enter PIN</h2><input id="pinInput" class="pinInput" maxlength="4" inputmode="numeric" placeholder="____"><button id="pinLoginBtn">Login</button><button id="clearSetupBtn" class="gray">Change Supabase Setup</button></div></section>
 
 <div id="appPage" class="hidden">
-<nav class="topNav"><button class="active" data-page="dashboardPage">🏠<br>Home</button><button data-page="createTicketPage">➕<br>Create</button><button data-page="ticketsPage">🎫<br>Tickets</button><button data-page="archivePage">✅<br>Archive</button><button data-page="foldersPage">📁<br>Folders</button><button data-page="inventoryPage">📦<br>Inventory</button><button data-page="materialsPage">🧾<br>Used</button><button data-page="drivePage">📸<br>Photos</button><button data-page="settingsPage">⚙️<br>Settings</button></nav>
+<nav class="topNav"><button class="active" data-page="dashboardPage">🏠<br>Home</button><button data-page="createTicketPage">➕<br>Create</button><button data-page="ticketsPage">🎫<br>Tickets</button><button data-page="foldersPage">📁<br>Folders</button><button data-page="inventoryPage">📦<br>Inventory</button><button data-page="materialsPage">🧾<br>Used</button><button data-page="drivePage">📸<br>Photos</button><button data-page="settingsPage">⚙️<br>Settings</button></nav>
 
 <section id="dashboardPage" class="page active">
 <div class="card">
@@ -140,7 +108,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 
 
 <section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder</label><select id="newFolder"></select><label>Inspection Status</label><select id="newInspection"></select><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
-<section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><div class="filterRow"><div><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"></div><div><label>Status</label><select id="ticketStatusFilter" onchange="draw()"><option value="">Active Tickets</option><option>Open</option><option>In Progress</option><option>Waiting Inspection</option><option>Ready for Halo Inspection</option><option>Ready for Partial Inspection</option><option>Ready for Final Inspection</option><option>Inspection Not Ready</option><option>Inspection Not Needed</option><option>All</option></select></div></div><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">← Tickets</button><div id="ticketDetail"></div></div></div>
+<section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">← Tickets</button><div id="ticketDetail"></div></div></div>
 <div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">← Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder</label><select id="editFolder"></select><label>Inspection Status</label><select id="editInspection"></select><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
 <hr style="border:0;border-top:1px solid #e5e7eb;margin:16px 0">
 <h3>Edit Materials</h3>
@@ -151,16 +119,6 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <button class="green" id="addEditMaterialBtn">Add Material to Ticket</button>
 <div id="editMaterialsList"></div></div></section>
 
-
-<section id="archivePage" class="page">
-<div class="card">
-<h2>Completed Ticket Archive</h2>
-<label>Search Archive</label>
-<input id="archiveSearch" placeholder="Builder or address" oninput="draw()">
-<div id="archiveList"></div>
-</div>
-</section>
-
 <section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">← Back</button><h2 id="folderTitle">Folders</h2><label>Create Folder Here</label><input id="folderName"><button id="createFolderBtn" class="green">Save Folder</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="materialsPage" class="page"><div class="card"><h2>Materials Used</h2><div id="materialsUsedList"></div></div></section>
@@ -170,7 +128,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <label>Photo Label</label><input id="photoLabel" placeholder="Job Photo">
 <label>Choose Photo</label><input id="photoFile" type="file" accept="image/*" capture="environment">
 <button id="uploadPhotoBtn" class="green">Upload Photo</button></div><div class="card"><h2>Uploaded Photos & Drive Links</h2><div id="driveList"></div></div></section>
-<section id="settingsPage" class="page"><div class="card"><h2>Settings</h2><p id="signedInAs" class="small"></p><div id="adminPanel" class="hidden"><h3>Admin: Employees</h3><label>Employee Name</label><input id="empName"><label>4-Digit PIN</label><input id="empPin" maxlength="4" inputmode="numeric"><button id="addEmployeeBtn" class="green">Add Employee</button><div id="employeeList"></div></div><button class="gray" onclick="showPage('privacyPage')">Privacy Policy</button><button class="gray" onclick="showPage('termsPage')">Terms of Use</button><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="proVersion">App Version: NEU Tickets v1.0</div></div></section>
+<section id="settingsPage" class="page"><div class="card"><h2>Settings</h2><p id="signedInAs" class="small"></p><div id="adminPanel" class="hidden"><h3>Admin: Employees</h3><label>Employee Name</label><input id="empName"><label>4-Digit PIN</label><input id="empPin" maxlength="4" inputmode="numeric"><button id="addEmployeeBtn" class="green">Add Employee</button><div id="employeeList"></div></div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button></div></section>
 </div>
 
 
@@ -187,37 +145,27 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 
 <script>
 
-function hideSplash(){
- var s=document.getElementById("splashScreen");
- if(s){s.classList.add("splashHide");}
-}
-window.addEventListener("load",function(){setTimeout(hideSplash,1500);});
-setTimeout(hideSplash,3500);
+window.addEventListener("load",function(){
+ setTimeout(function(){
+  var s=document.getElementById("splashScreen");
+  if(s){s.style.display="none";}
+ },3000);
+});
 
 let supabaseClient=null,currentEmployee=null,currentFolder=null,selectedTicket=null,selectedMoveTicket=null,createMaterialLineCount=10;
 let data={employees:[],folders:[],tickets:[],inventory:[],used:[],drive:[]};
-const statuses=["Open","In Progress","Waiting Inspection","Completed","Ready for Halo Inspection","Inspection Not Ready","Inspection Not Needed","Ready for Partial Inspection","Ready for Final Inspection"];
+const statuses=["Ready for Halo Inspection","Inspection Not Ready","Inspection Not Needed","Ready for Partial Inspection","Ready for Final Inspection"];
 function $(id){return document.getElementById(id)}function show(x){x&&x.classList.remove("hidden")}function hide(x){x&&x.classList.add("hidden")}
 function notice(m){$("noticeBox").textContent=m;show($("noticeBox"));setTimeout(()=>hide($("noticeBox")),3000)}function error(m){$("errorBox").textContent=m;show($("errorBox"));window.scrollTo(0,0)}
 function today(){return new Date().toISOString().slice(0,10)}function displayDate(iso){if(!iso)return"";let p=iso.split("-");return p.length===3?p[1]+"/"+p[2]+"/"+p[0]:iso}
-function inspectClass(s){
- if(s==="Open")return"workflowOpen";
- if(s==="In Progress")return"workflowProgress";
- if(s==="Waiting Inspection")return"inspectHalo";
- if(s==="Completed")return"workflowComplete";
- if(s==="Ready for Halo Inspection")return"inspectHalo";
- if(s==="Ready for Partial Inspection")return"inspectPartial";
- if(s==="Ready for Final Inspection")return"inspectFinal";
- if(s==="Inspection Not Needed")return"inspectNone";
- return"inspectNotReady";
-}
+function inspectClass(s){if(s==="Ready for Halo Inspection")return"inspectHalo";if(s==="Ready for Partial Inspection")return"inspectPartial";if(s==="Ready for Final Inspection")return"inspectFinal";if(s==="Inspection Not Needed")return"inspectNone";return"inspectNotReady"}
 function setStatusSelect(id,val){let el=$(id);if(!el)return;el.innerHTML=statuses.map(s=>`<option>${s}</option>`).join("");el.value=val||"Inspection Not Ready"}
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>String(t.id)===String(id))}function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
 function folderPath(id){let arr=[],f=data.folders.find(x=>x.id===id);while(f){arr.unshift(f.name);f=data.folders.find(x=>x.id===f.parent_id)}return arr.join(" / ")}
 
 async function init(){$("newDate").value=today();setStatusSelect("newInspection");renderCreateMaterials();let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
 async function pinLogin(){let pin=$("pinInput").value.trim();if(pin.length!==4)return error("Enter 4 digit PIN.");let r=await supabaseClient.from("employees").select("*").eq("pin",pin).eq("active",true).maybeSingle();if(r.error)return error(r.error.message);if(!r.data)return error("PIN not found.");currentEmployee=r.data;localStorage.setItem("neu_current_employee",JSON.stringify(currentEmployee));showApp()}
-async function showApp(){hideSplash();hide($("setupPage"));hide($("pinPage"));show($("appPage"));$("signedInAs").textContent="Signed in as "+currentEmployee.name;await loadAll()}
+async function showApp(){hide($("setupPage"));hide($("pinPage"));show($("appPage"));$("signedInAs").textContent="Signed in as "+currentEmployee.name;await loadAll()}
 async function loadAll(){let [e,f,t,i,u,d]=await Promise.all([supabaseClient.from("employees").select("*").order("name"),supabaseClient.from("folders").select("*").order("name"),supabaseClient.from("tickets").select("*").order("created_at",{ascending:false}),supabaseClient.from("employee_inventory").select("*").eq("employee_id",currentEmployee.id).order("name"),supabaseClient.from("ticket_materials").select("*").order("created_at",{ascending:false}),supabaseClient.from("drive_links").select("*").order("created_at",{ascending:false})]);if(f.error)return error(f.error.message);data.employees=e.data||[];data.folders=f.data||[];data.tickets=t.data||[];data.inventory=i.data||[];data.used=u.data||[];data.drive=d.data||[];draw()}
 function showPage(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(p).classList.add("active");document.querySelectorAll(".topNav button").forEach(b=>b.classList.remove("active"));document.querySelector(`[data-page="${p}"]`).classList.add("active");draw()}
 function renderCreateMaterials(){let out="";for(let i=1;i<=createMaterialLineCount;i++)out+=`<div class="materialGrid"><div><div class="materialNumber">Material ${i}</div><input id="newMatName${i}" list="materialOptions" placeholder="Start typing material"></div><div><div class="materialNumber">Qty</div><input id="newMatQty${i}" type="number" placeholder="0"></div></div>`;$("createMaterialsList").innerHTML=out}function addCreateMaterialLine(){createMaterialLineCount++;renderCreateMaterials()}
@@ -380,67 +328,6 @@ async function uploadTicketPhoto(){
 
 async function addDrive(){let r=await supabaseClient.from("drive_links").insert({ticket_id:$("driveTicket").value,label:$("driveLabel").value||"Drive Link",url:$("driveUrl").value});if(r.error)return error(r.error.message);$("driveLabel").value="";$("driveUrl").value="";notice("Drive link added.");loadAll()}
 async function addEmployee(){if(!currentEmployee.is_admin)return error("Admin only.");let name=$("empName").value.trim(),pin=$("empPin").value.trim();if(!name||pin.length!==4)return error("Enter name and 4 digit PIN.");let r=await supabaseClient.from("employees").insert({name,pin,active:true,is_admin:false});if(r.error)return error(r.error.message);$("empName").value="";$("empPin").value="";loadAll()}
-
-function generateTicketPDF(id){
- let t=ticket(id);
- if(!t)return error("Ticket not found.");
- let used=data.used.filter(u=>String(u.ticket_id)===String(id));
- let links=data.drive.filter(d=>String(d.ticket_id)===String(id));
- let htmlReport=`<!doctype html><html><head><title>NEU Ticket Report</title><style>
- body{font-family:Arial,sans-serif;padding:24px;color:#111}
- h1{color:#06243b;margin-bottom:0}
- .sub{color:#666;margin-top:4px}
- .box{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}
- .label{font-weight:bold;color:#06243b}
- img{max-width:100%;border-radius:10px;margin:8px 0}
- 
-#splashScreen{
- position:fixed;inset:0;z-index:99999;
- background:radial-gradient(circle at 50% 35%, #0b3b5a 0%, #06243b 45%, #031523 100%);
- display:flex;align-items:center;justify-content:center;flex-direction:column;
- transition:opacity .45s ease, visibility .45s ease;
-}
-#splashScreen.splashHide{opacity:0;visibility:hidden;pointer-events:none}
-.splashOrb{position:absolute;width:230px;height:230px;border-radius:50%;background:rgba(140,198,63,.13);animation:orbFloat 2.6s ease-in-out infinite alternate}
-.splashLogo{width:142px;height:142px;border-radius:32px;object-fit:cover;box-shadow:0 18px 60px rgba(0,0,0,.38);animation:logoEnter 1.15s cubic-bezier(.2,.9,.2,1) forwards, logoFloat 2.2s ease-in-out 1.15s infinite alternate;transform:translateY(34px) scale(.82);opacity:0}
-.splashTitle{color:white;font-size:30px;font-weight:900;margin-top:20px;opacity:0;transform:translateY(14px);animation:titleEnter .75s ease forwards .5s}
-.splashBar{width:160px;height:6px;border-radius:999px;background:rgba(255,255,255,.16);overflow:hidden;margin-top:22px;opacity:0;animation:titleEnter .75s ease forwards .75s}
-.splashBar span{display:block;width:45%;height:100%;border-radius:999px;background:#8cc63f;animation:barMove 1.15s ease-in-out infinite}
-@keyframes logoEnter{0%{transform:translateY(50px) scale(.74) rotate(-7deg);opacity:0}70%{transform:translateY(-8px) scale(1.04) rotate(2deg);opacity:1}100%{transform:translateY(0) scale(1) rotate(0);opacity:1}}
-@keyframes titleEnter{to{opacity:1;transform:translateY(0)}}
-@keyframes logoFloat{from{transform:translateY(0)}to{transform:translateY(-8px)}}
-@keyframes orbFloat{from{transform:translate(-18px,12px) scale(.95)}to{transform:translate(18px,-12px) scale(1.08)}}
-@keyframes barMove{0%{transform:translateX(-120%)}100%{transform:translateX(260%)}}
-
-</style>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#06243b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NEU Tickets">
-
-</head><body>
- <h1>NEU Electrical Solutions</h1>
- <div class="sub">Job Ticket Report</div>
- <div class="box"><div class="label">Builder</div>${t.builder||""}</div>
- <div class="box"><div class="label">Job Address</div>${t.job_address||""}</div>
- <div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div>
- <div class="box"><div class="label">Status / Inspection</div>${t.inspection_status||""}</div>
- <div class="box"><div class="label">Created By</div>${t.created_by_name||"Team"}</div>
- <div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div>
- <div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div>
- <div class="box"><div class="label">Materials Used</div>${used.length?used.map(u=>`${u.material_name} — ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials listed."}</div>
- <div class="box"><div class="label">Photos / Drive Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: <a href="${l.url}">${l.url}</a></div>`).join(""):"No links listed."}</div>
-
- </body></html>`;
- let w=window.open("","_blank");
- if(!w)return error("Popup blocked. Allow popups to generate PDF.");
- w.document.open();
- w.document.write(htmlReport);
- w.document.close();
- setTimeout(()=>{try{w.print()}catch(e){}},500);
-}
-
 function emailTicket(id){let t=ticket(id),used=data.used.filter(u=>String(u.ticket_id)===String(id)),links=data.drive.filter(d=>String(d.ticket_id)===String(id));let body=`NEU ELECTRICAL SOLUTIONS\n\nBuilder: ${t.builder||""}\nCreated By: ${t.created_by_name||"Team"}\nAddress: ${t.job_address||""}\nDate: ${displayDate(t.ticket_date)}\nInspection: ${t.inspection_status||""}\n\nNotes:\n${t.notes||""}\n\nMaterials:\n`;used.forEach(u=>body+=`- ${u.material_name} - ${u.quantity} ${u.unit||""}\n`);body+=`\nNeed to Complete:\n${t.need_to_complete||""}\n\nDrive Links:\n`;links.forEach(l=>body+=`- ${l.label||"Drive"}: ${l.url}\n`);location.href="mailto:?subject="+encodeURIComponent("NEU TICKETS - "+(t.builder||"Ticket"))+"&body="+encodeURIComponent(body)}
 
 
@@ -473,7 +360,7 @@ function renderPhotoLinks(links){
 
 
 function statusStripe(s){
- if(s==="Open")return"stripeFinal";if(s==="In Progress")return"stripePartial";if(s==="Waiting Inspection")return"stripeHalo";if(s==="Completed")return"stripeNone";if(s==="Ready for Halo Inspection")return"stripeHalo";
+ if(s==="Ready for Halo Inspection")return"stripeHalo";
  if(s==="Ready for Partial Inspection")return"stripePartial";
  if(s==="Ready for Final Inspection")return"stripeFinal";
  if(s==="Inspection Not Needed")return"stripeNone";
@@ -481,7 +368,7 @@ function statusStripe(s){
 }
 function drawDashboard(){
  if(!$("dashOpen"))return;
- let open=data.tickets.filter(t=>t.inspection_status!=="Completed").length;
+ let open=data.tickets.length;
  let low=lowStockItems?lowStockItems():[];
  let halo=data.tickets.filter(t=>t.inspection_status==="Ready for Halo Inspection").length;
  let final=data.tickets.filter(t=>t.inspection_status==="Ready for Final Inspection").length;
@@ -490,22 +377,7 @@ function drawDashboard(){
  $("dashHalo").textContent=halo;
  $("dashFinal").textContent=final;
  $("dashLowStockList").innerHTML=low.length?low.map(i=>`<div class="ticketCard lowStock"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}<div class="lowStockText">Alert at ${i.low_alert_qty}</div></div>`).join(""):'<p class="small">No low stock items.</p>';
- $("dashRecentTickets").innerHTML=data.tickets.filter(t=>t.inspection_status!=="Completed").length?data.tickets.filter(t=>t.inspection_status!=="Completed").slice(0,5).map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';
-}
-
-
-async function completeTicket(id){
- if(!confirm("Mark this ticket completed and move it to Archive?"))return;
- let r=await supabaseClient.from("tickets").update({inspection_status:"Completed"}).eq("id",id);
- if(r.error)return error(r.error.message);
- notice("Ticket completed.");
- await loadAll();
-}
-async function reopenTicket(id){
- let r=await supabaseClient.from("tickets").update({inspection_status:"Open"}).eq("id",id);
- if(r.error)return error(r.error.message);
- notice("Ticket reopened.");
- await loadAll();
+ $("dashRecentTickets").innerHTML=data.tickets.length?data.tickets.slice(0,5).map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';
 }
 
 function ticketCard(t,folderMode){
@@ -513,7 +385,6 @@ function ticketCard(t,folderMode){
  let photoCount=data.drive.filter(d=>String(d.ticket_id)===String(t.id)).length;
  let openCall=folderMode?`folderOpenTicket('${t.id}')`:`openTicket('${t.id}')`;
  let editCall=folderMode?`folderEditTicket('${t.id}')`:`safeEditTicket('${t.id}')`;
- let isDone=t.inspection_status==="Completed";
  return `<div class="ticketCard proCard">
   <div class="statusStripe ${statusStripe(t.inspection_status)}"></div>
   <div class="ticketTitle">${t.builder||"No Builder"}</div>
@@ -525,21 +396,11 @@ function ticketCard(t,folderMode){
   <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();${editCall}">Edit</button>
   <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();moveTicket('${t.id}')">Move</button>
   <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();openPhotos('${t.id}')">Photos</button>
-  <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();generateTicketPDF('${t.id}')">PDF</button>
   <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();emailTicket('${t.id}')">Email</button>
-  ${isDone?`<button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();reopenTicket('${t.id}')">Reopen</button>`:`<button type="button" class="mini red" onclick="event.preventDefault();event.stopPropagation();completeTicket('${t.id}')">Complete</button>`}
  </div>`;
 }
-function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button><button class="red" onclick="completeTicket('${t.id}')">Complete</button>`}
-function draw(){setStatusSelect("newInspection",$("newInspection").value);let folderOpts='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)}</option>`).join("");$("newFolder").innerHTML=folderOpts;$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();
- let sf=$("ticketStatusFilter")?$("ticketStatusFilter").value:"";
- let shownTickets=data.tickets.filter(t=>{
-  let matches=!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q);
-  let done=t.inspection_status==="Completed";
-  let statusOk=sf==="All"?true:(sf? t.inspection_status===sf:!done);
-  return matches&&statusOk;
- });
- $("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?folderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">📁</div><div class="folderName">${f.name}</div><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
+function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
+function draw(){setStatusSelect("newInspection",$("newInspection").value);let folderOpts='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)}</option>`).join("");$("newFolder").innerHTML=folderOpts;$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?folderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">📁</div><div class="folderName">${f.name}</div><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"• "+x.name+" — "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK — Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');$("materialsUsedList").innerHTML=data.used.length?data.used.map(u=>`<p><b>${ticket(u.ticket_id)?.builder||"Ticket"}</b><br>${u.material_name} - ${u.quantity} ${u.unit||""}<br><span class="small">${u.employee_name||""}</span></p>`).join(""):'<p class="small">No materials used yet.</p>';$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
 if($("folderTicketsCard")&&$("folderTickets")){
@@ -547,14 +408,7 @@ if($("folderTicketsCard")&&$("folderTickets")){
  let ft=data.tickets.filter(t=>String(t.folder_id||"")===String(currentFolder||""));
  $("folderTickets").innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(""):'<p class="small">No tickets in this folder yet.</p>';
 }
-$("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> — PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`📦<br>Inventory (${c})`:"📦<br>Inventory"}
-if($("archiveList")){
- let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
- let archived=data.tickets.filter(t=>t.inspection_status==="Completed").filter(t=>!aq||(t.builder||"").toLowerCase().includes(aq)||(t.job_address||"").toLowerCase().includes(aq));
- $("archiveList").innerHTML=archived.length?archived.map(t=>ticketCard(t,false)).join(""):'<p class="small">No completed tickets yet.</p>';
-}
-
-drawDashboard();if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
+$("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> — PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`📦<br>Inventory (${c})`:"📦<br>Inventory"}drawDashboard();if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
 $("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").value.trim());location.reload()};$("clearSetupBtn").onclick=()=>{localStorage.removeItem("neu_pin_supabase");location.reload()};$("pinLoginBtn").onclick=pinLogin;$("pinInput").addEventListener("keyup",e=>{if(e.key==="Enter"||$("pinInput").value.length===4)pinLogin()});$("signOutBtn").onclick=()=>{localStorage.removeItem("neu_current_employee");location.reload()};$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"NEU TICKETS",url:location.href});else prompt("Copy app link:",location.href)};document.body.addEventListener("click",e=>{
  let btn=e.target.closest("button");
  if(btn){
@@ -576,6 +430,6 @@ $("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").
   }
  }
 });$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
-<\/script>
+</script>
 </body>
 </html>
