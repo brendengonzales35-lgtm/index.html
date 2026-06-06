@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEU TICKETS</title>
+<title>NEU TICKETS PRO v1.0</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--navy:#06243b;--green:#8cc63f;--bg:#f3f4f6;--text:#111827;--line:#e5e7eb}
@@ -114,6 +114,13 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <label>Photo Label</label><input id="photoLabel" placeholder="Job Photo">
 <label>Choose Photo</label><input id="photoFile" type="file" accept="image/*" capture="environment">
 <button id="uploadPhotoBtn" class="green">Upload Photo</button></div><div class="card"><h2>Uploaded Photos & Drive Links</h2><div id="driveList"></div></div></section>
+
+<div class="card">
+<h2>Pro Version</h2>
+<p>NEU TICKETS PRO v1.0</p>
+<p>Includes dashboard, folders, inventory alerts, ticket workflow, and App Store preparation.</p>
+</div>
+
 <section id="settingsPage" class="page"><div class="card"><h2>Settings</h2><p id="signedInAs" class="small"></p><div id="adminPanel" class="hidden"><h3>Admin: Employees</h3><label>Employee Name</label><input id="empName"><label>4-Digit PIN</label><input id="empPin" maxlength="4" inputmode="numeric"><button id="addEmployeeBtn" class="green">Add Employee</button><div id="employeeList"></div></div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button></div></section>
 </div>
 
