@@ -95,7 +95,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <section id="pinPage" class="authPage hidden"><div class="authCard"><img class="authLogo" src="neu-logo.PNG"><h2>Enter PIN</h2><input id="pinInput" class="pinInput" maxlength="4" inputmode="numeric" placeholder="____"><button id="pinLoginBtn">Login</button><button id="clearSetupBtn" class="gray">Change Supabase Setup</button></div></section>
 
 <div id="appPage" class="hidden">
-<nav class="topNav"><button class="active" data-page="dashboardPage">🏠<br>Home</button><button data-page="createTicketPage">➕<br>Create</button><button data-page="ticketsPage">🎫<br>Tickets</button><button data-page="archivePage">✅<br>Done</button><button data-page="foldersPage">📁<br>Folders</button><button data-page="inventoryPage">📦<br>Inventory</button><button data-page="materialsPage">🧾<br>Used</button><button data-page="drivePage">📸<br>Photos</button><button data-page="settingsPage">⚙️<br>Settings</button></nav>
+<nav class="topNav"><button class="active" data-page="dashboardPage">ð <br>Home</button><button data-page="createTicketPage">â<br>Create</button><button data-page="ticketsPage">ð«<br>Tickets</button><button data-page="archivePage">â<br>Done</button><button data-page="foldersPage">ð<br>Folders</button><button data-page="inventoryPage">ð¦<br>Inventory</button><button data-page="materialsPage">ð§¾<br>Used</button><button data-page="drivePage">ð¸<br>Photos</button><button data-page="settingsPage">âï¸<br>Settings</button></nav>
 
 <section id="dashboardPage" class="page active">
 <div class="card">
@@ -128,8 +128,8 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 
 
 <section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder</label><select id="newFolder"></select><label>Inspection Status</label><select id="newInspection"></select><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
-<section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">← Tickets</button><div id="ticketDetail"></div></div></div>
-<div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">← Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder</label><select id="editFolder"></select><label>Inspection Status</label><select id="editInspection"></select><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
+<section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">â Tickets</button><div id="ticketDetail"></div></div></div>
+<div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">â Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder</label><select id="editFolder"></select><label>Inspection Status</label><select id="editInspection"></select><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
 <hr style="border:0;border-top:1px solid #e5e7eb;margin:16px 0">
 <h3>Edit Materials</h3>
 <label>Add Material</label>
@@ -142,7 +142,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 
 <section id="archivePage" class="page"><div class="card"><h2>Completed Tickets</h2><label>Search Completed</label><input id="archiveSearch" placeholder="Builder or address" oninput="draw()"><div id="archiveList"></div></div></section>
 
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">← Back</button><h2 id="folderTitle">Folders</h2><label>Create Folder Here</label><input id="folderName"><button id="createFolderBtn" class="green">Save Folder</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">â Back</button><h2 id="folderTitle">Folders</h2><label>Create Folder Here</label><input id="folderName"><button id="createFolderBtn" class="green">Save Folder</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="materialsPage" class="page"><div class="card"><h2>Materials Used</h2><div id="materialsUsedList"></div></div></section>
 <section id="drivePage" class="page"><div class="card"><h2>Photos & Drive Links</h2><label>Ticket</label><select id="driveTicket"></select><label>Label</label><input id="driveLabel" placeholder="Photos"><label>Drive Link</label><textarea id="driveUrl"></textarea><button id="addDriveBtn" class="green">Attach Drive Link</button>
@@ -241,7 +241,7 @@ async function saveEdit(){if(!selectedTicket)return error("No ticket selected.")
 function moveTicket(id){
  selectedMoveTicket=ticket(id);
  if(!selectedMoveTicket)return error("Ticket not found.");
- $("moveTicketName").textContent=(selectedMoveTicket.builder||"Ticket")+" • "+(selectedMoveTicket.job_address||"");
+ $("moveTicketName").textContent=(selectedMoveTicket.builder||"Ticket")+" â¢ "+(selectedMoveTicket.job_address||"");
  let options='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)||f.name}</option>`).join("");
  $("moveFolderSelect").innerHTML=options;
  $("moveFolderSelect").value=selectedMoveTicket.folder_id||"";
@@ -336,6 +336,49 @@ async function removeTicketMaterial(id){
 async function createFolder(){let n=$("folderName").value.trim();if(!n)return error("Enter folder name.");let r=await supabaseClient.from("folders").insert({name:n,parent_id:currentFolder});if(r.error)return error(r.error.message);$("folderName").value="";notice("Folder saved.");loadAll()}
 async function deleteFolder(id){if(!confirm("Delete folder?"))return;await supabaseClient.from("tickets").update({folder_id:null}).eq("folder_id",id);let r=await supabaseClient.from("folders").delete().eq("id",id);if(r.error)return error(r.error.message);loadAll()}
 async function addInventory(){let name=$("invName").value.trim();if(!name)return error("Enter material name.");let r=await supabaseClient.from("employee_inventory").insert({employee_id:currentEmployee.id,name,quantity:Number($("invQty").value||0),unit:$("invUnit").value,low_alert_qty:Number($("invLow").value||0)});if(r.error)return error(r.error.message);["invName","invQty","invUnit","invLow"].forEach(id=>$(id).value="");notice("Material saved.");loadAll()}
+
+async function restockInventory(id){
+ let item=data.inventory.find(i=>String(i.id)===String(id));
+ if(!item)return error("Inventory item not found.");
+ let addText=prompt("How many " +(item.unit||"")+ " are you adding to " + item.name + "?", "0");
+ if(addText===null)return;
+ let addQty=Number(addText);
+ if(isNaN(addQty)||addQty<=0)return error("Enter a number more than 0.");
+ let newQty=Number(item.quantity||0)+addQty;
+ let r=await supabaseClient.from("employee_inventory").update({quantity:newQty}).eq("id",id);
+ if(r.error)return error(r.error.message);
+ notice("Restocked " + item.name + ". New quantity: " + newQty + " " + (item.unit||""));
+ await loadAll();
+}
+
+async function editInventory(id){
+ let item=data.inventory.find(i=>String(i.id)===String(id));
+ if(!item)return error("Inventory item not found.");
+ let name=prompt("Material name:",item.name||"");
+ if(name===null)return;
+ name=name.trim();
+ if(!name)return error("Material name cannot be blank.");
+ let qtyText=prompt("Total quantity:",String(item.quantity??0));
+ if(qtyText===null)return;
+ let qty=Number(qtyText);
+ if(isNaN(qty))return error("Quantity must be a number.");
+ let unit=prompt("Unit:",item.unit||"");
+ if(unit===null)return;
+ let lowText=prompt("Low alert quantity:",String(item.low_alert_qty??0));
+ if(lowText===null)return;
+ let low=Number(lowText||0);
+ if(isNaN(low))return error("Low alert quantity must be a number.");
+ let r=await supabaseClient.from("employee_inventory").update({
+  name:name,
+  quantity:qty,
+  unit:unit,
+  low_alert_qty:low
+ }).eq("id",id);
+ if(r.error)return error(r.error.message);
+ notice("Inventory updated.");
+ await loadAll();
+}
+
 async function deleteInventory(id){if(!confirm("Delete this material?"))return;let r=await supabaseClient.from("employee_inventory").delete().eq("id",id);if(r.error)return error(r.error.message);notice("Material deleted.");loadAll()}
 
 async function uploadTicketPhoto(){
@@ -433,7 +476,7 @@ function drawDashboard(){
  $("sumDone").textContent=done.length;
  $("sumLow").textContent=low.length;
  $("dashRecentTickets").innerHTML=active.length?active.slice(0,5).map(t=>ticketCard(t,false)).join(""):'<p class="small">No active tickets.</p>';
- $("dashLowInventory").innerHTML=low.length?low.map(i=>`<div class="ticketCard lowStock"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}<div class="lowStockText">LOW STOCK — Alert at ${i.low_alert_qty}</div></div>`).join(""):'<p class="small">No low inventory.</p>';
+ $("dashLowInventory").innerHTML=low.length?low.map(i=>`<div class="ticketCard lowStock"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}<div class="lowStockText">LOW STOCK â Alert at ${i.low_alert_qty}</div></div>`).join(""):'<p class="small">No low inventory.</p>';
 }
 async function completeTicket(id){
  if(!confirm("Mark this ticket completed?"))return;
@@ -467,7 +510,7 @@ function ticketCard(t,folderMode){
  let done=isCompleted(t);
  return `<div class="ticketCard proCard">
   <div class="ticketTitle">${t.builder||"No Builder"}</div>
-  <div class="small">${t.job_address||"No address"}<br>${displayDate(t.ticket_date)} • Created By: ${t.created_by_name||"Team"}</div>
+  <div class="small">${t.job_address||"No address"}<br>${displayDate(t.ticket_date)} â¢ Created By: ${t.created_by_name||"Team"}</div>
   <span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||"Open"}</span>
   <span class="badge">${count} material line(s)</span>
   <span class="badge">${photoCount} photo/link(s)</span><br>
@@ -481,15 +524,15 @@ function ticketCard(t,folderMode){
  </div>`;
 }
 function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button><button class="red" onclick="completeTicket('${t.id}')">Complete</button>`}
-function draw(){setStatusSelect("newInspection",$("newInspection").value);let folderOpts='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)}</option>`).join("");$("newFolder").innerHTML=folderOpts;$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?folderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">📁</div><div class="folderName">${f.name}</div><div class="folderStats">${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length} active<br>${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&isCompleted(t)).length} completed</div><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
- let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"• "+x.name+" — "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
- $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK — Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');$("materialsUsedList").innerHTML=data.used.length?data.used.map(u=>`<p><b>${ticket(u.ticket_id)?.builder||"Ticket"}</b><br>${u.material_name} - ${u.quantity} ${u.unit||""}<br><span class="small">${u.employee_name||""}</span></p>`).join(""):'<p class="small">No materials used yet.</p>';$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
+function draw(){setStatusSelect("newInspection",$("newInspection").value);let folderOpts='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)}</option>`).join("");$("newFolder").innerHTML=folderOpts;$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?folderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">ð</div><div class="folderName">${f.name}</div><div class="folderStats">${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length} active<br>${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&isCompleted(t)).length} completed</div><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
+ let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"â¢ "+x.name+" â "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
+ $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK â Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');$("materialsUsedList").innerHTML=data.used.length?data.used.map(u=>`<p><b>${ticket(u.ticket_id)?.builder||"Ticket"}</b><br>${u.material_name} - ${u.quantity} ${u.unit||""}<br><span class="small">${u.employee_name||""}</span></p>`).join(""):'<p class="small">No materials used yet.</p>';$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
 if($("folderTicketsCard")&&$("folderTickets")){
  $("folderTicketsCard").classList.toggle("hidden",!currentFolder);
  let ft=data.tickets.filter(t=>String(t.folder_id||"")===String(currentFolder||""));
  $("folderTickets").innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(""):'<p class="small">No tickets in this folder yet.</p>';
 }
-$("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> — PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`📦<br>Inventory (${c})`:"📦<br>Inventory"}drawDashboard();
+$("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> â PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`ð¦<br>Inventory (${c})`:"ð¦<br>Inventory"}drawDashboard();
 if($("archiveList")){
  let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
  let archived=data.tickets.filter(isCompleted).filter(t=>!aq||(t.builder||"").toLowerCase().includes(aq)||(t.job_address||"").toLowerCase().includes(aq));
