@@ -211,7 +211,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v2.1</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.0 Fast Folders</div></div></section>
 </div>
 
 
@@ -930,6 +930,92 @@ function renderInspections(){
 
 let selectedMoveFolder=null;
 
+let currentFolderBuilder=null;
+
+function browserBuilderName(f){
+ if(!f)return "";
+ let direct=cleanFolderNameText(f.builder_name||"");
+ if(direct)return direct;
+ let parent=(data.folders||[]).find(x=>String(x.id)===String(f.parent_id||""));
+ if(parent&&isBuilderFolder(parent))return cleanFolderNameText(parent.name||"");
+ return "";
+}
+function findBuilderFolder(builder){
+ let target=normBuilderName(builder);
+ return (data.folders||[]).find(f=>isBuilderFolder(f)&&normBuilderName(f.name)===target) || null;
+}
+function folderBrowserBuilders(){
+ let names=[];
+ (typeof FIXED_BUILDERS!=="undefined"?FIXED_BUILDERS:[]).forEach(b=>names.push(cleanFolderNameText(b)));
+ (data.folders||[]).forEach(f=>{
+  if(isBuilderFolder(f))names.push(cleanFolderNameText(f.name));
+  let b=browserBuilderName(f);
+  if(b)names.push(b);
+ });
+ return [...new Set(names.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
+}
+function folderBrowserJobs(builder){
+ let target=normBuilderName(builder);
+ return (data.folders||[])
+  .filter(f=>isJobFolder(f))
+  .filter(f=>normBuilderName(browserBuilderName(f))===target)
+  .sort((a,b)=>cleanFolderNameText(a.name).localeCompare(cleanFolderNameText(b.name)));
+}
+function openBuilderFolder(builder){
+ currentFolderBuilder=builder;
+ currentFolder=null;
+ showPage("foldersPage");
+ draw();
+}
+function openJobFolder(id){
+ currentFolder=String(id);
+ showPage("foldersPage");
+ draw();
+}
+function backFolderBrowser(){
+ if(currentFolder){currentFolder=null;draw();return;}
+ if(currentFolderBuilder){currentFolderBuilder=null;draw();return;}
+ currentFolder=null;
+ draw();
+}
+function folderBrowserJobCard(f){
+ let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
+ return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div class="folderName">&#128193; ${cleanFolderNameText(f.name)||"Job"}</div><div class="folderStats">Builder: ${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open Job</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`;
+}
+function renderFolderBrowser(){
+ if(!$('foldersGrid'))return;
+ let title="Folders";
+ let showBack=!!(currentFolderBuilder||currentFolder);
+ $('folderBackBtn').classList.toggle('hidden',!showBack);
+ if($('folderBuilderSelect')&&currentFolderBuilder){$('folderBuilderSelect').value=currentFolderBuilder;}
+ if(!currentFolderBuilder){
+  let builders=folderBrowserBuilders();
+  $('folderTitle').textContent='Folders';
+  hide($('folderTicketsCard'));
+  $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
+   let count=folderBrowserJobs(b).length;
+   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button></div>`;
+  }).join(''):'<p class="small">No builders found.</p>';
+  return;
+ }
+ if(currentFolderBuilder&&!currentFolder){
+  let jobs=folderBrowserJobs(currentFolderBuilder);
+  $('folderTitle').textContent=currentFolderBuilder;
+  hide($('folderTicketsCard'));
+  $('foldersGrid').innerHTML=jobs.length?jobs.map(folderBrowserJobCard).join(''):'<p class="small">No job folders under this builder yet.</p>';
+  return;
+ }
+ let job=(data.folders||[]).find(f=>String(f.id)===String(currentFolder));
+ title=job?cleanFolderNameText(job.name):'Job';
+ $('folderTitle').textContent=title;
+ $('foldersGrid').innerHTML=job?folderBrowserJobCard(job):'<p class="small">Job not found.</p>';
+ if($('folderTicketsCard')&&$('folderTickets')){
+  show($('folderTicketsCard'));
+  let ft=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(currentFolder||"")&&!isCompleted(t));
+  $('folderTickets').innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(''):'<p class="small">No tickets in this job yet.</p>';
+ }
+}
+
 function cleanFolderNameText(v){
  return String(v||"")
   .replace(/^\s*(ð|&#128193;|\uD83D\uDCC1)\s*/g,"")
@@ -985,8 +1071,11 @@ async function confirmMoveFolder(){
  let parentId=$("moveFolderParentSelect").value||null;
  if(parentId&&String(parentId)===String(selectedMoveFolder.id))return error("A folder cannot move inside itself.");
  if(parentId&&isFolderDescendant(selectedMoveFolder.id,parentId))return error("A folder cannot move inside one of its own folders.");
- let r=await supabaseClient.from("folders").update({parent_id:parentId}).eq("id",selectedMoveFolder.id);
+ let builder=($("moveFolderBuilderSelect")&&$("moveFolderBuilderSelect").value)||selectedMoveFolder.builder_name||browserBuilderName(selectedMoveFolder)||"";
+ let r=await supabaseClient.from("folders").update({parent_id:parentId,builder_name:builder}).eq("id",selectedMoveFolder.id);
  if(r.error)return error(r.error.message);
+ currentFolderBuilder=builder||currentFolderBuilder;
+ currentFolder=null;
  notice("Folder moved.");
  cancelMoveFolder();
  await loadAll();
@@ -998,7 +1087,8 @@ async function createFolder(){
  if(!builder)return error("Pick or add a builder.");
  if(!n)return error("Enter job name.");
  let builders=getBuilders();builders.push(builder);saveBuilders(builders);
- let r=await supabaseClient.from("folders").insert({name:n,parent_id:currentFolder,builder_name:builder}).select().single();
+ let parentForNew=(currentFolderBuilder?((findBuilderFolder(builder)||{}).id||null):null);
+ let r=await supabaseClient.from("folders").insert({name:n,parent_id:parentForNew,builder_name:builder}).select().single();
  if(r.error)return error(r.error.message+". If it mentions builder_name, run the Supabase folder builder SQL.");
  let driveUrl="";
  if(localStorage.getItem("neu_drive_script_url")){
@@ -1260,14 +1350,9 @@ function ticketCard(t,folderMode){
  </div>`;
 }
 function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
-function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=(currentFolder?data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null)):data.folders.filter(f=>isJobFolder(f)));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?plainFolderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">&#128193;</div><div class="folderName">&#128193; ${cleanFolderNameText(f.name)}</div><div class="folderStats">${f.builder_name?`Builder: ${f.builder_name}<br>`:""}${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length} active ticket(s)</div>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
+function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';renderFolderBrowser();let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
-if($("folderTicketsCard")&&$("folderTickets")){
- $("folderTicketsCard").classList.toggle("hidden",!currentFolder);
- let ft=data.tickets.filter(t=>String(t.folder_id||"")===String(currentFolder||"")&&!isCompleted(t));
- $("folderTickets").innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(""):'<p class="small">No tickets in this folder yet.</p>';
-}
 $("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();renderBuilderSelect();drawDashboard();
 if($("archiveList")){
  let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
@@ -1297,7 +1382,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
    return showPage(p);
   }
  }
-});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
+});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 </body>
 </html>
