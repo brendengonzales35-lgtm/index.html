@@ -481,13 +481,39 @@ function safeEditTicket(id){
  }
 }
 
-async function saveEdit(){if(!selectedTicket)return error("No ticket selected.");let upd={builder:$("editBuilder").value.trim(),job_address:$("editJobAddress").value.trim(),ticket_date:$("editDate").value||today(),folder_id:$("editFolder").value||null,inspection_status:$("editInspection").value,man_hours:totalManHours(editManLines),man_hours_details:JSON.stringify(editManLines),notes:$("editNotes").value,need_to_complete:$("editNeed").value};let r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);if(r.error)return error(r.error.message);let id=selectedTicket.id;notice("Ticket updated.");await loadAll();openTicket(id)}
+async function saveEdit(){
+ if(!selectedTicket)return error("No ticket selected.");
+ let editManLines=getManHourLines("edit",editManHourLineCount);
+ let upd={
+  builder:$("editBuilder").value.trim(),
+  job_address:$("editJobAddress").value.trim(),
+  ticket_date:$("editDate").value||today(),
+  folder_id:$("editFolder").value||null,
+  inspection_status:$("editInspection").value,
+  man_hours:totalManHours(editManLines),
+  man_hours_details:JSON.stringify(editManLines),
+  notes:$("editNotes").value,
+  need_to_complete:$("editNeed").value
+ };
+ let r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);
 
+ if(r.error && (String(r.error.message||"").includes("man_hours_details") || String(r.error.message||"").includes("schema cache"))){
+  delete upd.man_hours_details;
+  r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);
+ }
 
+ if(r.error && (String(r.error.message||"").includes("man_hours") || String(r.error.message||"").includes("schema cache"))){
+  delete upd.man_hours;
+  delete upd.man_hours_details;
+  r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);
+ }
 
+ if(r.error)return error("Ticket edit did not save: "+r.error.message);
 
-function jobsForBuilder(builder){
- return (data.folders||[]).filter(f=>(f.builder_name||"")===builder).sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+ selectedTicket=null;
+ notice("Ticket updated.");
+ await loadAll();
+ showPage("ticketsPage");
 }
 function renderMoveBuilderSelect(selectedBuilder){
  if(!$("moveBuilderSelect"))return;
