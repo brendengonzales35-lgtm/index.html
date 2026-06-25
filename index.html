@@ -175,7 +175,14 @@ F-no work 1 PTO day"></textarea>
 <label>Photo Label</label><input id="photoLabel" placeholder="Job Photo">
 <label>Choose Photo</label><input id="photoFile" type="file" accept="image/*" capture="environment">
 <button id="uploadPhotoBtn" class="green">Upload Photo</button></div><div class="card"><h2>Uploaded Photos & Drive Links</h2><div id="driveList"></div></div></section>
-<section id="settingsPage" class="page"><div class="card"><h2>Settings</h2><p id="signedInAs" class="small"></p><div id="adminPanel" class="hidden"><h3>Admin: Employees</h3><label>Employee Name</label><input id="empName"><label>4-Digit PIN</label><input id="empPin" maxlength="4" inputmode="numeric"><button id="addEmployeeBtn" class="green">Add Employee</button><div id="employeeList"></div></div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v2.0</div></div></section>
+<section id="settingsPage" class="page"><div class="card"><h2>Settings</h2><p id="signedInAs" class="small"></p><div id="adminPanel" class="hidden"><h3>Admin: Employees</h3><label>Employee Name</label><input id="empName"><label>4-Digit PIN</label><input id="empPin" maxlength="4" inputmode="numeric"><button id="addEmployeeBtn" class="green">Add Employee</button><div id="employeeList"></div></div>
+<div class="info">
+<h3>Google Drive Auto Folders</h3>
+<label>Apps Script Web App URL</label>
+<textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
+<button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button>
+<p class="small">When this is saved, new app folders can also create a matching Google Drive folder.</p>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v2.0</div></div></section>
 </div>
 
 
@@ -220,7 +227,7 @@ function setStatusSelect(id,val){let el=$(id);if(!el)return;el.innerHTML=statuse
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>String(t.id)===String(id))}function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
 function folderPath(id){let arr=[],f=data.folders.find(x=>x.id===id);while(f){arr.unshift(f.name);f=data.folders.find(x=>x.id===f.parent_id)}return arr.join(" / ")}
 
-async function init(){loadSavedWeather();$("newDate").value=today();if($("hoursWeek"))$("hoursWeek").value=today();setStatusSelect("newInspection");renderCreateMaterials();let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
+async function init(){loadSavedWeather();loadDriveScriptSetting();$("newDate").value=today();if($("hoursWeek"))$("hoursWeek").value=today();setStatusSelect("newInspection");renderCreateMaterials();let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
 async function pinLogin(){let pin=$("pinInput").value.trim();if(pin.length!==4)return error("Enter 4 digit PIN.");let r=await supabaseClient.from("employees").select("*").eq("pin",pin).eq("active",true).maybeSingle();if(r.error)return error(r.error.message);if(!r.data)return error("PIN not found.");currentEmployee=r.data;localStorage.setItem("neu_current_employee",JSON.stringify(currentEmployee));showApp()}
 async function showApp(){hide($("setupPage"));hide($("pinPage"));show($("appPage"));$("signedInAs").textContent="Signed in as "+currentEmployee.name;await loadAll()}
 async function loadAll(){let [e,f,t,i,u,d,h]=await Promise.all([supabaseClient.from("employees").select("*").order("name"),supabaseClient.from("folders").select("*").order("name"),supabaseClient.from("tickets").select("*").order("created_at",{ascending:false}),supabaseClient.from("employee_inventory").select("*").eq("employee_id",currentEmployee.id).order("name"),supabaseClient.from("ticket_materials").select("*").order("created_at",{ascending:false}),supabaseClient.from("drive_links").select("*").order("created_at",{ascending:false}),supabaseClient.from("work_hours").select("*").eq("employee_id",currentEmployee.id).order("created_at",{ascending:false})]);if(f.error)return error(f.error.message);data.employees=e.data||[];data.folders=f.data||[];data.tickets=t.data||[];data.inventory=i.data||[];data.used=u.data||[];data.drive=d.data||[];data.hours=(h&&!h.error?h.data:[])||[];draw()}
@@ -562,7 +569,54 @@ function renderHoursList(){
  $("hoursList").innerHTML=summary+(rows.length?rows.map(h=>`<div class="ticketCard"><b>${displayDate(h.week_of)||"Week"}</b><br><span class="small">Total: ${formatHourNumber(calculateHoursTotal(h.notes||""))} hours</span><div class="info" style="white-space:pre-wrap">${h.notes||""}</div><button class="mini green" onclick="sendSavedHours('${h.id}')">Send</button><button class="mini gray" onclick="editHours('${h.id}')">Edit</button><button class="mini red" onclick="deleteHours('${h.id}')">Delete</button></div>`).join(""):'<p class="small">No hours saved yet.</p>');
 }
 
-async function createFolder(){let n=$("folderName").value.trim();if(!n)return error("Enter folder name.");let r=await supabaseClient.from("folders").insert({name:n,parent_id:currentFolder});if(r.error)return error(r.error.message);$("folderName").value="";notice("Folder saved.");loadAll()}
+
+function loadDriveScriptSetting(){
+ if($("driveScriptUrl"))$("driveScriptUrl").value=localStorage.getItem("neu_drive_script_url")||"";
+}
+function saveDriveScriptSetting(){
+ let url=($("driveScriptUrl")&&$("driveScriptUrl").value||"").trim();
+ if(url)localStorage.setItem("neu_drive_script_url",url);
+ else localStorage.removeItem("neu_drive_script_url");
+ notice("Drive auto-folder URL saved.");
+}
+async function createGoogleDriveFolder(folderName){
+ let scriptUrl=localStorage.getItem("neu_drive_script_url")||"";
+ if(!scriptUrl)return null;
+ let joiner=scriptUrl.includes("?")?"&":"?";
+ let url=scriptUrl+joiner+"folderName="+encodeURIComponent(folderName);
+ let res=await fetch(url);
+ let data=await res.json();
+ if(!data.ok)throw new Error(data.error||"Drive folder failed.");
+ return data;
+}
+function openDriveFolder(url){
+ if(!url)return error("No Drive folder link saved.");
+ window.open(url,"_blank");
+}
+
+async function createFolder(){
+ let n=$("folderName").value.trim();
+ if(!n)return error("Enter folder name.");
+ let r=await supabaseClient.from("folders").insert({name:n,parent_id:currentFolder}).select().single();
+ if(r.error)return error(r.error.message);
+ let driveUrl="";
+ if(localStorage.getItem("neu_drive_script_url")){
+  try{
+   notice("Folder saved. Creating Google Drive folder...");
+   let d=await createGoogleDriveFolder(n);
+   if(d&&d.url){
+    driveUrl=d.url;
+    let up=await supabaseClient.from("folders").update({drive_url:driveUrl}).eq("id",r.data.id);
+    if(up.error)return error("Drive folder was created, but saving the link failed. Run the Supabase drive_url SQL.");
+   }
+  }catch(e){
+   error("App folder saved, but Google Drive folder failed: "+(e&&e.message?e.message:e));
+  }
+ }
+ $("folderName").value="";
+ notice(driveUrl?"Folder saved with Google Drive folder.":"Folder saved.");
+ await loadAll();
+}
 async function deleteFolder(id){if(!confirm("Delete folder?"))return;await supabaseClient.from("tickets").update({folder_id:null}).eq("folder_id",id);let r=await supabaseClient.from("folders").delete().eq("id",id);if(r.error)return error(r.error.message);loadAll()}
 async function addInventory(){let name=$("invName").value.trim();if(!name)return error("Enter material name.");let r=await supabaseClient.from("employee_inventory").insert({employee_id:currentEmployee.id,name,quantity:Number($("invQty").value||0),unit:$("invUnit").value,low_alert_qty:Number($("invLow").value||0)});if(r.error)return error(r.error.message);["invName","invQty","invUnit","invLow"].forEach(id=>$(id).value="");notice("Material saved.");loadAll()}
 
@@ -761,7 +815,7 @@ if($("archiveList")){
 drawDashboard();
 
 if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
-$("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").value.trim());location.reload()};$("clearSetupBtn").onclick=()=>{localStorage.removeItem("neu_pin_supabase");location.reload()};$("pinLoginBtn").onclick=pinLogin;$("pinInput").addEventListener("keyup",e=>{if(e.key==="Enter"||$("pinInput").value.length===4)pinLogin()});$("signOutBtn").onclick=()=>{localStorage.removeItem("neu_current_employee");location.reload()};$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"NEU TICKETS",url:location.href});else prompt("Copy app link:",location.href)};document.body.addEventListener("click",e=>{
+if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSetting;$("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").value.trim());location.reload()};$("clearSetupBtn").onclick=()=>{localStorage.removeItem("neu_pin_supabase");location.reload()};$("pinLoginBtn").onclick=pinLogin;$("pinInput").addEventListener("keyup",e=>{if(e.key==="Enter"||$("pinInput").value.length===4)pinLogin()});$("signOutBtn").onclick=()=>{localStorage.removeItem("neu_current_employee");location.reload()};$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"NEU TICKETS",url:location.href});else prompt("Copy app link:",location.href)};document.body.addEventListener("click",e=>{
  let btn=e.target.closest("button");
  if(btn){
   let action=btn.dataset.action;
