@@ -556,6 +556,17 @@ function renderJobPicker(builderSelectId,jobSelectId,selectedBuilder,selectedJob
  jobEl.innerHTML=(allowGeneral?'<option value="">General / No Job</option>':'<option value="">Pick job</option>')+jobs.map(f=>`<option value="${f.id}">${cleanFolderNameText(f.name)||"Job"}</option>`).join("");
  if(selectedJobId)jobEl.value=selectedJobId;
 }
+
+function moveTicket(id){
+ selectedMoveTicket=ticket(id);
+ if(!selectedMoveTicket)return error("Ticket not found.");
+ if($("moveTicketName"))$("moveTicketName").textContent=(selectedMoveTicket.builder||"Ticket")+" - "+(selectedMoveTicket.job_address||"");
+ let currentJob=(data.folders||[]).find(f=>String(f.id)===String(selectedMoveTicket.folder_id||""));
+ let selectedBuilder=currentJob?(currentJob.builder_name||""):(selectedMoveTicket.builder||"");
+ renderJobPicker("moveBuilderSelect","moveFolderSelect",selectedBuilder,selectedMoveTicket.folder_id||"",true);
+ show($("moveOverlay"));
+}
+
 function renderMoveBuilderSelect(selectedBuilder){renderJobPicker("moveBuilderSelect","moveFolderSelect",selectedBuilder,"",true)}
 function renderMoveJobSelect(selectedFolderId){renderJobPicker("moveBuilderSelect","moveFolderSelect",undefined,selectedFolderId,true)}
 function cancelMoveTicket(){
