@@ -862,6 +862,45 @@ function addBuilder(){
  return notice("Builder list is fixed to match Google Drive.");
 }
 
+
+function callDriveScriptJsonp(scriptUrl,params){
+ return new Promise(function(resolve,reject){
+  try{
+   var callbackName="neuDriveCb_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+   var url=scriptUrl+(scriptUrl.indexOf("?")>=0?"&":"?");
+   var query=Object.keys(params||{}).map(function(k){return encodeURIComponent(k)+"="+encodeURIComponent(params[k]||"");}).join("&");
+   url+=query+"&callback="+encodeURIComponent(callbackName);
+   var script=document.createElement("script");
+   var done=false;
+   var timer=setTimeout(function(){
+    if(done)return;
+    done=true;
+    cleanup();
+    reject(new Error("Drive folder request timed out."));
+   },15000);
+   function cleanup(){
+    clearTimeout(timer);
+    try{delete window[callbackName];}catch(e){window[callbackName]=undefined;}
+    if(script&&script.parentNode)script.parentNode.removeChild(script);
+   }
+   window[callbackName]=function(data){
+    if(done)return;
+    done=true;
+    cleanup();
+    resolve(data||{});
+   };
+   script.onerror=function(){
+    if(done)return;
+    done=true;
+    cleanup();
+    reject(new Error("Google Drive script could not be reached."));
+   };
+   script.src=url;
+   document.body.appendChild(script);
+  }catch(err){reject(err);}
+ });
+}
+
 async function createGoogleDriveJobFolder(builderName,jobName){
  let scriptUrl=localStorage.getItem("neu_drive_script_url")||"";
  if(!scriptUrl)return null;
