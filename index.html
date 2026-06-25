@@ -81,6 +81,61 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .dashDrillCard:hover{transform:translateY(-1px)}
 .manHoursGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;margin-bottom:10px}
 .manHoursBox{background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;padding:10px;margin:10px 0}
+
+/* v3.0.3 professional UI polish */
+.dashGrid{grid-template-columns:repeat(2,1fr);gap:12px}
+.dashBox{
+  border:0;
+  border-radius:22px;
+  padding:18px 14px;
+  background:linear-gradient(180deg,#ffffff,#f9fafb);
+  box-shadow:0 6px 20px #00000012;
+}
+.dashNumber{font-size:42px;letter-spacing:-1px}
+.dashLabel{font-size:13px;text-transform:uppercase;letter-spacing:.4px}
+.weatherBox{
+  display:grid;
+  gap:4px;
+  border:0;
+  box-shadow:0 6px 20px #00000010;
+}
+.weatherMain{font-size:42px}
+.recentJobCard{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid #eef2f7;
+  border-radius:18px;
+  padding:12px;
+  margin-top:10px;
+  background:#fff;
+  box-shadow:0 2px 10px #00000008;
+}
+.recentJobTitle{font-size:16px;font-weight:900}
+.recentJobMeta{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.statusBadge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:900;
+  margin:6px 4px 4px 0;
+  border:1px solid transparent;
+}
+.statusNotReady{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.statusCalled{background:#ffedd5;color:#9a3412;border-color:#fed7aa}
+.statusPartial{background:#fef3c7;color:#92400e;border-color:#fde68a}
+.statusFinal{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+.statusHalo{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.statusPassed{background:#bbf7d0;color:#14532d;border-color:#86efac}
+.statusFailed{background:#fecaca;color:#7f1d1d;border-color:#fca5a5}
+.statusNeeded{background:#f3f4f6;color:#374151;border-color:#e5e7eb}
+.folderCard,.ticketCard{box-shadow:0 2px 12px #00000008}
+.folderName{font-size:17px}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -131,13 +186,8 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <div id="dashDrillList"></div>
 </div>
 <div class="card">
-<h2>Quick Actions</h2>
-<div class="quickActions">
-<button class="green" onclick="showPage('createTicketPage')">Create Ticket</button>
-<button class="gray" onclick="showPage('ticketsPage')">View Tickets</button>
-<button class="gray" onclick="showPage('inventoryPage')">Inventory</button>
-<button class="gray" onclick="showPage('foldersPage')">Folders</button>
-</div>
+<h2>Recent Jobs</h2>
+<div id="recentJobsList"></div>
 </div>
 </section>
 
@@ -211,7 +261,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.0 Fast Folders</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.0.3 Professional Home</div></div></section>
 </div>
 
 
@@ -270,6 +320,34 @@ function inspectClass(s){
  if(s==="Not Ready"||s==="Failed")return"inspectNotReady";
  if(s==="Passed")return"inspectFinal";
  return"inspectNotReady";
+}
+
+function statusBadgeClass(s){
+ s=String(s||"Not Ready");
+ if(s==="Inspection Called In")return"statusCalled";
+ if(s==="Ready for Partial Inspection")return"statusPartial";
+ if(s==="Ready for Final Inspection")return"statusFinal";
+ if(s==="Ready for Halo Inspection")return"statusHalo";
+ if(s==="Passed")return"statusPassed";
+ if(s==="Failed")return"statusFailed";
+ if(s==="Not Needed"||s==="Inspection Not Needed")return"statusNeeded";
+ return"statusNotReady";
+}
+function statusEmoji(s){
+ s=String(s||"Not Ready");
+ if(s==="Inspection Called In")return"ð ";
+ if(s==="Ready for Partial Inspection")return"ð¡";
+ if(s==="Ready for Final Inspection")return"ð¢";
+ if(s==="Ready for Halo Inspection")return"ðµ";
+ if(s==="Passed")return"â";
+ if(s==="Failed")return"â";
+ if(s==="Not Needed"||s==="Inspection Not Needed")return"âª";
+ return"ð´";
+}
+function statusBadge(s){
+ s=String(s||"Not Ready");
+ if(s==="Ready for Inspection")s="Not Ready";
+ return `<span class="statusBadge ${statusBadgeClass(s)}">${statusEmoji(s)} ${s}</span>`;
 }
 function setStatusSelect(id,val){let el=$(id);if(!el)return;el.innerHTML=statuses.map(s=>`<option>${s}</option>`).join("");if(!statuses.includes(val)){val="Not Ready";}el.value=val||"Not Ready"}
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>String(t.id)===String(id))}function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
@@ -947,7 +1025,7 @@ async function deleteInspectionJob(id){
 function inspectionJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length;
  let status=inspectionStatus(f)=="Ready for Inspection"?"Not Ready":inspectionStatus(f);
- return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div><span class="badge ${inspectionClass(status)}">${status}</span><br>${inspectionButtons(f)}<button class="mini red" onclick="deleteInspectionJob('${f.id}')">Delete</button>${f.drive_url?`<button class="mini green" onclick="openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}</div>`;
+ return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div>${statusBadge(status)}<br>${inspectionButtons(f)}<button class="mini red" onclick="deleteInspectionJob('${f.id}')">Delete</button>${f.drive_url?`<button class="mini green" onclick="openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}</div>`;
 }
 function renderInspections(){
  if(!$("inspectionsList"))return;
@@ -973,7 +1051,7 @@ function renderInspections(){
  $("inspectionsList").innerHTML=jobs.length?groups.map(g=>g[1].length?`<h3>${g[0]}</h3>${g[1].map(inspectionJobCard).join("")}`:"").join(""):'<p class="small">No jobs found.</p>';
  if($("inspectionRecentList")){
   let recent=jobs.filter(f=>f.inspection_updated_at).slice(0,8);
-  $("inspectionRecentList").innerHTML=recent.length?recent.map(f=>`<div class="ticketCard"><b>${cleanFolderNameText(f.name)||"Job"}</b><br><span class="small">Builder: ${f.builder_name||""}</span><br><span class="badge ${inspectionClass(inspectionStatus(f))}">${inspectionStatus(f)}</span><div class="small">Updated by ${f.inspection_updated_by||"Team"}</div></div>`).join(""):'<p class="small">No inspection updates yet.</p>';
+  $("inspectionRecentList").innerHTML=recent.length?recent.map(f=>`<div class="ticketCard"><b>${cleanFolderNameText(f.name)||"Job"}</b><br><span class="small">Builder: ${f.builder_name||""}</span><br>${statusBadge(inspectionStatus(f))}<div class="small">Updated by ${f.inspection_updated_by||"Team"}</div></div>`).join(""):'<p class="small">No inspection updates yet.</p>';
  }
 }
 
@@ -1274,12 +1352,21 @@ function drawDashboard(){
  $("dashLow").textContent=low.length;
  $("dashHalo").textContent=halo;
  $("dashFinal").textContent=final;
- if($("dashLowStockList")){
-  $("dashLowStockList").innerHTML=low.length?low.map(i=>`<div class="ticketCard lowStock"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}<div class="lowStockText">Alert at ${i.low_alert_qty}</div></div>`).join(""):'<p class="small">No low stock items.</p>';
+ renderRecentJobs(active);
+}
+function renderRecentJobs(activeTickets){
+ if(!$("recentJobsList"))return;
+ let recent=(activeTickets||data.tickets||[]).filter(t=>!isCompleted(t)).slice(0,5);
+ if(!recent.length){
+  $("recentJobsList").innerHTML='<p class="small">No active jobs yet.</p>';
+  return;
  }
- if($("dashRecentTickets")){
-  $("dashRecentTickets").innerHTML=active.length?active.slice(0,5).map(t=>ticketCard(t,false)).join(""):'<p class="small">No active tickets.</p>';
- }
+ $("recentJobsList").innerHTML=recent.map(t=>{
+  let f=(data.folders||[]).find(x=>String(x.id)===String(t.folder_id||""));
+  let job=f?cleanFolderNameText(f.name):(t.job_address||"No Job");
+  let builder=f?(f.builder_name||t.builder||"No builder"):(t.builder||"No builder");
+  return `<div class="recentJobCard" onclick="openTicket('${t.id}')"><div><div class="recentJobTitle">ð ${job}</div><div class="recentJobMeta">${builder}</div>${statusBadge(t.inspection_status)}</div><button class="mini gray" onclick="event.stopPropagation();openTicket('${t.id}')">Open</button></div>`;
+ }).join("");
 }
 
 
@@ -1287,7 +1374,7 @@ function dashboardTicketCard(t){
  let f=(data.folders||[]).find(x=>String(x.id)===String(t.folder_id||""));
  let title=f?f.name:(t.job_address||"No Job Folder");
  let builder=f?(f.builder_name||t.builder||"No builder"):(t.builder||"No builder");
- return `<div class="ticketCard" onclick="openTicket('${t.id}')"><div class="ticketTitle">${title}</div><div class="small">Builder: ${builder}<br>Ticket: ${t.job_address||""}</div><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span><br>${f&&f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();openTicket('${t.id}')">Open Ticket</button></div>`;
+ return `<div class="ticketCard" onclick="openTicket('${t.id}')"><div class="ticketTitle">${title}</div><div class="small">Builder: ${builder}<br>Ticket: ${t.job_address||""}</div>${statusBadge(t.inspection_status)}<br>${f&&f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();openTicket('${t.id}')">Open Ticket</button></div>`;
 }
 function dashboardJobCard(f,type){
  let matching=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id));
@@ -1295,7 +1382,7 @@ function dashboardJobCard(f,type){
  if(type==="halo")matching=matching.filter(t=>t.inspection_status==="Ready for Halo Inspection"&&!isCompleted(t));
  if(type==="final")matching=matching.filter(t=>t.inspection_status==="Ready for Final Inspection");
  let activeCount=matching.length;
- return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} matching ticket(s)</div><span class="badge ${inspectionClass(inspectionStatus(f))}">${inspectionStatus(f)}</span><br>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="openFolder('${f.id}')">Open Job</button></div>`;
+ return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} matching ticket(s)</div>${statusBadge(inspectionStatus(f))}<br>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="openFolder('${f.id}')">Open Job</button></div>`;
 }
 function uniqueFoldersFromTickets(tickets){
  let ids=[...new Set((tickets||[]).map(t=>String(t.folder_id||"")).filter(Boolean))];
@@ -1387,7 +1474,7 @@ function ticketCard(t,folderMode){
  return `<div class="ticketCard proCard">
   <div class="ticketTitle">${t.builder||"No Builder"}</div>
   <div class="small">${t.job_address||"No address"}<br>${displayDate(t.ticket_date)} - Created By: ${t.created_by_name||"Team"}</div>
-  <span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||"Open"}</span>
+  ${statusBadge(t.inspection_status)}
   <span class="badge">${count} material line(s)</span><span class="badge">${Number(t.man_hours||0)} man hr(s)</span>
   <span class="badge">${photoCount} photo/link(s)</span><br>
   <button type="button" class="mini green" onclick="event.preventDefault();event.stopPropagation();${openCall}">Open</button>
@@ -1399,7 +1486,7 @@ function ticketCard(t,folderMode){
   ${done?`<button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();reopenTicket('${t.id}')">Reopen</button>`:""}
  </div>`;
 }
-function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
+function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br>${statusBadge(t.inspection_status)}</div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
 function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';renderFolderBrowser();let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
