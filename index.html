@@ -930,22 +930,34 @@ function renderInspections(){
 
 let selectedMoveFolder=null;
 
-function cleanFolderNameText(v){return String(v||"").replace(/^\s*(ð|&#128193;|\uD83D\uDCC1)\s*/g,"").trim()}
+function cleanFolderNameText(v){
+ return String(v||"")
+  .replace(/^\s*(ð|&#128193;|\uD83D\uDCC1)\s*/g,"")
+  .replace(/^\s*Ã°[^A-Za-z0-9]+/g,"")
+  .trim();
+}
 function plainFolderPath(id){let arr=[],f=data.folders.find(x=>String(x.id)===String(id));while(f){arr.unshift(cleanFolderNameText(f.name));f=data.folders.find(x=>String(x.id)===String(f.parent_id||""))}return arr.filter(Boolean).join(" / ")}
+function normBuilderName(v){return cleanFolderNameText(v).toLowerCase().replace(/[^a-z0-9]/g,"");}
+function isKnownBuilderName(v){
+ let n=normBuilderName(v);
+ let fixed=(typeof FIXED_BUILDERS!=="undefined"?FIXED_BUILDERS:[]).map(normBuilderName);
+ let legacy=["aaronland","chrisfurrpools","executivepools","executiveswimmingpools","ionpools","ionstructures","ionstructure","ionoutdoors","peacefulponds","southernshowplace","apoolpricing","cirssydahlblanco","ionpoolcover","kellyhudson","otherpools"];
+ return fixed.includes(n)||legacy.includes(n);
+}
 function isBuilderFolder(f){
  if(!f)return false;
- let name=cleanFolderNameText(f.name).toLowerCase();
- let builder=cleanFolderNameText(f.builder_name).toLowerCase();
- let fixed=(typeof FIXED_BUILDERS!=="undefined"?FIXED_BUILDERS:[]).map(b=>String(b).trim().toLowerCase());
- let hasChildren=(data.folders||[]).some(ch=>String(ch.parent_id||"")===String(f.id));
+ let name=cleanFolderNameText(f.name);
+ let builder=cleanFolderNameText(f.builder_name);
  let hasTickets=(data.tickets||[]).some(t=>String(t.folder_id||"")===String(f.id));
- return hasChildren && !hasTickets && !f.drive_url && (fixed.includes(name) || (builder && builder===name));
+ let hasDrive=!!f.drive_url;
+ // Builder/container folders should not show as job cards. They usually have a builder name as their title, no tickets, and no Drive photo URL.
+ return !hasTickets && !hasDrive && (isKnownBuilderName(name) || (builder && normBuilderName(builder)===normBuilderName(name)));
 }
 function isJobFolder(f){
  if(!f)return false;
  if(isBuilderFolder(f))return false;
  let hasTickets=(data.tickets||[]).some(t=>String(t.folder_id||"")===String(f.id));
- return !!(f.drive_url || f.builder_name || hasTickets || f.parent_id);
+ return !!(f.drive_url || hasTickets || f.parent_id || (f.builder_name && !isKnownBuilderName(f.name)));
 }
 function isFolderDescendant(folderId,parentId){
  if(!folderId||!parentId)return false;
@@ -1248,7 +1260,7 @@ function ticketCard(t,folderMode){
  </div>`;
 }
 function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
-function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?plainFolderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">&#128193;</div><div class="folderName">ð ${cleanFolderNameText(f.name)}</div><div class="folderStats">${f.builder_name?`Builder: ${f.builder_name}<br>`:""}${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length} active ticket(s)</div>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
+function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=(currentFolder?data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null)):data.folders.filter(f=>isJobFolder(f)));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?plainFolderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">&#128193;</div><div class="folderName">&#128193; ${cleanFolderNameText(f.name)}</div><div class="folderStats">${f.builder_name?`Builder: ${f.builder_name}<br>`:""}${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length} active ticket(s)</div>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
 if($("folderTicketsCard")&&$("folderTickets")){
