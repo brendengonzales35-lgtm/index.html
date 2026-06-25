@@ -111,10 +111,10 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <div class="card">
 <h2>Dashboard</h2>
 <div class="dashGrid">
-  <div class="dashBox"><div id="dashOpen" class="dashNumber">0</div><div class="dashLabel">Open Tickets</div></div>
-  <div class="dashBox"><div id="dashLow" class="dashNumber">0</div><div class="dashLabel">Low Stock</div></div>
-  <div class="dashBox"><div id="dashHalo" class="dashNumber">0</div><div class="dashLabel">Ready for Halo</div></div>
-  <div class="dashBox"><div id="dashFinal" class="dashNumber">0</div><div class="dashLabel">Ready for Final</div></div>
+  <div class="dashBox dashDrillCard" onclick="showDashboardJobs('open')"><div id="dashOpen" class="dashNumber">0</div><div class="dashLabel">Open Tickets</div></div>
+  <div class="dashBox dashDrillCard" onclick="showDashboardJobs('low')"><div id="dashLow" class="dashNumber">0</div><div class="dashLabel">Low Stock</div></div>
+  <div class="dashBox dashDrillCard" onclick="showDashboardJobs('halo')"><div id="dashHalo" class="dashNumber">0</div><div class="dashLabel">Ready for Halo</div></div>
+  <div class="dashBox dashDrillCard" onclick="showDashboardJobs('final')"><div id="dashFinal" class="dashNumber">0</div><div class="dashLabel">Ready for Final</div></div>
 </div>
 </div>
 
@@ -177,7 +177,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><label>Add New Builder</label><input id="newBuilderName" placeholder="New builder name"><button id="addBuilderBtn" class="gray">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="hoursPage" class="page">
 <div class="card">
@@ -219,7 +219,9 @@ F-no work 1 PTO day"></textarea>
   <div class="moveModal">
     <h2>Move Ticket</h2>
     <p id="moveTicketName" class="small"></p>
-    <label>Select New Folder</label>
+    <label>Builder</label>
+    <select id="moveBuilderSelect"></select>
+    <label>Job</label>
     <select id="moveFolderSelect"></select>
     <button id="confirmMoveBtn" class="green">Move Ticket</button>
     <button id="cancelMoveBtn" class="gray">Cancel</button>
@@ -436,13 +438,34 @@ async function saveEdit(){if(!selectedTicket)return error("No ticket selected.")
 
 
 
+
+function jobsForBuilder(builder){
+ return (data.folders||[]).filter(f=>(f.builder_name||"")===builder).sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+}
+function renderMoveBuilderSelect(selectedBuilder){
+ if(!$("moveBuilderSelect"))return;
+ let builders=(typeof FIXED_BUILDERS!=="undefined"?FIXED_BUILDERS:getBuilders());
+ let existing=[...new Set((data.folders||[]).map(f=>f.builder_name).filter(Boolean))];
+ let all=[...new Set([...builders,...existing])].sort((a,b)=>a.localeCompare(b));
+ $("moveBuilderSelect").innerHTML='<option value="">Pick builder</option>'+all.map(b=>`<option value="${b}">ð ${b}</option>`).join("");
+ if(selectedBuilder)$("moveBuilderSelect").value=selectedBuilder;
+}
+function renderMoveJobSelect(selectedFolderId){
+ if(!$("moveFolderSelect"))return;
+ let builder=($("moveBuilderSelect")&&$("moveBuilderSelect").value)||"";
+ let jobs=builder?jobsForBuilder(builder):(data.folders||[]).slice().sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+ $("moveFolderSelect").innerHTML='<option value="">General / No Job</option>'+jobs.map(f=>`<option value="${f.id}">${f.name||"Job"}</option>`).join("");
+ if(selectedFolderId)$("moveFolderSelect").value=selectedFolderId;
+}
+
 function moveTicket(id){
  selectedMoveTicket=ticket(id);
  if(!selectedMoveTicket)return error("Ticket not found.");
  $("moveTicketName").textContent=(selectedMoveTicket.builder||"Ticket")+" - "+(selectedMoveTicket.job_address||"");
- let options='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)||f.name}</option>`).join("");
- $("moveFolderSelect").innerHTML=options;
- $("moveFolderSelect").value=selectedMoveTicket.folder_id||"";
+ let currentFolder=data.folders.find(f=>String(f.id)===String(selectedMoveTicket.folder_id||""));
+ let currentBuilder=currentFolder?currentFolder.builder_name:"";
+ renderMoveBuilderSelect(currentBuilder);
+ renderMoveJobSelect(selectedMoveTicket.folder_id||"");
  show($("moveOverlay"));
 }
 function cancelMoveTicket(){
@@ -714,59 +737,21 @@ function openDriveFolder(url){
 }
 
 
+const FIXED_BUILDERS=["A pool pricing", "Aaron land", "Chris furr pools", "Cirssy Dahl-blanco", "Executive swimming pools", "Ion Pool cover", "Ion pools", "Ion structure", "Kelly Hudson", "Other pools"];
 function getBuilders(){
- let saved=JSON.parse(localStorage.getItem("neu_builders")||"[]");
- let fromFolders=(data.folders||[]).map(f=>f.builder_name).filter(Boolean);
- let fromTickets=(data.tickets||[]).map(t=>t.builder).filter(Boolean);
- let all=[...saved,...fromFolders,...fromTickets].map(x=>String(x||"").trim()).filter(Boolean);
- return [...new Set(all)].sort((a,b)=>a.localeCompare(b));
+ return FIXED_BUILDERS.slice();
 }
 function saveBuilders(list){
- localStorage.setItem("neu_builders",JSON.stringify([...new Set((list||[]).map(x=>String(x||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b))));
+ // Fixed builders are controlled in the app code so Drive names stay clean.
 }
 function renderBuilderSelect(){
  if(!$("folderBuilderSelect"))return;
  let current=$("folderBuilderSelect").value;
- let builders=getBuilders();
- $("folderBuilderSelect").innerHTML='<option value="">Pick builder</option>'+builders.map(b=>`<option value="${b}">${b}</option>`).join("");
- if(current)$("folderBuilderSelect").value=current;
+ $("folderBuilderSelect").innerHTML='<option value="">Pick builder</option>'+FIXED_BUILDERS.map(b=>`<option value="${b}">ð ${b}</option>`).join("");
+ if(current&&FIXED_BUILDERS.includes(current))$("folderBuilderSelect").value=current;
 }
 function addBuilder(){
- let name=($("newBuilderName")&&$("newBuilderName").value||"").trim();
- if(!name)return error("Enter a builder name.");
- let builders=getBuilders();builders.push(name);saveBuilders(builders);
- $("newBuilderName").value="";renderBuilderSelect();$("folderBuilderSelect").value=name;notice("Builder added.");
-}
-function callDriveScriptJsonp(scriptUrl,params){
- return new Promise((resolve,reject)=>{
-  let cb="neuDriveCb_"+Date.now()+"_"+Math.floor(Math.random()*100000);
-  params.callback=cb;
-  let joiner=scriptUrl.includes("?")?"&":"?";
-  let qs=Object.keys(params).map(k=>encodeURIComponent(k)+"="+encodeURIComponent(params[k])).join("&");
-  let s=document.createElement("script");
-  let done=false;
-  window[cb]=function(data){
-   done=true;
-   cleanup();
-   resolve(data);
-  };
-  function cleanup(){
-   try{delete window[cb]}catch(e){window[cb]=undefined}
-   if(s&&s.parentNode)s.parentNode.removeChild(s);
-  }
-  s.onerror=function(){
-   if(done)return;
-   cleanup();
-   reject(new Error("Drive script failed to load. Check the Web App URL and deployment access."));
-  };
-  s.src=scriptUrl+joiner+qs;
-  document.body.appendChild(s);
-  setTimeout(()=>{
-   if(done)return;
-   cleanup();
-   reject(new Error("Drive script timed out. Check the Web App URL and Google deployment."));
-  },15000);
- });
+ return notice("Builder list is fixed to match Google Drive.");
 }
 
 async function createGoogleDriveJobFolder(builderName,jobName){
@@ -1055,7 +1040,7 @@ if($("folderTicketsCard")&&$("folderTickets")){
  let ft=data.tickets.filter(t=>String(t.folder_id||"")===String(currentFolder||"")&&!isCompleted(t));
  $("folderTickets").innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(""):'<p class="small">No tickets in this folder yet.</p>';
 }
-$("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();drawDashboard();
+$("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();renderBuilderSelect();drawDashboard();
 if($("archiveList")){
  let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
  let archived=data.tickets.filter(isCompleted).filter(t=>!aq||(t.builder||"").toLowerCase().includes(aq)||(t.job_address||"").toLowerCase().includes(aq));
@@ -1084,7 +1069,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
    return showPage(p);
   }
  }
-});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
+});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 </body>
 </html>
