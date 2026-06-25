@@ -71,6 +71,11 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .workflowDone{background:#e0e7ff;color:#3730a3}
 .versionBadge{font-size:12px;text-align:center;color:#6b7280;margin-top:12px}
 
+
+.weatherBox{background:#f9fafb;border:1px solid #e5e7eb;border-radius:18px;padding:14px;margin-top:10px}
+.weatherMain{font-size:34px;font-weight:900;color:#06243b;line-height:1}
+.weatherDetails{font-size:13px;color:#6b7280;font-weight:800;line-height:1.5;margin-top:6px}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -105,6 +110,15 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
   <div class="dashBox"><div id="dashLow" class="dashNumber">0</div><div class="dashLabel">Low Stock</div></div>
   <div class="dashBox"><div id="dashHalo" class="dashNumber">0</div><div class="dashLabel">Ready for Halo</div></div>
   <div class="dashBox"><div id="dashFinal" class="dashNumber">0</div><div class="dashLabel">Ready for Final</div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>&#127780;&#65039; Weather</h2>
+<div id="weatherBox" class="weatherBox">
+  <div id="weatherMain" class="weatherMain">--&deg;F</div>
+  <div id="weatherDetails" class="weatherDetails">Tap Update Weather to use your current location.</div>
+  <button id="updateWeatherBtn" class="gray">Update Weather</button>
 </div>
 </div>
 <div class="card">
@@ -206,10 +220,58 @@ function setStatusSelect(id,val){let el=$(id);if(!el)return;el.innerHTML=statuse
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>String(t.id)===String(id))}function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
 function folderPath(id){let arr=[],f=data.folders.find(x=>x.id===id);while(f){arr.unshift(f.name);f=data.folders.find(x=>x.id===f.parent_id)}return arr.join(" / ")}
 
-async function init(){$("newDate").value=today();if($("hoursWeek"))$("hoursWeek").value=today();setStatusSelect("newInspection");renderCreateMaterials();let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
+async function init(){loadSavedWeather();$("newDate").value=today();if($("hoursWeek"))$("hoursWeek").value=today();setStatusSelect("newInspection");renderCreateMaterials();let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
 async function pinLogin(){let pin=$("pinInput").value.trim();if(pin.length!==4)return error("Enter 4 digit PIN.");let r=await supabaseClient.from("employees").select("*").eq("pin",pin).eq("active",true).maybeSingle();if(r.error)return error(r.error.message);if(!r.data)return error("PIN not found.");currentEmployee=r.data;localStorage.setItem("neu_current_employee",JSON.stringify(currentEmployee));showApp()}
 async function showApp(){hide($("setupPage"));hide($("pinPage"));show($("appPage"));$("signedInAs").textContent="Signed in as "+currentEmployee.name;await loadAll()}
 async function loadAll(){let [e,f,t,i,u,d,h]=await Promise.all([supabaseClient.from("employees").select("*").order("name"),supabaseClient.from("folders").select("*").order("name"),supabaseClient.from("tickets").select("*").order("created_at",{ascending:false}),supabaseClient.from("employee_inventory").select("*").eq("employee_id",currentEmployee.id).order("name"),supabaseClient.from("ticket_materials").select("*").order("created_at",{ascending:false}),supabaseClient.from("drive_links").select("*").order("created_at",{ascending:false}),supabaseClient.from("work_hours").select("*").eq("employee_id",currentEmployee.id).order("created_at",{ascending:false})]);if(f.error)return error(f.error.message);data.employees=e.data||[];data.folders=f.data||[];data.tickets=t.data||[];data.inventory=i.data||[];data.used=u.data||[];data.drive=d.data||[];data.hours=(h&&!h.error?h.data:[])||[];draw()}
+
+function weatherCodeText(code){
+ code=Number(code);
+ if(code===0)return"Clear";
+ if([1,2,3].includes(code))return"Partly cloudy";
+ if([45,48].includes(code))return"Fog";
+ if([51,53,55,56,57].includes(code))return"Drizzle";
+ if([61,63,65,66,67,80,81,82].includes(code))return"Rain";
+ if([71,73,75,77,85,86].includes(code))return"Snow";
+ if([95,96,99].includes(code))return"Thunderstorms";
+ return"Weather";
+}
+function setWeatherText(main,details){
+ if($("weatherMain"))$("weatherMain").innerHTML=main;
+ if($("weatherDetails"))$("weatherDetails").textContent=details;
+}
+async function fetchWeather(lat,lon){
+ try{
+  setWeatherText("--&deg;F","Loading weather...");
+  let url="https://api.open-meteo.com/v1/forecast?latitude="+encodeURIComponent(lat)+"&longitude="+encodeURIComponent(lon)+"&current=temperature_2m,weather_code,precipitation&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto";
+  let res=await fetch(url);
+  let w=await res.json();
+  let temp=Math.round(w.current.temperature_2m);
+  let desc=weatherCodeText(w.current.weather_code);
+  let high=Math.round(w.daily.temperature_2m_max[0]);
+  let low=Math.round(w.daily.temperature_2m_min[0]);
+  let rain=w.daily.precipitation_probability_max&&w.daily.precipitation_probability_max[0]!=null?w.daily.precipitation_probability_max[0]:0;
+  setWeatherText(temp+"&deg;F",desc+" - High "+high+" / Low "+low+" - Rain chance "+rain+"%");
+  localStorage.setItem("neu_last_weather",JSON.stringify({temp,desc,high,low,rain,when:Date.now()}));
+ }catch(e){
+  setWeatherText("--&deg;F","Weather failed to load. Check location permission and internet.");
+ }
+}
+function loadSavedWeather(){
+ try{
+  let w=JSON.parse(localStorage.getItem("neu_last_weather")||"null");
+  if(!w)return;
+  setWeatherText(w.temp+"&deg;F",w.desc+" - High "+w.high+" / Low "+w.low+" - Rain chance "+w.rain+"%");
+ }catch(e){}
+}
+function updateWeather(){
+ if(!navigator.geolocation)return error("Location is not available on this device.");
+ navigator.geolocation.getCurrentPosition(
+  p=>fetchWeather(p.coords.latitude,p.coords.longitude),
+  e=>setWeatherText("--&deg;F","Location permission is needed for weather.")
+ );
+}
+
 function showPage(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(p).classList.add("active");document.querySelectorAll(".topNav button").forEach(b=>b.classList.remove("active"));document.querySelector(`[data-page="${p}"]`).classList.add("active");draw()}
 function renderCreateMaterials(){let out="";for(let i=1;i<=createMaterialLineCount;i++)out+=`<div class="materialGrid"><div><div class="materialNumber">Material ${i}</div><input id="newMatName${i}" list="materialOptions" placeholder="Start typing material"></div><div><div class="materialNumber">Qty</div><input id="newMatQty${i}" type="number" placeholder="0"></div></div>`;$("createMaterialsList").innerHTML=out}function addCreateMaterialLine(){createMaterialLineCount++;renderCreateMaterials()}
 
@@ -719,7 +781,7 @@ $("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").
    return showPage(p);
   }
  }
-});$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
+});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=()=>{currentFolder=data.folders.find(f=>f.id===currentFolder)?.parent_id||null;draw()};$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 </body>
 </html>
