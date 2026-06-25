@@ -76,6 +76,11 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .weatherMain{font-size:34px;font-weight:900;color:#06243b;line-height:1}
 .weatherDetails{font-size:13px;color:#6b7280;font-weight:800;line-height:1.5;margin-top:6px}
 
+
+.dashDrillCard{cursor:pointer}
+.dashDrillCard:hover{transform:translateY(-1px)}
+.manHoursGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;margin-bottom:10px}
+.manHoursBox{background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;padding:10px;margin:10px 0}
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -121,6 +126,10 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
   <button id="updateWeatherBtn" class="gray">Update Weather</button>
 </div>
 </div>
+<div id="dashDrillCard" class="card hidden">
+<h2 id="dashDrillTitle">Jobs</h2>
+<div id="dashDrillList"></div>
+</div>
 <div class="card">
 <h2>Quick Actions</h2>
 <div class="quickActions">
@@ -133,9 +142,13 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 </section>
 
 
-<section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder</label><select id="newFolder"></select><label>Inspection Status</label><select id="newInspection"></select><label>Man Hrs</label><input id="newManHrs" type="number" inputmode="decimal" placeholder="0"><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
+<section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder</label><select id="newFolder"></select><label>Inspection Status</label><select id="newInspection"></select><label>Man Hrs</label>
+<div id="newManHoursList"></div>
+<button type="button" id="addNewManHourBtn" class="gray">Add Man</button><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
 <section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">&larr; Tickets</button><div id="ticketDetail"></div></div></div>
-<div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder</label><select id="editFolder"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label><input id="editManHrs" type="number" inputmode="decimal" placeholder="0"><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
+<div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder</label><select id="editFolder"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label>
+<div id="editManHoursList"></div>
+<button type="button" id="addEditManHourBtn" class="gray">Add Man</button><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
 <hr style="border:0;border-top:1px solid #e5e7eb;margin:16px 0">
 <h3>Edit Materials</h3>
 <label>Add Material</label>
@@ -225,7 +238,7 @@ window.addEventListener("load",function(){
 
 let supabaseClient=null,currentEmployee=null,currentFolder=null,selectedTicket=null,selectedMoveTicket=null,createMaterialLineCount=10;
 let data={employees:[],folders:[],tickets:[],inventory:[],used:[],drive:[],hours:[]};
-const statuses=["Open","In Progress","Ready for Inspection","Completed","Ready for Halo Inspection","Inspection Not Ready","Inspection Not Needed","Ready for Partial Inspection","Ready for Final Inspection"];
+const statuses=["Open","In Progress","Ready for Inspection","Inspection Called In","Completed","Ready for Halo Inspection","Inspection Not Ready","Inspection Not Needed","Ready for Partial Inspection","Ready for Final Inspection"];
 function $(id){return document.getElementById(id)}function show(x){x&&x.classList.remove("hidden")}function hide(x){x&&x.classList.add("hidden")}
 function notice(m){$("noticeBox").textContent=m;show($("noticeBox"));setTimeout(()=>hide($("noticeBox")),3000)}function error(m){$("errorBox").textContent=m;show($("errorBox"));window.scrollTo(0,0)}
 function today(){return new Date().toISOString().slice(0,10)}function displayDate(iso){if(!iso)return"";let p=iso.split("-");return p.length===3?p[1]+"/"+p[2]+"/"+p[0]:iso}
@@ -244,7 +257,7 @@ function setStatusSelect(id,val){let el=$(id);if(!el)return;el.innerHTML=statuse
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>String(t.id)===String(id))}function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
 function folderPath(id){let arr=[],f=data.folders.find(x=>x.id===id);while(f){arr.unshift(f.name);f=data.folders.find(x=>x.id===f.parent_id)}return arr.join(" / ")}
 
-async function init(){loadSavedWeather();loadDriveScriptSetting();$("newDate").value=today();if($("hoursWeek"))$("hoursWeek").value=today();setStatusSelect("newInspection");renderCreateMaterials();let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
+async function init(){loadSavedWeather();loadDriveScriptSetting();$("newDate").value=today();if($("hoursWeek"))$("hoursWeek").value=today();setStatusSelect("newInspection");renderCreateMaterials();renderManHourLines("new",newManHourLineCount);let c=cfg(),saved=localStorage.getItem("neu_current_employee");if(!c||!c.url||!c.key){show($("setupPage"));return}supabaseClient=window.supabase.createClient(c.url,c.key);if(saved){currentEmployee=JSON.parse(saved);showApp()}else show($("pinPage"))}
 async function pinLogin(){let pin=$("pinInput").value.trim();if(pin.length!==4)return error("Enter 4 digit PIN.");let r=await supabaseClient.from("employees").select("*").eq("pin",pin).eq("active",true).maybeSingle();if(r.error)return error(r.error.message);if(!r.data)return error("PIN not found.");currentEmployee=r.data;localStorage.setItem("neu_current_employee",JSON.stringify(currentEmployee));showApp()}
 async function showApp(){hide($("setupPage"));hide($("pinPage"));show($("appPage"));$("signedInAs").textContent="Signed in as "+currentEmployee.name;await loadAll()}
 async function loadAll(){let [e,f,t,i,u,d,h]=await Promise.all([supabaseClient.from("employees").select("*").order("name"),supabaseClient.from("folders").select("*").order("name"),supabaseClient.from("tickets").select("*").order("created_at",{ascending:false}),supabaseClient.from("employee_inventory").select("*").eq("employee_id",currentEmployee.id).order("name"),supabaseClient.from("ticket_materials").select("*").order("created_at",{ascending:false}),supabaseClient.from("drive_links").select("*").order("created_at",{ascending:false}),supabaseClient.from("work_hours").select("*").eq("employee_id",currentEmployee.id).order("created_at",{ascending:false})]);if(f.error)return error(f.error.message);data.employees=e.data||[];data.folders=f.data||[];data.tickets=t.data||[];data.inventory=i.data||[];data.used=u.data||[];data.drive=d.data||[];data.hours=(h&&!h.error?h.data:[])||[];draw()}
@@ -319,8 +332,53 @@ function addCreateMaterialLine(){
  renderCreateMaterials(vals);
 }
 
+
+let newManHourLineCount=1;
+let editManHourLineCount=1;
+
+function renderManHourLines(prefix,count,vals){
+ vals=vals||[];
+ let box=$(prefix+"ManHoursList");
+ if(!box)return;
+ let out="";
+ for(let i=1;i<=count;i++){
+  let v=vals[i-1]||{};
+  out+=`<div class="manHoursGrid"><div><input id="${prefix}ManName${i}" placeholder="Man ${i} name" value="${(v.name||"").replace(/"/g,'&quot;')}"></div><div><input id="${prefix}ManHours${i}" type="number" inputmode="decimal" placeholder="hrs" value="${v.hours||""}"></div></div>`;
+ }
+ box.innerHTML=out;
+}
+function getManHourLines(prefix,count){
+ let lines=[];
+ for(let i=1;i<=count;i++){
+  let name=($(prefix+"ManName"+i)&&$(prefix+"ManName"+i).value||"").trim();
+  let hrs=Number(($(prefix+"ManHours"+i)&&$(prefix+"ManHours"+i).value)||0);
+  if(name||hrs)lines.push({name:name||("Man "+i),hours:hrs});
+ }
+ return lines;
+}
+function totalManHours(lines){
+ return (lines||[]).reduce((s,x)=>s+Number(x.hours||0),0);
+}
+function manHoursText(lines){
+ return (lines||[]).length?(lines||[]).map(x=>`${x.name}: ${x.hours} hr(s)`).join("<br>"):"0";
+}
+function parseManHoursDetails(v){
+ try{return JSON.parse(v||"[]")||[]}catch(e){return []}
+}
+function addNewManHourLine(){
+ let vals=getManHourLines("new",newManHourLineCount);
+ newManHourLineCount++;
+ renderManHourLines("new",newManHourLineCount,vals);
+}
+function addEditManHourLine(){
+ let vals=getManHourLines("edit",editManHourLineCount);
+ editManHourLineCount++;
+ renderManHourLines("edit",editManHourLineCount,vals);
+}
+
 async function createTicket(){
- let row={builder:$("newBuilder").value.trim(),job_address:$("newJobAddress").value.trim(),ticket_date:$("newDate").value||today(),folder_id:$("newFolder").value||null,inspection_status:$("newInspection").value,man_hours:Number($("newManHrs")&&$("newManHrs").value||0),notes:$("newNotes").value,need_to_complete:$("newNeed").value,created_by_name:currentEmployee.name};
+ let newManLines=getManHourLines("new",newManHourLineCount);
+ let row={builder:$("newBuilder").value.trim(),job_address:$("newJobAddress").value.trim(),ticket_date:$("newDate").value||today(),folder_id:$("newFolder").value||null,inspection_status:$("newInspection").value,man_hours:totalManHours(newManLines),man_hours_details:JSON.stringify(newManLines),notes:$("newNotes").value,need_to_complete:$("newNeed").value,created_by_name:currentEmployee.name};
  let r=await supabaseClient.from("tickets").insert(row).select().single();
  if(r.error)return error(r.error.message+". If it mentions man_hours, run the Supabase man_hours SQL.");
  let ticketId=r.data.id;
@@ -337,8 +395,8 @@ async function createTicket(){
   await supabaseClient.from("ticket_materials").insert({ticket_id:ticketId,inventory_id:item.id,material_name:item.name,unit:item.unit,quantity:qty,employee_id:currentEmployee.id,employee_name:currentEmployee.name});
   await supabaseClient.from("employee_inventory").update({quantity:Number(item.quantity||0)-qty}).eq("id",item.id);
  }
- ["newBuilder","newJobAddress","newManHrs","newNotes","newNeed"].forEach(id=>{if($(id))$(id).value=""});
- setStatusSelect("newInspection");createMaterialLineCount=10;renderCreateMaterials();
+ ["newBuilder","newJobAddress","newNotes","newNeed"].forEach(id=>{if($(id))$(id).value=""});
+ setStatusSelect("newInspection");newManHourLineCount=1;renderManHourLines("new",newManHourLineCount);createMaterialLineCount=10;renderCreateMaterials();
  await loadAll();
  let lowsAfter=lowStockItems();
  if(lowsAfter.length)notice("Ticket created. Low stock: "+lowsAfter.map(x=>x.name).join(", "));else notice("Ticket created.");
@@ -360,7 +418,7 @@ function editTicket(id){
   $("editFolder").value=selectedTicket.folder_id||"";
  }
  if($("editInspection"))setStatusSelect("editInspection",selectedTicket.inspection_status||"Inspection Not Ready");
- if($("editManHrs"))$("editManHrs").value=selectedTicket.man_hours||0;
+ let editLines=parseManHoursDetails(selectedTicket.man_hours_details);if(!editLines.length&&selectedTicket.man_hours)editLines=[{name:"Total",hours:Number(selectedTicket.man_hours||0)}];editManHourLineCount=Math.max(1,editLines.length);renderManHourLines("edit",editManHourLineCount,editLines);
  if($("editNotes"))$("editNotes").value=selectedTicket.notes||"";
  if($("editNeed"))$("editNeed").value=selectedTicket.need_to_complete||"";
  window.scrollTo(0,0);
@@ -374,7 +432,7 @@ function safeEditTicket(id){
  }
 }
 
-async function saveEdit(){if(!selectedTicket)return error("No ticket selected.");let upd={builder:$("editBuilder").value.trim(),job_address:$("editJobAddress").value.trim(),ticket_date:$("editDate").value||today(),folder_id:$("editFolder").value||null,inspection_status:$("editInspection").value,man_hours:Number($("editManHrs")&&$("editManHrs").value||0),notes:$("editNotes").value,need_to_complete:$("editNeed").value};let r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);if(r.error)return error(r.error.message);let id=selectedTicket.id;notice("Ticket updated.");await loadAll();openTicket(id)}
+async function saveEdit(){if(!selectedTicket)return error("No ticket selected.");let upd={builder:$("editBuilder").value.trim(),job_address:$("editJobAddress").value.trim(),ticket_date:$("editDate").value||today(),folder_id:$("editFolder").value||null,inspection_status:$("editInspection").value,man_hours:totalManHours(editManLines),man_hours_details:JSON.stringify(editManLines),notes:$("editNotes").value,need_to_complete:$("editNeed").value};let r=await supabaseClient.from("tickets").update(upd).eq("id",selectedTicket.id);if(r.error)return error(r.error.message);let id=selectedTicket.id;notice("Ticket updated.");await loadAll();openTicket(id)}
 
 
 
@@ -679,13 +737,46 @@ function addBuilder(){
  let builders=getBuilders();builders.push(name);saveBuilders(builders);
  $("newBuilderName").value="";renderBuilderSelect();$("folderBuilderSelect").value=name;notice("Builder added.");
 }
+function callDriveScriptJsonp(scriptUrl,params){
+ return new Promise((resolve,reject)=>{
+  let cb="neuDriveCb_"+Date.now()+"_"+Math.floor(Math.random()*100000);
+  params.callback=cb;
+  let joiner=scriptUrl.includes("?")?"&":"?";
+  let qs=Object.keys(params).map(k=>encodeURIComponent(k)+"="+encodeURIComponent(params[k])).join("&");
+  let s=document.createElement("script");
+  let done=false;
+  window[cb]=function(data){
+   done=true;
+   cleanup();
+   resolve(data);
+  };
+  function cleanup(){
+   try{delete window[cb]}catch(e){window[cb]=undefined}
+   if(s&&s.parentNode)s.parentNode.removeChild(s);
+  }
+  s.onerror=function(){
+   if(done)return;
+   cleanup();
+   reject(new Error("Drive script failed to load. Check the Web App URL and deployment access."));
+  };
+  s.src=scriptUrl+joiner+qs;
+  document.body.appendChild(s);
+  setTimeout(()=>{
+   if(done)return;
+   cleanup();
+   reject(new Error("Drive script timed out. Check the Web App URL and Google deployment."));
+  },15000);
+ });
+}
+
 async function createGoogleDriveJobFolder(builderName,jobName){
  let scriptUrl=localStorage.getItem("neu_drive_script_url")||"";
  if(!scriptUrl)return null;
- let joiner=scriptUrl.includes("?")?"&":"?";
- let url=scriptUrl+joiner+"builderName="+encodeURIComponent(builderName)+"&jobName="+encodeURIComponent(jobName)+"&parentId="+encodeURIComponent(NEU_DRIVE_PARENT_FOLDER_ID);
- let res=await fetch(url);
- let data=await res.json();
+ let data=await callDriveScriptJsonp(scriptUrl,{
+  builderName:builderName,
+  jobName:jobName,
+  parentId:NEU_DRIVE_PARENT_FOLDER_ID
+ });
  if(!data.ok)throw new Error(data.error||"Drive folder failed.");
  return data;
 }
@@ -869,6 +960,38 @@ function drawDashboard(){
  }
 }
 
+function dashboardJobCard(f){
+ let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length;
+ return `<div class="ticketCard"><div class="ticketTitle">${f.name||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div><span class="badge ${inspectionClass(inspectionStatus(f))}">${inspectionStatus(f)}</span><br>${f.drive_url?`<button class="mini green" onclick="openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="openFolder('${f.id}')">Open Job</button></div>`;
+}
+function showDashboardJobs(type){
+ if(!$("dashDrillCard"))return;
+ let title="Jobs";
+ let jobs=[];
+ if(type==="open"){
+  title="Open Tickets";
+  let folderIds=[...new Set((data.tickets||[]).filter(t=>!isCompleted(t)).map(t=>String(t.folder_id||"")).filter(Boolean))];
+  jobs=(data.folders||[]).filter(f=>folderIds.includes(String(f.id)));
+ }else if(type==="halo"){
+  title="Ready for Halo";
+  jobs=(data.folders||[]).filter(f=>(data.tickets||[]).some(t=>String(t.folder_id)===String(f.id)&&t.inspection_status==="Ready for Halo Inspection"&&!isCompleted(t)));
+ }else if(type==="final"){
+  title="Ready for Final";
+  jobs=(data.folders||[]).filter(f=>(data.tickets||[]).some(t=>String(t.folder_id)===String(f.id)&&t.inspection_status==="Ready for Final Inspection"));
+ }else if(type==="low"){
+  title="Low Stock";
+  $("dashDrillTitle").textContent=title;
+  let low=lowStockItems();
+  $("dashDrillList").innerHTML=low.length?low.map(i=>`<div class="ticketCard lowStock"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}<div class="lowStockText">Alert at ${i.low_alert_qty}</div></div>`).join(""):'<p class="small">No low stock.</p>';
+  $("dashDrillCard").classList.remove("hidden");
+  return;
+ }
+ $("dashDrillTitle").textContent=title;
+ $("dashDrillList").innerHTML=jobs.length?jobs.map(dashboardJobCard).join(""):'<p class="small">Nothing here.</p>';
+ $("dashDrillCard").classList.remove("hidden");
+}
+
+
 
 function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
 function isCompleted(t){return t.inspection_status==="Completed"||t.inspection_status==="Ready for Final Inspection"}
@@ -895,7 +1018,7 @@ function generateTicketPDF(id){
  let t=ticket(id); if(!t)return error("Ticket not found.");
  let used=data.used.filter(u=>String(u.ticket_id)===String(id));
  let links=data.drive.filter(d=>String(d.ticket_id)===String(id));
- let report=`<!doctype html><html><head><title>NEU Ticket Report</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#06243b}.box{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}.label{font-weight:bold;color:#06243b}.backBtn{background:#06243b;color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin-bottom:16px}@media print{.noPrint{display:none}}</style></head><body><button class="backBtn noPrint" onclick="window.close();history.back()">Back</button><h1>NEU Tickets</h1><h2>Job Report</h2><div class="box"><div class="label">Builder</div>${t.builder||""}</div><div class="box"><div class="label">Address</div>${t.job_address||""}</div><div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div><div class="box"><div class="label">Status</div>${t.inspection_status||""}</div><div class="box"><div class="label">Man Hrs</div>${Number(t.man_hours||0)}</div><div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Materials</div>${used.length?used.map(u=>`${u.material_name} - ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials."}</div><div class="box"><div class="label">Photos / Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: ${l.url}</div>`).join(""):"No links."}</div></body></html>`;
+ let report=`<!doctype html><html><head><title>NEU Ticket Report</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#06243b}.box{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}.label{font-weight:bold;color:#06243b}.backBtn{background:#06243b;color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin-bottom:16px}@media print{.noPrint{display:none}}</style></head><body><button class="backBtn noPrint" onclick="window.close();history.back()">Back</button><h1>NEU Tickets</h1><h2>Job Report</h2><div class="box"><div class="label">Builder</div>${t.builder||""}</div><div class="box"><div class="label">Address</div>${t.job_address||""}</div><div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div><div class="box"><div class="label">Status</div>${t.inspection_status||""}</div><div class="box"><div class="label">Man Hrs</div>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Materials</div>${used.length?used.map(u=>`${u.material_name} - ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials."}</div><div class="box"><div class="label">Photos / Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: ${l.url}</div>`).join(""):"No links."}</div></body></html>`;
  let w=window.open("","_blank");
  if(!w)return error("Popup blocked.");
  w.document.open(); w.document.write(report); w.document.close();
@@ -923,7 +1046,7 @@ function ticketCard(t,folderMode){
   ${done?`<button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();reopenTicket('${t.id}')">Reopen</button>`:""}
  </div>`;
 }
-function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Man Hrs</b><br>${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
+function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br><span class="badge ${inspectClass(t.inspection_status)}">${t.inspection_status||""}</span></div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
 function draw(){setStatusSelect("newInspection",$("newInspection").value);let folderOpts='<option value="">General</option>'+data.folders.map(f=>`<option value="${f.id}">${folderPath(f.id)}</option>`).join("");$("newFolder").innerHTML=folderOpts;$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';let visible=data.folders.filter(f=>(f.parent_id||null)===(currentFolder||null));$("folderBackBtn").classList.toggle("hidden",!currentFolder);$("folderTitle").textContent=currentFolder?folderPath(currentFolder):"Folders";$("foldersGrid").innerHTML=visible.length?visible.map(f=>`<div class="folderCard" onclick="if(event.target.closest('button'))return;currentFolder='${f.id}';draw()"><div class="folderIcon">&#128193;</div><div class="folderName">${f.name}</div><div class="folderStats">${f.builder_name?`Builder: ${f.builder_name}<br>`:""}${data.tickets.filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length} active ticket(s)</div><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`).join(""):'<p class="small">No folders here.</p>';let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
