@@ -868,10 +868,26 @@ async function setFolderInspection(id,status){
  if(r.error)return error(r.error.message+". If it mentions inspection_status, run the Supabase inspections SQL.");
  notice("Job inspection marked: "+status);await loadAll();
 }
-function inspectionButtons(f){return `<button class="mini gray" onclick="setFolderInspection('${f.id}','Not Ready')">Not Ready</button><button class="mini gray" onclick="setFolderInspection('${f.id}','Inspection Called In')">Called In</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Inspection')">Ready</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Partial Inspection')">Partial</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Final Inspection')">Final</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Halo Inspection')">Halo</button><button class="mini green" onclick="setFolderInspection('${f.id}','Passed')">Passed</button><button class="mini red" onclick="setFolderInspection('${f.id}','Failed')">Failed</button><button class="mini gray" onclick="setFolderInspection('${f.id}','Not Needed')">Not Needed</button>`}
+function inspectionButtons(f){return `<button class="mini gray" onclick="setFolderInspection('${f.id}','Not Ready')">Not Ready</button><button class="mini gray" onclick="setFolderInspection('${f.id}','Inspection Called In')">Called In</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Partial Inspection')">Partial</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Final Inspection')">Final</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Halo Inspection')">Halo</button><button class="mini green" onclick="setFolderInspection('${f.id}','Passed')">Passed</button><button class="mini red" onclick="setFolderInspection('${f.id}','Failed')">Failed</button><button class="mini gray" onclick="setFolderInspection('${f.id}','Not Needed')">Not Needed</button>`}
+async function deleteInspectionJob(id){
+ let f=(data.folders||[]).find(x=>String(x.id)===String(id));
+ if(!f)return error("Job not found.");
+ if(!confirm("Delete this job? This removes the job folder and its tickets from the app. Google Drive photos are not deleted."))return;
+ let ids=(data.tickets||[]).filter(t=>String(t.folder_id)===String(id)).map(t=>t.id);
+ if(ids.length){
+  await supabaseClient.from("ticket_materials").delete().in("ticket_id",ids);
+  let tr=await supabaseClient.from("tickets").delete().in("id",ids);
+  if(tr.error)return error(tr.error.message);
+ }
+ let r=await supabaseClient.from("folders").delete().eq("id",id);
+ if(r.error)return error(r.error.message);
+ notice("Job deleted.");
+ await loadAll();
+}
 function inspectionJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length;
- return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div><span class="badge ${inspectionClass(inspectionStatus(f))}">${inspectionStatus(f)}</span><br>${inspectionButtons(f)}${f.drive_url?`<button class="mini green" onclick="openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}</div>`;
+ let status=inspectionStatus(f)=="Ready for Inspection"?"Not Ready":inspectionStatus(f);
+ return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div><span class="badge ${inspectionClass(status)}">${status}</span><br>${inspectionButtons(f)}<button class="mini red" onclick="deleteInspectionJob('${f.id}')">Delete</button>${f.drive_url?`<button class="mini green" onclick="openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}</div>`;
 }
 function renderInspections(){
  if(!$("inspectionsList"))return;
@@ -880,18 +896,17 @@ function renderInspections(){
   .filter(f=>isJobFolder(f))
   .filter(f=>!q||(f.name||"").toLowerCase().includes(q)||(f.builder_name||"").toLowerCase().includes(q));
  jobs.sort((a,b)=>String(b.inspection_updated_at||b.created_at||"").localeCompare(String(a.inspection_updated_at||a.created_at||"")));
- let ready=jobs.filter(f=>["Ready for Inspection","Ready for Partial Inspection","Ready for Final Inspection","Ready for Halo Inspection"].includes(inspectionStatus(f))).length;
+ let ready=jobs.filter(f=>["Ready for Partial Inspection","Ready for Final Inspection","Ready for Halo Inspection"].includes(inspectionStatus(f))).length;
  let passed=jobs.filter(f=>inspectionStatus(f)==="Passed").length;
  if($("inspReadyCount"))$("inspReadyCount").textContent=ready;
  if($("inspPassedCount"))$("inspPassedCount").textContent=passed;
  let groups=[
   ["Inspection Called In",jobs.filter(f=>inspectionStatus(f)==="Inspection Called In")],
-  ["Ready for Inspection",jobs.filter(f=>inspectionStatus(f)==="Ready for Inspection")],
   ["Ready for Partial Inspection",jobs.filter(f=>inspectionStatus(f)==="Ready for Partial Inspection")],
   ["Ready for Final Inspection",jobs.filter(f=>inspectionStatus(f)==="Ready for Final Inspection")],
   ["Ready for Halo Inspection",jobs.filter(f=>inspectionStatus(f)==="Ready for Halo Inspection")],
   ["Failed",jobs.filter(f=>inspectionStatus(f)==="Failed")],
-  ["Not Ready",jobs.filter(f=>inspectionStatus(f)==="Not Ready")],
+  ["Not Ready",jobs.filter(f=>inspectionStatus(f)==="Not Ready"||inspectionStatus(f)==="Ready for Inspection")],
   ["Passed",jobs.filter(f=>inspectionStatus(f)==="Passed")],
   ["Not Needed",jobs.filter(f=>inspectionStatus(f)==="Not Needed")]
  ];
