@@ -82,7 +82,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .manHoursGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:10px;margin-bottom:10px}
 .manHoursBox{background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px;padding:10px;margin:10px 0}
 
-/* v3.0.3 professional UI polish */
+/* v3.1 quick clean UI */
 .dashGrid{grid-template-columns:repeat(2,1fr);gap:12px}
 .dashBox{
   border:0;
@@ -94,8 +94,6 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .dashNumber{font-size:42px;letter-spacing:-1px}
 .dashLabel{font-size:13px;text-transform:uppercase;letter-spacing:.4px}
 .weatherBox{
-  display:grid;
-  gap:4px;
   border:0;
   box-shadow:0 6px 20px #00000010;
 }
@@ -125,6 +123,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
   margin:6px 4px 4px 0;
   border:1px solid transparent;
 }
+.statusDot{width:10px;height:10px;border-radius:999px;display:inline-block;flex:0 0 10px}
 .statusNotReady{background:#fee2e2;color:#991b1b;border-color:#fecaca}
 .statusCalled{background:#ffedd5;color:#9a3412;border-color:#fed7aa}
 .statusPartial{background:#fef3c7;color:#92400e;border-color:#fde68a}
@@ -133,17 +132,6 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .statusPassed{background:#bbf7d0;color:#14532d;border-color:#86efac}
 .statusFailed{background:#fecaca;color:#7f1d1d;border-color:#fca5a5}
 .statusNeeded{background:#f3f4f6;color:#374151;border-color:#e5e7eb}
-.folderCard,.ticketCard{box-shadow:0 2px 12px #00000008}
-.folderName{font-size:17px}
-
-
-.statusDot{
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  display:inline-block;
-  flex:0 0 10px;
-}
 .statusDot.statusNotReady{background:#dc2626}
 .statusDot.statusCalled{background:#f97316}
 .statusDot.statusPartial{background:#facc15}
@@ -152,6 +140,8 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .statusDot.statusPassed{background:#15803d}
 .statusDot.statusFailed{background:#991b1b}
 .statusDot.statusNeeded{background:#9ca3af}
+.folderCard,.ticketCard{box-shadow:0 2px 12px #00000008}
+.folderName{font-size:17px}
 
 </style>
 
@@ -278,7 +268,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.0.4 Status Dot Fix</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1 Quick Clean</div></div></section>
 </div>
 
 
@@ -355,8 +345,8 @@ function statusBadge(s){
  if(s==="Ready for Inspection")s="Not Ready";
  let cls=statusBadgeClass(s);
  return `<span class="statusBadge ${cls}"><span class="statusDot ${cls}"></span>${s}</span>`;
-}">${statusEmoji(s)} ${s}</span>`;
 }
+
 function setStatusSelect(id,val){let el=$(id);if(!el)return;el.innerHTML=statuses.map(s=>`<option>${s}</option>`).join("");if(!statuses.includes(val)){val="Not Ready";}el.value=val||"Not Ready"}
 function cfg(){return JSON.parse(localStorage.getItem("neu_pin_supabase")||"null")}function saveCfg(url,key){localStorage.setItem("neu_pin_supabase",JSON.stringify({url,key}))}function ticket(id){return data.tickets.find(t=>String(t.id)===String(id))}function lowStockItems(){return data.inventory.filter(i=>Number(i.low_alert_qty||0)>0 && Number(i.quantity||0)<=Number(i.low_alert_qty||0))}
 function folderPath(id){let arr=[],f=data.folders.find(x=>x.id===id);while(f){arr.unshift(f.name);f=data.folders.find(x=>x.id===f.parent_id)}return arr.join(" / ")}
@@ -1154,8 +1144,8 @@ function renderFolderBrowser(){
 
 function cleanFolderNameText(v){
  return String(v||"")
-  .replace(/^\s*(ð|&#128193;|\uD83D\uDCC1)\s*/g,"")
-  .replace(/^\s*Ã°[^A-Za-z0-9]+/g,"")
+  .replace(/^\s*(📁|&#128193;|\uD83D\uDCC1)\s*/g,"")
+  .replace(/^\s*ð[^A-Za-z0-9]+/g,"")
   .trim();
 }
 function plainFolderPath(id){let arr=[],f=data.folders.find(x=>String(x.id)===String(id));while(f){arr.unshift(cleanFolderNameText(f.name));f=data.folders.find(x=>String(x.id)===String(f.parent_id||""))}return arr.filter(Boolean).join(" / ")}
@@ -1373,10 +1363,9 @@ function renderRecentJobs(activeTickets){
   let f=(data.folders||[]).find(x=>String(x.id)===String(t.folder_id||""));
   let job=f?cleanFolderNameText(f.name):(t.job_address||"No Job");
   let builder=f?(f.builder_name||t.builder||"No builder"):(t.builder||"No builder");
-  return `<div class="recentJobCard" onclick="openTicket('${t.id}')"><div><div class="recentJobTitle">ð ${job}</div><div class="recentJobMeta">${builder}</div>${statusBadge(t.inspection_status)}</div><button class="mini gray" onclick="event.stopPropagation();openTicket('${t.id}')">Open</button></div>`;
+  return `<div class="recentJobCard" onclick="openTicket('${t.id}')"><div><div class="recentJobTitle">${job}</div><div class="recentJobMeta">${builder}</div>${statusBadge(t.inspection_status)}</div><button class="mini gray" onclick="event.stopPropagation();openTicket('${t.id}')">Open</button></div>`;
  }).join("");
 }
-
 
 function dashboardTicketCard(t){
  let f=(data.folders||[]).find(x=>String(x.id)===String(t.folder_id||""));
