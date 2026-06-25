@@ -144,11 +144,11 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 
 <section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder</label><select id="newFolder"></select><label>Inspection Status</label><select id="newInspection"></select><label>Man Hrs</label>
 <div id="newManHoursList"></div>
-<button type="button" id="addNewManHourBtn" class="gray">Add Man</button><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
+<button type="button" id="addNewManHourBtn" class="gray" onclick="addNewManHourLine()">Add Man</button><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
 <section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">&larr; Tickets</button><div id="ticketDetail"></div></div></div>
 <div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder</label><select id="editFolder"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label>
 <div id="editManHoursList"></div>
-<button type="button" id="addEditManHourBtn" class="gray">Add Man</button><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
+<button type="button" id="addEditManHourBtn" class="gray" onclick="addEditManHourLine()">Add Man</button><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
 <hr style="border:0;border-top:1px solid #e5e7eb;margin:16px 0">
 <h3>Edit Materials</h3>
 <label>Add Material</label>
@@ -367,41 +367,88 @@ function manHoursText(lines){
 function parseManHoursDetails(v){
  try{return JSON.parse(v||"[]")||[]}catch(e){return []}
 }
-function addNewManHourLine(){
- let vals=getManHourLines("new",newManHourLineCount);
- newManHourLineCount++;
- renderManHourLines("new",newManHourLineCount,vals);
-}
-function addEditManHourLine(){
- let vals=getManHourLines("edit",editManHourLineCount);
- editManHourLineCount++;
- renderManHourLines("edit",editManHourLineCount,vals);
-}
+function addNewManHourLine(){let vals=getManHourLines("new",newManHourLineCount);newManHourLineCount++;renderManHourLines("new",newManHourLineCount,vals);}
+function addEditManHourLine(){let vals=getManHourLines("edit",editManHourLineCount);editManHourLineCount++;renderManHourLines("edit",editManHourLineCount,vals);}
 
 async function createTicket(){
  let newManLines=getManHourLines("new",newManHourLineCount);
- let row={builder:$("newBuilder").value.trim(),job_address:$("newJobAddress").value.trim(),ticket_date:$("newDate").value||today(),folder_id:$("newFolder").value||null,inspection_status:$("newInspection").value,man_hours:totalManHours(newManLines),man_hours_details:JSON.stringify(newManLines),notes:$("newNotes").value,need_to_complete:$("newNeed").value,created_by_name:currentEmployee.name};
+ let row={
+  builder:$("newBuilder").value.trim(),
+  job_address:$("newJobAddress").value.trim(),
+  ticket_date:$("newDate").value||today(),
+  folder_id:$("newFolder").value||null,
+  inspection_status:$("newInspection").value,
+  man_hours:totalManHours(newManLines),
+  man_hours_details:JSON.stringify(newManLines),
+  notes:$("newNotes").value,
+  need_to_complete:$("newNeed").value,
+  created_by_name:currentEmployee.name
+ };
+
  let r=await supabaseClient.from("tickets").insert(row).select().single();
- if(r.error)return error(r.error.message+". If it mentions man_hours, run the Supabase man_hours SQL.");
+
+ if(r.error && (String(r.error.message||"").includes("man_hours_details") || String(r.error.message||"").includes("schema cache"))){
+  delete row.man_hours_details;
+  r=await supabaseClient.from("tickets").insert(row).select().single();
+ }
+
+ if(r.error && (String(r.error.message||"").includes("man_hours") || String(r.error.message||"").includes("schema cache"))){
+  delete row.man_hours;
+  delete row.man_hours_details;
+  r=await supabaseClient.from("tickets").insert(row).select().single();
+ }
+
+ if(r.error)return error("Ticket did not save: "+r.error.message);
  let ticketId=r.data.id;
+
  for(let i=1;i<=createMaterialLineCount;i++){
-  let name=($("newMatName"+i)?.value||"").trim(),qty=Number($("newMatQty"+i)?.value||0);
+  let nameEl=$("newMatName"+i);
+  let qtyEl=$("newMatQty"+i);
+  let name=(nameEl&&nameEl.value?nameEl.value:"").trim();
+  let qty=Number(qtyEl&&qtyEl.value?qtyEl.value:0);
   if(!name||!qty)continue;
+
   let item=data.inventory.find(x=>(x.name||"").toLowerCase()===name.toLowerCase());
+
   if(!item){
-   let created=await supabaseClient.from("employee_inventory").insert({employee_id:currentEmployee.id,name:name,quantity:5,unit:"",low_alert_qty:0}).select().single();
-   if(created.error)return error(created.error.message);
+   let created=await supabaseClient.from("employee_inventory").insert({
+    employee_id:currentEmployee.id,
+    name:name,
+    quantity:5,
+    unit:"",
+    low_alert_qty:0
+   }).select().single();
+   if(created.error)return error("Ticket saved, but material was not added: "+created.error.message);
    item=created.data;
    data.inventory.push(item);
   }
-  await supabaseClient.from("ticket_materials").insert({ticket_id:ticketId,inventory_id:item.id,material_name:item.name,unit:item.unit,quantity:qty,employee_id:currentEmployee.id,employee_name:currentEmployee.name});
-  await supabaseClient.from("employee_inventory").update({quantity:Number(item.quantity||0)-qty}).eq("id",item.id);
+
+  let mat=await supabaseClient.from("ticket_materials").insert({
+   ticket_id:ticketId,
+   inventory_id:item.id,
+   material_name:item.name,
+   unit:item.unit,
+   quantity:qty,
+   employee_id:currentEmployee.id,
+   employee_name:currentEmployee.name
+  });
+  if(mat.error)return error("Ticket saved, but material line failed: "+mat.error.message);
+
+  await supabaseClient.from("employee_inventory").update({
+   quantity:Number(item.quantity||0)-qty
+  }).eq("id",item.id);
  }
+
  ["newBuilder","newJobAddress","newNotes","newNeed"].forEach(id=>{if($(id))$(id).value=""});
- setStatusSelect("newInspection");newManHourLineCount=1;renderManHourLines("new",newManHourLineCount);createMaterialLineCount=10;renderCreateMaterials();
+ setStatusSelect("newInspection");
+ newManHourLineCount=1;
+ renderManHourLines("new",newManHourLineCount);
+ createMaterialLineCount=10;
+ renderCreateMaterials();
  await loadAll();
  let lowsAfter=lowStockItems();
- if(lowsAfter.length)notice("Ticket created. Low stock: "+lowsAfter.map(x=>x.name).join(", "));else notice("Ticket created.");
+ if(lowsAfter.length)notice("Ticket created. Low stock: "+lowsAfter.map(x=>x.name).join(", "));
+ else notice("Ticket created.");
 }
 function openTicket(id){selectedTicket=ticket(id);if(!selectedTicket)return error("Could not open ticket.");hide($("ticketListView"));hide($("ticketEditView"));show($("ticketDetailView"));drawTicketDetail();window.scrollTo(0,0)}
 function backTickets(){selectedTicket=null;hide($("ticketDetailView"));hide($("ticketEditView"));show($("ticketListView"));draw()}
@@ -480,6 +527,13 @@ async function confirmMoveTicket(){
  notice("Ticket moved.");
  cancelMoveTicket();
  await loadAll();
+}
+
+
+function openFolder(id){
+ currentFolder=id;
+ showPage("foldersPage");
+ draw();
 }
 
 function openPhotos(id){let links=data.drive.filter(d=>String(d.ticket_id)===String(id));if(links.length){window.open(links[0].url,"_blank");return}showPage("drivePage");$("driveTicket").value=id;notice("Add a Google Drive photo link for this ticket.")}
