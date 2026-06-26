@@ -274,7 +274,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .statusCalled.currentInspectionStatus{background:#ffedd5!important;color:#7c2d12!important;border-color:#ea580c!important}
 
 
-/* v3.2.5 mockup style redesign */
+/* v3.2.7 dark mockup clean - no overlap */
 :root{
   --navy:#050a10;
   --green:#22c55e;
@@ -290,126 +290,83 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 *{-webkit-tap-highlight-color:transparent}
 body{
   background:
-    radial-gradient(circle at 20% -10%,rgba(59,130,246,.18),transparent 35%),
-    radial-gradient(circle at 90% 20%,rgba(168,85,247,.10),transparent 30%),
-    linear-gradient(180deg,#02060b,#050a10 45%,#02060b);
+    radial-gradient(circle at 20% -10%,rgba(59,130,246,.16),transparent 34%),
+    linear-gradient(180deg,#02060b,#050a10 48%,#02060b);
   color:#f8fafc;
-  padding:0 10px 18px;
+  padding:12px 12px 26px;
 }
 header{
-  margin:0 -10px 10px;
-  padding:18px 14px;
-  border-radius:0 0 26px 26px;
   background:linear-gradient(180deg,#07111b,#03070c);
-  border-bottom:1px solid #1f2937;
-  box-shadow:0 16px 40px rgba(0,0,0,.75);
-}
-.logoRow{
-  gap:14px;
+  border:1px solid #1f2937;
+  border-radius:0 0 24px 24px;
+  box-shadow:0 16px 38px rgba(0,0,0,.72);
+  margin:-12px -12px 12px;
+  padding:18px 14px;
 }
 .logo{
-  width:72px;
-  height:72px;
-  border-radius:20px;
   background:#07111b;
   border:1px solid #263241;
-  box-shadow:0 10px 25px rgba(0,0,0,.55);
+  box-shadow:0 10px 24px rgba(0,0,0,.55);
 }
-h1{
-  color:#fff;
-  font-size:29px;
-  font-weight:900;
-  letter-spacing:-.8px;
-}
-h2{
-  color:#fff;
-  font-size:20px;
-  font-weight:900;
-  letter-spacing:-.25px;
-}
-h3{
-  color:#fff;
-}
+h1,h2,h3,.ticketTitle,.folderName{color:#f8fafc}
 .card{
-  background:linear-gradient(180deg,rgba(17,27,37,.94),rgba(8,13,19,.96));
+  background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98));
   border:1px solid #1f2937;
   color:#f8fafc;
   border-radius:20px;
-  box-shadow:0 18px 42px rgba(0,0,0,.62);
-  backdrop-filter:blur(14px);
+  box-shadow:0 16px 36px rgba(0,0,0,.58);
 }
 .topNav{
   position:sticky;
   top:0;
   z-index:999;
-  background:linear-gradient(180deg,#03070c 0%,rgba(3,7,12,.94) 80%,transparent);
+  background:#03070c;
   padding:10px 0 12px;
   grid-template-columns:repeat(4,1fr);
   gap:8px;
+  margin:0 0 12px;
 }
 .topNav button{
-  background:transparent;
+  background:#080f16;
   color:#d1d5db;
-  border:0;
+  border:1px solid #1f2937;
   box-shadow:none;
   min-height:68px;
-  border-radius:0;
+  border-radius:16px;
   font-size:12px;
   padding:8px 4px;
-  border-bottom:3px solid transparent;
 }
 .topNav button.active{
-  background:transparent;
+  background:#0b1d46;
   color:#60a5fa;
-  border-bottom-color:#3b82f6;
+  border-color:#3b82f6;
 }
-.navIcon{
-  font-size:24px;
-}
+.navIcon{font-size:24px}
 input,select,textarea{
   background:#050a10;
   color:#f8fafc;
   border:1px solid #334155;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
 }
-input::placeholder,textarea::placeholder{
-  color:#6b7280;
-}
+input::placeholder,textarea::placeholder{color:#6b7280}
 button{
-  background:#2563eb;
-  color:#fff;
   border-radius:14px;
-  border:0;
-  box-shadow:0 8px 20px rgba(0,0,0,.4);
+  box-shadow:none;
 }
-.green{
-  background:#22c55e!important;
-  color:#03120a!important;
-}
-.gray{
-  background:#111827!important;
-  color:#f8fafc!important;
-  border:1px solid #334155!important;
-}
-.red{
-  background:#b91c1c!important;
-  color:#fff!important;
-}
-.small,.folderStats,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails{
-  color:#a7b0bd!important;
-}
+.green{background:#22c55e!important;color:#03120a!important}
+.gray{background:#111827!important;color:#f8fafc!important;border:1px solid #334155!important}
+.red{background:#b91c1c!important;color:#fff!important}
+.small,.folderStats,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails{color:#a7b0bd!important}
 .ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox{
   background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98))!important;
   border:1px solid #1f2937!important;
   color:#f8fafc!important;
   border-radius:18px!important;
-  box-shadow:0 14px 35px rgba(0,0,0,.55)!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.50)!important;
 }
 .ticketTitle,.folderName{
-  color:#fff;
   font-size:20px;
   font-weight:900;
-  letter-spacing:-.35px;
+  letter-spacing:-.3px;
 }
 .folderGrid{
   display:grid;
@@ -421,44 +378,27 @@ button{
 }
 .folderCard{
   padding:16px!important;
-  min-height:110px;
+  min-height:105px;
 }
-.folderIcon{
-  font-size:34px;
-}
-.folderName{
-  margin-top:2px;
-}
+.folderIcon{font-size:34px}
 .folderCard .mini,.ticketCard .mini,.mini{
   border-radius:999px!important;
   padding:8px 11px!important;
   font-size:12px!important;
   margin:7px 5px 0 0!important;
-  box-shadow:none!important;
 }
-.dashGrid{
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.dashBox{
-  padding:18px!important;
-  min-height:106px;
-}
+.dashGrid{grid-template-columns:repeat(2,1fr);gap:12px}
+.dashBox{padding:18px!important;min-height:106px}
 .dashNumber,.summaryNum,.weatherMain{
   color:#f8fafc!important;
   font-size:42px;
   font-weight:900;
 }
-.notice{
-  background:#052e16!important;
-  color:#bbf7d0!important;
-  border:1px solid #166534!important;
-}
-.bad{
-  background:#450a0a!important;
-  color:#fecaca!important;
-  border:1px solid #991b1b!important;
-}
+.notice{background:#052e16!important;color:#bbf7d0!important;border:1px solid #166534!important}
+.bad{background:#450a0a!important;color:#fecaca!important;border:1px solid #991b1b!important}
+a{color:#60a5fa}
+
+/* Strong status colors */
 .statusBadge{
   display:inline-flex;
   align-items:center;
@@ -470,12 +410,7 @@ button{
   margin:7px 5px 5px 0;
   border:2px solid transparent;
 }
-.statusDot{
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  display:inline-block;
-}
+.statusDot{width:10px;height:10px;border-radius:999px;display:inline-block}
 .statusNotReady{background:#450a0a!important;color:#fecaca!important;border-color:#ef4444!important}
 .statusCalled{background:#431407!important;color:#fed7aa!important;border-color:#f97316!important}
 .statusPartial{background:#422006!important;color:#fef08a!important;border-color:#fbbf24!important}
@@ -484,15 +419,8 @@ button{
 .statusPassed{background:#022c22!important;color:#a7f3d0!important;border-color:#10b981!important}
 .statusFailed{background:#1f0303!important;color:#fecaca!important;border-color:#dc2626!important}
 .statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
-.statusDot.statusNotReady{background:#ef4444!important}
-.statusDot.statusCalled{background:#f97316!important}
-.statusDot.statusPartial{background:#fbbf24!important}
-.statusDot.statusFinal{background:#22c55e!important}
-.statusDot.statusHalo{background:#3b82f6!important}
-.statusDot.statusPassed{background:#10b981!important}
-.statusDot.statusFailed{background:#dc2626!important}
-.statusDot.statusNeeded{background:#9ca3af!important}
 
+/* Inspections look like clean app cards */
 .inspectActionBtn{
   width:auto!important;
   min-width:92px;
@@ -503,7 +431,6 @@ button{
   margin:7px 5px 0 0!important;
   border:2px solid transparent!important;
   font-weight:900!important;
-  box-shadow:0 10px 24px rgba(0,0,0,.42)!important;
 }
 .inspectBtnNotReady{background:#7f1d1d!important;color:#fff!important;border-color:#ef4444!important}
 .inspectBtnCalled{background:#9a3412!important;color:#fff!important;border-color:#f97316!important}
@@ -530,87 +457,6 @@ button{
 .currentInspectionStatus.statusPassed{background:#022c22!important;color:#a7f3d0!important;border-color:#10b981!important}
 .currentInspectionStatus.statusFailed{background:#1f0303!important;color:#fecaca!important;border-color:#dc2626!important}
 .currentInspectionStatus.statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
-
-/* Mockup-style job progress card */
-.progressTabs{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:8px;
-  margin:10px 0 12px;
-}
-.progressTabs button{
-  background:#090f16!important;
-  color:#d1d5db!important;
-  border:1px solid #263241!important;
-  border-radius:14px!important;
-  padding:10px 4px!important;
-  font-size:12px!important;
-  box-shadow:none!important;
-}
-.progressTabs button.active{
-  color:#60a5fa!important;
-  border-color:#3b82f6!important;
-  background:#0b1d46!important;
-}
-.progressGrid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  margin-top:10px;
-}
-@media(min-width:700px){
-  .progressGrid{grid-template-columns:repeat(3,1fr)}
-}
-.progressOption{
-  min-height:86px;
-  border-radius:16px;
-  background:linear-gradient(135deg,#0b1118,#111827);
-  border:1px solid #263241;
-  color:#fff;
-  font-size:15px;
-  font-weight:900;
-  text-align:center;
-  box-shadow:0 10px 24px rgba(0,0,0,.45);
-}
-.progressOption.active{
-  border-color:#a855f7;
-  background:linear-gradient(135deg,#32115e,#111827);
-  box-shadow:0 0 0 2px rgba(168,85,247,.35) inset;
-}
-.progressChecklist{
-  margin-top:12px;
-  border:1px solid #263241;
-  border-radius:16px;
-  overflow:hidden;
-  background:#080d13;
-}
-.progressCheckRow{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:12px;
-  padding:13px;
-  border-bottom:1px solid #1f2937;
-  align-items:center;
-  color:#f8fafc;
-}
-.progressCheckRow:last-child{border-bottom:0}
-.progressCheckRow input{
-  width:24px!important;
-  height:24px!important;
-  margin:0!important;
-  accent-color:#22c55e;
-}
-.progressSave{
-  margin-top:12px;
-  background:#2563eb!important;
-  color:#fff!important;
-}
-.driveLinkCard a{
-  overflow-wrap:anywhere;
-}
-a{
-  color:#60a5fa;
-}
 
 </style>
 
@@ -703,19 +549,7 @@ a{
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div>
-<div id="jobProgressCard" class="card hidden">
-  <h2 id="jobProgressTitle">Inspection Progress</h2>
-  <div class="progressTabs">
-    <button type="button" class="gray" onclick="renderJobProgress()">Overview</button>
-    <button type="button" class="gray" onclick="showPage('ticketsPage')">Tickets</button>
-    <button type="button" class="active" onclick="renderJobProgress()">Progress</button>
-    <button type="button" class="gray" onclick="openCurrentJobPhotos()">Photos</button>
-    <button type="button" class="gray" onclick="focusJobNotes()">Notes</button>
-  </div>
-  <div id="jobProgressBody"></div>
-</div>
-</section>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="hoursPage" class="page">
 <div class="card">
@@ -749,7 +583,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.5 Mockup Style</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.7 Dark Clean</div></div></section>
 </div>
 
 
@@ -1767,7 +1601,6 @@ function openJobFolder(id){
  currentFolder=String(id);
  showPage("foldersPage");
  draw();
- setTimeout(renderJobProgress,0);
 }
 function backFolderBrowser(){
  if(currentFolder){currentFolder=null;draw();return;}
@@ -1779,68 +1612,6 @@ function folderBrowserJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
  return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div><div class="driveFolderTop">${driveFolderIconSvg()}<div class="driveFolderText"><div class="driveFolderName">${cleanFolderNameText(f.name)||"Job"}</div><div class="driveFolderMeta">${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div></div></div></div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div></div>`;
 }
-
-const PROGRESS_OPTIONS=[
- ["Water Bond Inspection","Water Bond"],
- ["Ditch Inspection","Ditch"],
- ["Bonding Inspection","Bonding"],
- ["Ready for Partial Inspection","Partial"],
- ["Ready for Final Inspection","Final"],
- ["Ready for Halo Inspection","Halo"],
- ["Passed","Passed"],
- ["Failed","Failed"]
-];
-const PROGRESS_CHECKS=[
- "Water bond inspection",
- "Ditch inspection",
- "Halo inspection",
- "Bonding inspection",
- "Final inspection",
- "Lights pulled in",
- "Panel mounted",
- "Whips ran",
- "Equipment bonded",
- "Power ran",
- "GFCI protection installed",
- "Breakers labeled",
- "Panel schedule installed"
-];
-function jobProgressKey(id){return "neu_job_progress_"+id;}
-function readJobProgress(id){try{return JSON.parse(localStorage.getItem(jobProgressKey(id))||"{}");}catch(e){return {};}}
-function saveJobProgressLocal(id,obj){localStorage.setItem(jobProgressKey(id),JSON.stringify(obj||{}));}
-function openCurrentJobPhotos(){let f=(data.folders||[]).find(x=>String(x.id)===String(currentFolder));if(f&&f.drive_url)return openDriveFolder(f.drive_url);showPage("drivePage");}
-function focusJobNotes(){let box=$("jobProgressNotes");if(box){box.focus();box.scrollIntoView({behavior:"smooth",block:"center"});}}
-async function setJobProgressStatus(status){if(!currentFolder)return;await setFolderInspection(currentFolder,status);renderJobProgress();}
-function toggleJobProgressCheck(name){if(!currentFolder)return;let p=readJobProgress(currentFolder);p.checks=p.checks||{};p.checks[name]=!p.checks[name];saveJobProgressLocal(currentFolder,p);renderJobProgress();}
-function saveJobProgressNotes(){if(!currentFolder)return;let p=readJobProgress(currentFolder);p.notes=$("jobProgressNotes")?$("jobProgressNotes").value:"";saveJobProgressLocal(currentFolder,p);notice("Progress saved.");}
-function renderJobProgress(){
- if(!$("jobProgressCard")||!currentFolder){hide($("jobProgressCard"));return;}
- let f=(data.folders||[]).find(x=>String(x.id)===String(currentFolder));
- if(!f){hide($("jobProgressCard"));return;}
- show($("jobProgressCard"));
- $("jobProgressTitle").textContent=cleanFolderNameText(f.name)||"Inspection Progress";
- let status=inspectionStatus(f)=="Ready for Inspection"?"Not Ready":inspectionStatus(f);
- let p=readJobProgress(currentFolder);
- let checks=p.checks||{};
- let done=PROGRESS_CHECKS.filter(c=>checks[c]).length;
- $("jobProgressBody").innerHTML=`<div class="info"><div class="small">CURRENT STATUS</div>${currentInspectionLabel(status)}</div>
- <label>Inspection Type</label>
- <select id="jobProgressSelect" onchange="setJobProgressStatus(this.value)">
-   ${PROGRESS_OPTIONS.map(o=>`<option value="${o[0]}" ${o[0]===status?"selected":""}>${o[0]}</option>`).join("")}
- </select>
- <div class="small" style="margin-top:8px">Double tap Partial, Final, or Halo on the Inspections tab to mark called in.</div>
- <div class="progressGrid">
-   ${PROGRESS_OPTIONS.map(o=>`<button type="button" class="progressOption ${o[0]===status?"active":""}" onclick="setJobProgressStatus('${o[0]}')">${o[1]}</button>`).join("")}
- </div>
- <h3>Checklist ${done} / ${PROGRESS_CHECKS.length}</h3>
- <div class="progressChecklist">
-   ${PROGRESS_CHECKS.map(c=>`<label class="progressCheckRow"><span>${c}</span><input type="checkbox" ${checks[c]?"checked":""} onchange="toggleJobProgressCheck('${c.replace(/'/g,"\\'")}')"></label>`).join("")}
- </div>
- <label>Notes</label>
- <textarea id="jobProgressNotes" placeholder="Add notes about this inspection...">${p.notes||""}</textarea>
- <button class="progressSave" onclick="saveJobProgressNotes()">Save Progress</button>`;
-}
-
 function renderFolderBrowser(){
  if(!$('foldersGrid'))return;
  let title="Folders";
@@ -1850,7 +1621,7 @@ function renderFolderBrowser(){
  if(!currentFolderBuilder){
   let builders=folderBrowserBuilders();
   $('folderTitle').textContent='Folders';
-  hide($('folderTicketsCard'));hide($('jobProgressCard'));
+  hide($('folderTicketsCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
    return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div><div class="driveFolderTop">${driveFolderIconSvg()}<div class="driveFolderText"><div class="driveFolderName">${b}</div><div class="driveFolderMeta">${count} job folder(s)</div></div></div></div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete</button></div></div>`;
@@ -1860,7 +1631,7 @@ function renderFolderBrowser(){
  if(currentFolderBuilder&&!currentFolder){
   let jobs=folderBrowserJobs(currentFolderBuilder);
   $('folderTitle').textContent=currentFolderBuilder;
-  hide($('folderTicketsCard'));hide($('jobProgressCard'));
+  hide($('folderTicketsCard'));
   $('foldersGrid').innerHTML=jobs.length?jobs.map(folderBrowserJobCard).join(''):'<p class="small">No job folders under this builder yet.</p>';
   return;
  }
@@ -2299,7 +2070,7 @@ function ticketCard(t,folderMode){
 function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br>${statusBadge(t.inspection_status)}</div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
 function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';renderFolderBrowser();let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
- $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a class="drivePill" href="${d.url}" target="_blank">Open Drive Folder</a><button class="mini gray" onclick="navigator.clipboard.writeText(\`${d.url}\`);notice(\`Drive link copied.\`)">Copy Link</button>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
+ $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
 $("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();renderBuilderSelect();drawDashboard();
 if($("archiveList")){
  let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
@@ -2308,7 +2079,7 @@ if($("archiveList")){
 }
 drawDashboard();
 
-if(typeof renderJobProgress==='function')renderJobProgress();if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
+if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
 if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSetting;$("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").value.trim());location.reload()};$("clearSetupBtn").onclick=()=>{localStorage.removeItem("neu_pin_supabase");location.reload()};$("pinLoginBtn").onclick=pinLogin;$("pinInput").addEventListener("keyup",e=>{if(e.key==="Enter"||$("pinInput").value.length===4)pinLogin()});$("signOutBtn").onclick=()=>{localStorage.removeItem("neu_current_employee");location.reload()};$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"NEU TICKETS",url:location.href});else prompt("Copy app link:",location.href)};document.body.addEventListener("click",e=>{
  let btn=e.target.closest("button");
  if(btn){
