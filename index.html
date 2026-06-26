@@ -273,6 +273,24 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .statusNeeded.currentInspectionStatus{background:#f3f4f6!important;color:#374151!important;border-color:#6b7280!important}
 .statusCalled.currentInspectionStatus{background:#ffedd5!important;color:#7c2d12!important;border-color:#ea580c!important}
 
+
+/* v3.3 dark premium field app UI */
+:root{--navy:#071827;--green:#35c46b;--bg:#05080d;--text:#f8fafc;--line:#1f2937;--card:#0d141c;--muted:#9ca3af;--blue:#3b82f6;--yellow:#facc15;--orange:#f97316;--red:#ef4444;--purple:#a855f7}
+body{background:radial-gradient(circle at 20% 0%,#102033 0,transparent 36%),linear-gradient(180deg,#05080d,#090d13 45%,#05080d);color:var(--text)}
+header{background:linear-gradient(135deg,#08243a,#06131f);color:#fff;border-radius:0 0 24px 24px;box-shadow:0 14px 35px #0009;border-bottom:1px solid #1d3550}
+.logo{background:#06131f;border:1px solid #33516e}.card{background:linear-gradient(180deg,#0d141c,#0a1017);border:1px solid #1f2937;box-shadow:0 10px 28px #0007;color:#f8fafc}
+h1,h2,h3,.ticketTitle,.folderName,.driveFolderName{color:#f8fafc}.small,.driveFolderMeta,.recentJobMeta,.folderStats{color:#a7b0bd!important}
+input,select,textarea{background:#05080d;color:#f8fafc;border:1px solid #334155}input::placeholder,textarea::placeholder{color:#6b7280}
+button{background:#2563eb;color:#fff;box-shadow:0 4px 12px #0005}.green{background:#35c46b!important;color:#03120a!important}.gray{background:#1f2937!important;color:#f8fafc!important;border:1px solid #334155!important}.red{background:#dc2626!important;color:#fff!important}
+.topNav{background:transparent;gap:10px}.topNav button{background:#111827;color:#d1d5db;border:1px solid #263241;border-radius:18px;box-shadow:0 6px 18px #0005}.topNav button.active{background:#08243a;color:#fff;border-color:#2563eb}
+.dashBox,.summaryCard,.dashDrillCard{background:linear-gradient(180deg,#111b25,#0c131b);border:1px solid #233041;box-shadow:0 10px 25px #0007}.dashNumber,.summaryNum,.weatherMain{color:#f8fafc}.dashLabel,.summaryLabel{color:#9ca3af}
+.weatherBox{background:linear-gradient(180deg,#111b25,#0c131b);border:1px solid #233041;color:#f8fafc}.weatherDetails{color:#a7b0bd}
+.ticketCard,.folderCard{background:linear-gradient(180deg,#111b25,#0c131b);border:1px solid #263241;box-shadow:0 10px 24px #0008}.info,.manHoursBox{background:#080d13;border:1px solid #1f2937;color:#f8fafc}.notice{background:#052e16;color:#bbf7d0;border:1px solid #166534}.bad{background:#450a0a;color:#fecaca;border:1px solid #991b1b}
+.statusNotReady{background:#450a0a!important;color:#fecaca!important;border-color:#ef4444!important}.statusCalled{background:#431407!important;color:#fed7aa!important;border-color:#f97316!important}.statusPartial{background:#422006!important;color:#fef08a!important;border-color:#facc15!important}.statusFinal{background:#052e16!important;color:#bbf7d0!important;border-color:#22c55e!important}.statusHalo{background:#0b1d46!important;color:#bfdbfe!important;border-color:#3b82f6!important}.statusPassed{background:#022c22!important;color:#a7f3d0!important;border-color:#10b981!important}.statusFailed{background:#1f0303!important;color:#fecaca!important;border-color:#dc2626!important}.statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
+.progressTabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}.progressTabs button{background:#0b1118;border:1px solid #263241;border-radius:14px;padding:10px 4px;font-size:12px;color:#d1d5db}.progressTabs button.active{border-color:#3b82f6;color:#60a5fa;background:#0b1d46}
+.progressGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}.progressOption{background:#0b1118;border:1px solid #263241;border-radius:16px;padding:12px 8px;min-height:78px;color:#f8fafc;font-weight:900;text-align:center}.progressOption.active{border-color:#a855f7;box-shadow:0 0 0 2px #a855f744 inset}
+.progressChecklist{margin-top:12px;border:1px solid #263241;border-radius:16px;overflow:hidden}.progressCheckRow{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px;border-bottom:1px solid #1f2937;align-items:center}.progressCheckRow:last-child{border-bottom:0}.progressCheckRow input{width:22px!important;height:22px!important;margin:0!important;accent-color:#35c46b}.progressSave{margin-top:12px;background:#2563eb!important;color:#fff!important}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -364,7 +382,19 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div>
+<div id="jobProgressCard" class="card hidden">
+  <h2 id="jobProgressTitle">Job Progress</h2>
+  <div class="progressTabs">
+    <button type="button" class="gray" onclick="renderJobProgress()">Overview</button>
+    <button type="button" class="gray" onclick="showPage('ticketsPage')">Tickets</button>
+    <button type="button" class="active" onclick="renderJobProgress()">Progress</button>
+    <button type="button" class="gray" onclick="openCurrentJobPhotos()">Photos</button>
+    <button type="button" class="gray" onclick="focusJobNotes()">Notes</button>
+  </div>
+  <div id="jobProgressBody"></div>
+</div>
+</section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="hoursPage" class="page">
 <div class="card">
@@ -398,7 +428,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.3 Inspection Double Tap</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.3 Dark Job Progress</div></div></section>
 </div>
 
 
@@ -1262,6 +1292,30 @@ function calledInStatus(status){
  if(status==="Not Needed")return"Not Needed";
  return"Not Ready";
 }
+
+let lastInspectionTap={};
+function canCallInStatus(status){
+ return status==="Ready for Partial Inspection"||status==="Ready for Final Inspection"||status==="Ready for Halo Inspection";
+}
+function handleInspectionTap(id,status){
+ let key=String(id)+"|"+String(status);
+ let now=Date.now();
+ let last=lastInspectionTap[key]||0;
+
+ if(canCallInStatus(status)&&now-last<650){
+  lastInspectionTap[key]=0;
+  return setFolderInspection(id,calledInStatus(status));
+ }
+
+ lastInspectionTap[key]=now;
+ setTimeout(function(){
+  if(lastInspectionTap[key]===now){
+   lastInspectionTap[key]=0;
+   setFolderInspection(id,status);
+  }
+ },320);
+}
+
 function inspectionButtons(f){
  let options=[
   ["Not Ready","Not Ready"],
@@ -1272,7 +1326,7 @@ function inspectionButtons(f){
   ["Failed","Failed"],
   ["Not Needed","Not Needed"]
  ];
- return `<div>${options.map(o=>`<button type="button" class="inspectActionBtn ${inspectButtonClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();setFolderInspection('${f.id}','${o[0]}')" ondblclick="event.preventDefault();event.stopPropagation();setFolderInspection('${f.id}','${calledInStatus(o[0])}')">${o[1]}</button>`).join("")}<div class="small" style="margin-top:8px">Double tap Partial, Final, or Halo to mark that inspection called in.</div></div>`;
+ return `<div>${options.map(o=>`<button type="button" class="inspectActionBtn ${inspectButtonClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();handleInspectionTap('${f.id}','${o[0]}')">${o[1]}</button>`).join("")}<div class="small" style="margin-top:8px">Double tap Partial, Final, or Halo to mark that inspection called in.</div></div>`;
 }
 
 async function deleteInspectionJob(id){
@@ -1392,6 +1446,7 @@ function openJobFolder(id){
  currentFolder=String(id);
  showPage("foldersPage");
  draw();
+ setTimeout(renderJobProgress,0);
 }
 function backFolderBrowser(){
  if(currentFolder){currentFolder=null;draw();return;}
@@ -1403,6 +1458,64 @@ function folderBrowserJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
  return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div><div class="driveFolderTop">${driveFolderIconSvg()}<div class="driveFolderText"><div class="driveFolderName">${cleanFolderNameText(f.name)||"Job"}</div><div class="driveFolderMeta">${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div></div></div></div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div></div>`;
 }
+
+const PROGRESS_OPTIONS=[
+ ["Water Bond Inspection","Water Bond"],
+ ["Ditch Inspection","Ditch"],
+ ["Bonding Inspection","Bonding"],
+ ["Ready for Partial Inspection","Partial"],
+ ["Ready for Final Inspection","Final"],
+ ["Ready for Halo Inspection","Halo"],
+ ["Passed","Passed"],
+ ["Failed","Failed"]
+];
+const PROGRESS_CHECKS=[
+ "Water bond inspection",
+ "Ditch inspection",
+ "Halo inspection",
+ "Bonding inspection",
+ "Final inspection",
+ "Lights pulled in",
+ "Panel mounted",
+ "Whips ran",
+ "Equipment bonded",
+ "Power ran"
+];
+function jobProgressKey(id){return "neu_job_progress_"+id;}
+function readJobProgress(id){try{return JSON.parse(localStorage.getItem(jobProgressKey(id))||"{}");}catch(e){return {};}}
+function saveJobProgressLocal(id,obj){localStorage.setItem(jobProgressKey(id),JSON.stringify(obj||{}));}
+function openCurrentJobPhotos(){let f=(data.folders||[]).find(x=>String(x.id)===String(currentFolder));if(f&&f.drive_url)return openDriveFolder(f.drive_url);showPage("drivePage");}
+function focusJobNotes(){let box=$("jobProgressNotes");if(box){box.focus();box.scrollIntoView({behavior:"smooth",block:"center"});}}
+async function setJobProgressStatus(status){if(!currentFolder)return;await setFolderInspection(currentFolder,status);renderJobProgress();}
+function toggleJobProgressCheck(name){if(!currentFolder)return;let p=readJobProgress(currentFolder);p.checks=p.checks||{};p.checks[name]=!p.checks[name];saveJobProgressLocal(currentFolder,p);renderJobProgress();}
+function saveJobProgressNotes(){if(!currentFolder)return;let p=readJobProgress(currentFolder);p.notes=$("jobProgressNotes")?$("jobProgressNotes").value:"";saveJobProgressLocal(currentFolder,p);notice("Progress saved.");}
+function renderJobProgress(){
+ if(!$("jobProgressCard")||!currentFolder){hide($("jobProgressCard"));return;}
+ let f=(data.folders||[]).find(x=>String(x.id)===String(currentFolder));
+ if(!f){hide($("jobProgressCard"));return;}
+ show($("jobProgressCard"));
+ $("jobProgressTitle").textContent=cleanFolderNameText(f.name)||"Job Progress";
+ let status=inspectionStatus(f)=="Ready for Inspection"?"Not Ready":inspectionStatus(f);
+ let p=readJobProgress(currentFolder);
+ let checks=p.checks||{};
+ let done=PROGRESS_CHECKS.filter(c=>checks[c]).length;
+ $("jobProgressBody").innerHTML=`<div class="info"><div class="small">CURRENT STATUS</div>${currentInspectionLabel(status)}</div>
+ <label>Inspection Type</label>
+ <select id="jobProgressSelect" onchange="setJobProgressStatus(this.value)">
+   ${PROGRESS_OPTIONS.map(o=>`<option value="${o[0]}" ${o[0]===status?"selected":""}>${o[0]}</option>`).join("")}
+ </select>
+ <div class="progressGrid">
+   ${PROGRESS_OPTIONS.map(o=>`<button type="button" class="progressOption ${o[0]===status?"active":""}" onclick="setJobProgressStatus('${o[0]}')">${o[1]}</button>`).join("")}
+ </div>
+ <h3>Job Checklist ${done} / ${PROGRESS_CHECKS.length}</h3>
+ <div class="progressChecklist">
+   ${PROGRESS_CHECKS.map(c=>`<label class="progressCheckRow"><span>${c}</span><input type="checkbox" ${checks[c]?"checked":""} onchange="toggleJobProgressCheck('${c.replace(/'/g,"\\'")}')"></label>`).join("")}
+ </div>
+ <label>Notes</label>
+ <textarea id="jobProgressNotes" placeholder="Add notes about this job or inspection...">${p.notes||""}</textarea>
+ <button class="progressSave" onclick="saveJobProgressNotes()">Save Progress</button>`;
+}
+
 function renderFolderBrowser(){
  if(!$('foldersGrid'))return;
  let title="Folders";
@@ -1412,7 +1525,7 @@ function renderFolderBrowser(){
  if(!currentFolderBuilder){
   let builders=folderBrowserBuilders();
   $('folderTitle').textContent='Folders';
-  hide($('folderTicketsCard'));
+  hide($('folderTicketsCard'));hide($('jobProgressCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
    return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div><div class="driveFolderTop">${driveFolderIconSvg()}<div class="driveFolderText"><div class="driveFolderName">${b}</div><div class="driveFolderMeta">${count} job folder(s)</div></div></div></div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete</button></div></div>`;
@@ -1422,7 +1535,7 @@ function renderFolderBrowser(){
  if(currentFolderBuilder&&!currentFolder){
   let jobs=folderBrowserJobs(currentFolderBuilder);
   $('folderTitle').textContent=currentFolderBuilder;
-  hide($('folderTicketsCard'));
+  hide($('folderTicketsCard'));hide($('jobProgressCard'));
   $('foldersGrid').innerHTML=jobs.length?jobs.map(folderBrowserJobCard).join(''):'<p class="small">No job folders under this builder yet.</p>';
   return;
  }
