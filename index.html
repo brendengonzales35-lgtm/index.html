@@ -268,7 +268,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.5 Duplicate Cleanup</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.6 Folder Move Delete</div></div></section>
 </div>
 
 
@@ -1199,7 +1199,7 @@ function backFolderBrowser(){
 }
 function folderBrowserJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
- return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div class="folderName">&#128193; ${cleanFolderNameText(f.name)||"Job"}</div><div class="folderStats">Builder: ${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open Job</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div>`;
+ return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div class="folderName">&#128193; ${cleanFolderNameText(f.name)||"Job"}</div><div class="folderStats">Builder: ${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open Job</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move Job</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete Job</button></div>`;
 }
 function renderFolderBrowser(){
  if(!$('foldersGrid'))return;
@@ -1213,7 +1213,7 @@ function renderFolderBrowser(){
   hide($('folderTicketsCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
-   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button></div>`;
+   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move Jobs</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete Builder</button></div>`;
   }).join(''):'<p class="small">No builders found.</p>';
   return;
  }
@@ -1325,7 +1325,71 @@ async function createFolder(){
  notice(driveUrl?"Job folder saved with Google Drive photos folder.":"Job folder saved.");
  await loadAll();
 }
-async function deleteFolder(id){if(!confirm("Delete this folder from the app? This will not delete the Google Drive folder or photos."))return;await supabaseClient.from("tickets").update({folder_id:null}).eq("folder_id",id);let r=await supabaseClient.from("folders").delete().eq("id",id);if(r.error)return error(r.error.message);notice("Folder deleted from app. Google Drive photos were not deleted.");loadAll()}
+
+function folderDescendantIds(rootId){
+ let ids=[String(rootId)];
+ let changed=true;
+ while(changed){
+  changed=false;
+  for(let f of (data.folders||[])){
+   if(f.parent_id && ids.includes(String(f.parent_id)) && !ids.includes(String(f.id))){
+    ids.push(String(f.id));
+    changed=true;
+   }
+  }
+ }
+ return ids;
+}
+function foldersForBuilderName(builder){
+ let target=normBuilderName(builder);
+ return (data.folders||[]).filter(f=>{
+  return normBuilderName(browserBuilderName(f))===target || normBuilderName(f.builder_name)===target || (isBuilderFolder(f)&&normBuilderName(f.name)===target);
+ });
+}
+async function deleteBuilderFolder(builder){
+ let related=foldersForBuilderName(builder);
+ if(!related.length)return notice("No app folders found for "+builder+".");
+ let ids=related.map(f=>String(f.id));
+ if(!confirm("Delete "+builder+" from the app? This removes "+ids.length+" folder record(s) from the app and unlinks tickets. Google Drive folders/photos will NOT be deleted."))return;
+ let tr=await supabaseClient.from("tickets").update({folder_id:null}).in("folder_id",ids);
+ if(tr.error)return error(tr.error.message);
+ let dr=await supabaseClient.from("folders").delete().in("id",ids);
+ if(dr.error)return error(dr.error.message);
+ currentFolderBuilder=null;
+ currentFolder=null;
+ notice("Builder deleted from app. Google Drive photos were not deleted.");
+ await loadAll();
+}
+async function moveBuilderJobs(builder){
+ let to=prompt("Move all app job folders from "+builder+" to which builder?", builder);
+ if(to===null)return;
+ to=String(to||"").trim();
+ if(!to)return error("Enter a builder name.");
+ let jobs=folderBrowserJobs(builder);
+ if(!jobs.length)return notice("No job folders found under "+builder+".");
+ if(!confirm("Move "+jobs.length+" job folder(s) from "+builder+" to "+to+"?"))return;
+ let ids=jobs.map(f=>String(f.id));
+ let r=await supabaseClient.from("folders").update({builder_name:to,parent_id:null}).in("id",ids);
+ if(r.error)return error(r.error.message);
+ currentFolderBuilder=to;
+ currentFolder=null;
+ notice("Moved "+jobs.length+" job folder(s) to "+to+".");
+ await loadAll();
+}
+
+async function deleteFolder(id){
+ let f=(data.folders||[]).find(x=>String(x.id)===String(id));
+ let name=f?cleanFolderNameText(f.name):"this folder";
+ let ids=folderDescendantIds(id);
+ if(!confirm("Delete "+name+" from the app? This removes "+ids.length+" folder record(s) and unlinks tickets. Google Drive folders/photos will NOT be deleted."))return;
+ let tr=await supabaseClient.from("tickets").update({folder_id:null}).in("folder_id",ids);
+ if(tr.error)return error(tr.error.message);
+ let r=await supabaseClient.from("folders").delete().in("id",ids);
+ if(r.error)return error(r.error.message);
+ if(currentFolder&&ids.includes(String(currentFolder)))currentFolder=null;
+ notice("Folder deleted from app. Google Drive photos were not deleted.");
+ await loadAll();
+}
 async function addInventory(){let name=$("invName").value.trim();if(!name)return error("Enter material name.");let r=await supabaseClient.from("employee_inventory").insert({employee_id:currentEmployee.id,name,quantity:Number($("invQty").value||0),unit:$("invUnit").value,low_alert_qty:Number($("invLow").value||0)});if(r.error)return error(r.error.message);["invName","invQty","invUnit","invLow"].forEach(id=>$(id).value="");notice("Material saved.");loadAll()}
 
 async function restockInventory(id){
