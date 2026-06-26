@@ -208,6 +208,34 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
   .folderGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 
+
+/* v3.2.1 inspection button fix */
+.inspectActionBtn{
+  width:auto!important;
+  padding:8px 10px!important;
+  font-size:12px!important;
+  border-radius:999px!important;
+  margin:6px 4px 0 0!important;
+  border:1px solid transparent!important;
+  font-weight:900!important;
+}
+.inspectBtnNotReady{background:#fee2e2!important;color:#991b1b!important;border-color:#fecaca!important}
+.inspectBtnCalled{background:#ffedd5!important;color:#9a3412!important;border-color:#fed7aa!important}
+.inspectBtnPartial{background:#fef3c7!important;color:#92400e!important;border-color:#fde68a!important}
+.inspectBtnFinal{background:#dcfce7!important;color:#166534!important;border-color:#bbf7d0!important}
+.inspectBtnHalo{background:#dbeafe!important;color:#1e40af!important;border-color:#bfdbfe!important}
+.inspectBtnPassed{background:#bbf7d0!important;color:#14532d!important;border-color:#86efac!important}
+.inspectBtnFailed{background:#fecaca!important;color:#7f1d1d!important;border-color:#fca5a5!important}
+.inspectBtnNeeded{background:#f3f4f6!important;color:#374151!important;border-color:#e5e7eb!important}
+.currentInspectionStatus{
+  display:block;
+  margin:10px 0 6px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:900;
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -333,7 +361,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2 Google Drive Folders</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.1 Inspection Buttons</div></div></section>
 </div>
 
 
@@ -1157,12 +1185,50 @@ function inspectionClass(status){
  return"inspectNone";
 }
 async function setFolderInspection(id,status){
- let update={inspection_status:status,inspection_updated_by:currentEmployee?currentEmployee.name:"",inspection_updated_at:new Date().toISOString()};
+ let cleanStatus=status==="Ready for Inspection"?"Not Ready":status;
+ let update={inspection_status:cleanStatus,inspection_updated_by:currentEmployee?currentEmployee.name:"",inspection_updated_at:new Date().toISOString()};
  let r=await supabaseClient.from("folders").update(update).eq("id",id);
  if(r.error)return error(r.error.message+". If it mentions inspection_status, run the Supabase inspections SQL.");
- notice("Job inspection marked: "+status);await loadAll();
+ let f=(data.folders||[]).find(x=>String(x.id)===String(id));
+ if(f){
+  f.inspection_status=cleanStatus;
+  f.inspection_updated_by=update.inspection_updated_by;
+  f.inspection_updated_at=update.inspection_updated_at;
+ }
+ notice("Inspection status updated: "+cleanStatus);
+ draw();
 }
-function inspectionButtons(f){return `<button class="mini gray" onclick="setFolderInspection('${f.id}','Not Ready')">Not Ready</button><button class="mini gray" onclick="setFolderInspection('${f.id}','Inspection Called In')">Called In</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Partial Inspection')">Partial</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Final Inspection')">Final</button><button class="mini green" onclick="setFolderInspection('${f.id}','Ready for Halo Inspection')">Halo</button><button class="mini green" onclick="setFolderInspection('${f.id}','Passed')">Passed</button><button class="mini red" onclick="setFolderInspection('${f.id}','Failed')">Failed</button><button class="mini gray" onclick="setFolderInspection('${f.id}','Not Needed')">Not Needed</button>`}
+
+function currentInspectionLabel(status){
+ status=String(status||"Not Ready");
+ if(status==="Ready for Inspection")status="Not Ready";
+ let cls=(typeof statusBadgeClass==="function")?statusBadgeClass(status):"statusNotReady";
+ return `<div class="currentInspectionStatus ${cls}">Current Status: ${status}</div>`;
+}
+function inspectButtonClass(status){
+ if(status==="Inspection Called In")return"inspectBtnCalled";
+ if(status==="Ready for Partial Inspection")return"inspectBtnPartial";
+ if(status==="Ready for Final Inspection")return"inspectBtnFinal";
+ if(status==="Ready for Halo Inspection")return"inspectBtnHalo";
+ if(status==="Passed")return"inspectBtnPassed";
+ if(status==="Failed")return"inspectBtnFailed";
+ if(status==="Not Needed")return"inspectBtnNeeded";
+ return"inspectBtnNotReady";
+}
+
+function inspectionButtons(f){
+ let options=[
+  ["Not Ready","Not Ready"],
+  ["Inspection Called In","Called In"],
+  ["Ready for Partial Inspection","Partial"],
+  ["Ready for Final Inspection","Final"],
+  ["Ready for Halo Inspection","Halo"],
+  ["Passed","Passed"],
+  ["Failed","Failed"],
+  ["Not Needed","Not Needed"]
+ ];
+ return `<div>${options.map(o=>`<button type="button" class="inspectActionBtn ${inspectButtonClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();setFolderInspection('${f.id}','${o[0]}')">${o[1]}</button>`).join("")}</div>`;
+}
 async function deleteInspectionJob(id){
  let f=(data.folders||[]).find(x=>String(x.id)===String(id));
  if(!f)return error("Job not found.");
@@ -1181,7 +1247,7 @@ async function deleteInspectionJob(id){
 function inspectionJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length;
  let status=inspectionStatus(f)=="Ready for Inspection"?"Not Ready":inspectionStatus(f);
- return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">Builder: ${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div>${statusBadge(status)}<br>${inspectionButtons(f)}<button class="mini red" onclick="deleteInspectionJob('${f.id}')">Delete</button>${f.drive_url?`<button class="mini green" onclick="openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}</div>`;
+ return `<div class="ticketCard"><div class="ticketTitle">${cleanFolderNameText(f.name)||"Job"}</div><div class="small">${f.builder_name||"No builder"}<br>${activeCount} active ticket(s)</div>${currentInspectionLabel(status)}${inspectionButtons(f)}<button class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteInspectionJob('${f.id}')">Delete</button>${f.drive_url?`<button class="mini green" onclick="event.preventDefault();event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}</div>`;
 }
 function renderInspections(){
  if(!$("inspectionsList"))return;
