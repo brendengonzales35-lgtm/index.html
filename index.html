@@ -615,961 +615,64 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4 Mockup UI
-   Purpose: real UI redesign while keeping the v3.2.5 data/app logic.
+   NEU Tickets v4.0 â Folders Screen Redesign Only
+   Base: working v3.2.5. This does not change Supabase, Drive,
+   tickets, inspections, inventory, or app data logic.
    ============================================================ */
 
 :root{
-  --navy:#05070d!important;
-  --green:#3867ff!important;
-  --bg:#01050a!important;
-  --text:#f8fafc!important;
-  --line:rgba(148,163,184,.18)!important;
-
-  --v4-bg:#01050a;
-  --v4-bg-2:#071019;
-  --v4-panel:#0b111a;
-  --v4-panel-2:#101720;
-  --v4-panel-3:#141d28;
-  --v4-line:rgba(148,163,184,.18);
-  --v4-line-2:rgba(148,163,184,.10);
-  --v4-text:#f8fafc;
-  --v4-muted:#aeb8c7;
-  --v4-blue:#4f73ff;
-  --v4-blue-2:#3154e6;
-  --v4-folder:#ffd166;
-  --v4-green:#4ade80;
-  --v4-yellow:#ffb020;
-  --v4-red:#ef4444;
-  --v4-purple:#a855f7;
-  --v4-orange:#fb923c;
-  --v4-teal:#2dd4bf;
+  --neu4-bg:#02060b;
+  --neu4-card:#0c121b;
+  --neu4-card2:#111a25;
+  --neu4-line:rgba(148,163,184,.18);
+  --neu4-line2:rgba(148,163,184,.10);
+  --neu4-text:#f8fafc;
+  --neu4-muted:#aab4c3;
+  --neu4-blue:#4f73ff;
+  --neu4-blue2:#3154e6;
+  --neu4-folder:#ffd166;
+  --neu4-green:#4ade80;
+  --neu4-yellow:#fbbf24;
+  --neu4-red:#ef4444;
+  --neu4-purple:#a855f7;
 }
 
-html{background:#01050a;color-scheme:dark}
-*{-webkit-tap-highlight-color:transparent!important}
+html{background:#02060b;color-scheme:dark}
+
 body{
-  margin:0!important;
-  padding:0 0 30px!important;
-  color:var(--v4-text)!important;
   background:
-    radial-gradient(circle at 10% -8%,rgba(79,115,255,.16),transparent 34%),
-    radial-gradient(circle at 100% 5%,rgba(168,85,247,.12),transparent 30%),
-    linear-gradient(180deg,#01050a 0%,#071019 46%,#01050a 100%)!important;
+    radial-gradient(circle at 18% -8%,rgba(79,115,255,.16),transparent 34%),
+    radial-gradient(circle at 95% 8%,rgba(168,85,247,.10),transparent 30%),
+    linear-gradient(180deg,#02060b 0%,#071019 45%,#02060b 100%)!important;
+  color:var(--neu4-text)!important;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif!important;
-  overflow-x:hidden!important;
-}
-
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
-  background-size:44px 44px;
-  opacity:.68;
-  mask-image:linear-gradient(180deg,rgba(0,0,0,.82),transparent 78%);
-}
-
-#setupPage,#pinPage,.authPage,#appPage{
-  position:relative;
-  width:100%;
-  max-width:1120px;
-  margin:0 auto!important;
 }
 
 header{
-  position:sticky!important;
-  top:0!important;
-  z-index:2000!important;
-  margin:0!important;
-  min-height:82px!important;
-  padding:14px 22px!important;
-  display:grid!important;
-  grid-template-columns:56px 1fr 56px!important;
-  align-items:center!important;
-  background:linear-gradient(180deg,rgba(2,6,12,.98),rgba(5,10,16,.96))!important;
-  border:0!important;
-  border-bottom:1px solid var(--v4-line)!important;
-  border-radius:0!important;
-  box-shadow:0 18px 44px rgba(0,0,0,.56)!important;
-  backdrop-filter:blur(18px);
-}
-header:before{
-  content:"â°";
-  width:48px;
-  height:48px;
-  display:grid;
-  place-items:center;
-  font-size:32px;
-  line-height:1;
-  color:#fff;
-  opacity:.96;
-}
-header:after{
-  content:"+";
-  width:52px;
-  height:52px;
-  display:grid;
-  place-items:center;
-  justify-self:end;
-  border-radius:999px;
-  font-size:36px;
-  font-weight:400;
-  color:#fff;
-  background:linear-gradient(180deg,#5576ff,#2f47db);
-  box-shadow:0 14px 34px rgba(79,115,255,.42);
-}
-.logoRow{
-  justify-content:center!important;
-  align-items:center!important;
-  gap:12px!important;
-  min-width:0!important;
-}
-.logo{
-  width:50px!important;
-  height:50px!important;
-  border-radius:14px!important;
-  background:#fff!important;
-  border:1px solid rgba(255,255,255,.20)!important;
-  box-shadow:0 12px 28px rgba(0,0,0,.42)!important;
-}
-h1{
-  color:#fff!important;
-  margin:0!important;
-  font-size:29px!important;
-  line-height:1.05!important;
-  font-weight:950!important;
-  letter-spacing:-.85px!important;
-  white-space:nowrap!important;
-}
-h2{
-  color:#fff!important;
-  font-size:20px!important;
-  line-height:1.15!important;
-  font-weight:950!important;
-  letter-spacing:-.35px!important;
-}
-h3,.ticketTitle,.folderName,.driveFolderName{
-  color:#fff!important;
+  background:linear-gradient(180deg,#07111b,#03070c)!important;
+  border-bottom:1px solid var(--neu4-line)!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.55)!important;
 }
 
-/* Top app navigation */
 .topNav{
-  position:sticky!important;
-  top:82px!important;
-  z-index:1900!important;
-  display:flex!important;
-  grid-template-columns:none!important;
-  flex-wrap:nowrap!important;
-  gap:0!important;
-  overflow-x:auto!important;
-  overflow-y:hidden!important;
-  overscroll-behavior-x:contain!important;
-  scrollbar-width:none!important;
-  margin:0!important;
-  padding:8px 10px 0!important;
-  background:linear-gradient(180deg,rgba(6,10,17,.97),rgba(9,14,22,.92))!important;
-  border:0!important;
-  border-bottom:1px solid var(--v4-line)!important;
-  border-radius:0!important;
-  box-shadow:0 12px 34px rgba(0,0,0,.38)!important;
-  backdrop-filter:blur(18px);
-  white-space:nowrap!important;
-}
-.topNav::-webkit-scrollbar{display:none!important}
-.topNav button{
-  flex:0 0 118px!important;
-  width:118px!important;
-  min-height:84px!important;
-  margin:0!important;
-  padding:10px 4px 13px!important;
-  border:0!important;
-  border-radius:0!important;
-  background:transparent!important;
-  color:#d9dee8!important;
-  box-shadow:none!important;
-  font-size:13px!important;
-  font-weight:650!important;
-  position:relative!important;
-}
-.topNav button:after{
-  content:"";
-  position:absolute;
-  left:14px;
-  right:14px;
-  bottom:0;
-  height:3px;
-  border-radius:999px 999px 0 0;
-  background:transparent;
-}
-.topNav button.active{color:#8fb0ff!important}
-.topNav button.active:after{
-  background:var(--v4-blue)!important;
-  box-shadow:0 0 20px rgba(79,115,255,.78);
-}
-.navIcon{
-  display:inline-block!important;
-  font-size:28px!important;
-  line-height:1!important;
-  margin-bottom:8px!important;
-  filter:drop-shadow(0 8px 12px rgba(0,0,0,.32));
-}
-
-/* Main page shell */
-.page{padding:16px!important;position:relative!important}
-.card,
-.ticketCard,
-.folderCard,
-.dashBox,
-.summaryCard,
-.weatherBox,
-.info,
-.manHoursBox,
-.materialGrid,
-.moveModal,
-.authCard{
-  background:linear-gradient(135deg,rgba(17,25,36,.96),rgba(8,13,19,.98))!important;
-  border:1px solid var(--v4-line)!important;
-  color:var(--v4-text)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 40px rgba(0,0,0,.42)!important;
-  backdrop-filter:blur(18px);
-}
-.card{
+  background:rgba(3,7,12,.94)!important;
+  border:1px solid var(--neu4-line)!important;
   border-radius:18px!important;
-  padding:16px!important;
-  margin:0 0 14px!important;
-}
-.small,.folderStats,.folderCount,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails,.recentJobMeta{
-  color:var(--v4-muted)!important;
-}
-label{
-  color:#dbe4f0!important;
-  text-transform:uppercase!important;
-  letter-spacing:.065em!important;
-  font-size:12px!important;
-  font-weight:900!important;
-}
-input,select,textarea{
-  background:#050912!important;
-  color:#fff!important;
-  border:1px solid rgba(148,163,184,.26)!important;
-  border-radius:13px!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
-}
-input::placeholder,textarea::placeholder{color:#6e7a8c!important}
-input:focus,select:focus,textarea:focus{
-  outline:0!important;
-  border-color:var(--v4-purple)!important;
-  box-shadow:0 0 0 3px rgba(168,85,247,.22)!important;
-}
-button{
-  border-radius:14px!important;
-  border:1px solid rgba(255,255,255,.08)!important;
-  background:linear-gradient(180deg,#4f73ff,#3154e6)!important;
-  color:#fff!important;
-  box-shadow:none!important;
-}
-.green{background:linear-gradient(180deg,#4f73ff,#3154e6)!important;color:#fff!important}
-.gray{
-  background:rgba(15,23,36,.88)!important;
-  color:#dbe7ff!important;
-  border:1px solid rgba(79,115,255,.38)!important;
-}
-.red{
-  background:linear-gradient(180deg,#7f1d1d,#450a0a)!important;
-  color:#fecaca!important;
-  border:1px solid rgba(239,68,68,.50)!important;
-}
-.mini{
-  min-height:34px!important;
-  padding:8px 12px!important;
-  border-radius:10px!important;
-  font-size:12px!important;
-  font-weight:900!important;
-}
-
-/* Dashboard */
-.dashGrid,.summaryGrid{gap:12px!important}
-.dashBox,.summaryCard{
-  min-height:108px!important;
-  padding:16px!important;
-  border-radius:18px!important;
-}
-.dashNumber,.summaryNum,.weatherMain{
-  color:#fff!important;
-  font-size:42px!important;
-  font-weight:950!important;
-  line-height:.96!important;
-  letter-spacing:-1px!important;
-}
-.dashLabel,.summaryLabel{
-  color:var(--v4-muted)!important;
-  text-transform:uppercase!important;
-  letter-spacing:.075em!important;
-  font-size:11px!important;
-  margin-top:8px!important;
-}
-
-/* V4 Folders + detail layout */
-.v4-folder-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1fr);
-  gap:14px;
-}
-@media(min-width:900px){
-  .v4-folder-layout.has-detail{
-    grid-template-columns:minmax(360px,.9fr) minmax(430px,1.1fr);
-    align-items:start;
-  }
-}
-.v4-left-pane,.v4-right-pane{
-  min-width:0;
-}
-.v4-path-card{
-  padding:16px;
-  border-radius:14px;
-  background:linear-gradient(135deg,rgba(17,25,36,.88),rgba(8,13,19,.94));
-  border:1px solid var(--v4-line);
-  margin-bottom:14px;
-}
-.v4-kicker{
-  color:#cbd5e1;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
-.v4-path-line{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  color:#8fb0ff;
-  font-size:18px;
-  line-height:1.3;
-}
-.v4-path-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-.folderGrid{
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:12px!important;
-}
-.folderCard{
-  display:grid!important;
-  grid-template-columns:60px minmax(0,1fr) 30px!important;
-  align-items:center!important;
-  gap:14px!important;
-  min-height:96px!important;
-  margin:0!important;
-  padding:14px!important;
-  border-radius:14px!important;
-}
-.folderCard:active,.ticketCard:active,.dashBox:active{
-  transform:scale(.992);
-}
-.v4-folder-card{
-  cursor:pointer;
-}
-.v4-card-menu{
-  font-size:25px;
-  color:#fff;
-  opacity:.92;
-  letter-spacing:2px;
-  text-align:right;
-}
-.driveFolderTop{
-  display:contents!important;
-}
-.driveFolderIcon,.folderIcon{
-  width:58px!important;
-  min-width:58px!important;
-  height:52px!important;
-  display:grid!important;
-  place-items:center!important;
-  font-size:38px!important;
-  filter:drop-shadow(0 10px 16px rgba(0,0,0,.36));
-}
-.driveFolderIcon svg{
-  width:54px!important;
-  height:42px!important;
-}
-.driveFolderText{min-width:0!important}
-.driveFolderName,.folderName,.ticketTitle,.recentJobTitle{
-  color:#fff!important;
-  font-size:21px!important;
-  line-height:1.12!important;
-  font-weight:950!important;
-  letter-spacing:-.45px!important;
-}
-.driveFolderMeta,.folderStats{
-  margin-top:5px!important;
-  font-size:14px!important;
-  line-height:1.35!important;
-}
-.driveFolderBtns,.v4-hidden-actions{
-  grid-column:1 / -1;
-  display:flex!important;
-  flex-wrap:wrap!important;
-  gap:7px!important;
-  margin-top:8px!important;
-}
-.driveFolderBtns .mini,.v4-hidden-actions .mini{margin:0!important}
-.v4-dot{
-  width:10px;
-  height:10px;
-  border-radius:999px;
-  display:inline-block;
-  margin-right:6px;
-  vertical-align:-1px;
-  background:#94a3b8;
-  box-shadow:0 0 14px currentColor;
-}
-.v4-dot.green{background:var(--v4-green);color:var(--v4-green)}
-.v4-dot.yellow{background:var(--v4-yellow);color:var(--v4-yellow)}
-.v4-dot.blue{background:var(--v4-blue);color:var(--v4-blue)}
-.v4-dot.red{background:var(--v4-red);color:var(--v4-red)}
-.v4-dot.gray{background:#94a3b8;color:#94a3b8}
-
-/* Tickets */
-.ticketCard{
-  margin-top:12px!important;
-  padding:14px!important;
-  border-radius:14px!important;
-}
-
-/* Status pills */
-.statusBadge{
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:7px!important;
-  padding:7px 11px!important;
-  border-radius:999px!important;
-  border-width:1px!important;
-  font-size:12px!important;
-  font-weight:900!important;
-}
-.statusDot{
-  width:10px!important;
-  height:10px!important;
-  border-radius:999px!important;
-  display:inline-block!important;
-  box-shadow:0 0 16px currentColor;
-}
-.statusNotReady{background:rgba(148,163,184,.12)!important;color:#dbeafe!important;border-color:rgba(148,163,184,.30)!important}
-.statusCalled,.statusPartial,.statusFinal{background:rgba(251,191,36,.12)!important;color:#fde68a!important;border-color:rgba(251,191,36,.45)!important}
-.statusHalo{background:rgba(79,115,255,.13)!important;color:#a9c0ff!important;border-color:rgba(79,115,255,.45)!important}
-.statusPassed{background:rgba(74,222,128,.12)!important;color:#a7f3d0!important;border-color:rgba(74,222,128,.45)!important}
-.statusFailed{background:rgba(239,68,68,.13)!important;color:#fecaca!important;border-color:rgba(239,68,68,.50)!important}
-.statusNeeded{background:rgba(148,163,184,.10)!important;color:#d1d5db!important;border-color:rgba(148,163,184,.32)!important}
-.statusDot.statusNotReady{background:#94a3b8!important;color:#94a3b8!important}
-.statusDot.statusCalled,.statusDot.statusPartial,.statusDot.statusFinal{background:#fbbf24!important;color:#fbbf24!important}
-.statusDot.statusHalo{background:#4f73ff!important;color:#4f73ff!important}
-.statusDot.statusPassed{background:#4ade80!important;color:#4ade80!important}
-.statusDot.statusFailed{background:#ef4444!important;color:#ef4444!important}
-.statusDot.statusNeeded{background:#94a3b8!important;color:#94a3b8!important}
-
-/* V4 job detail / progress panel */
-#jobProgressCard{
-  border-radius:18px!important;
-  overflow:hidden;
-}
-.v4-job-head{
-  display:grid;
-  grid-template-columns:48px 1fr 48px;
-  align-items:center;
-  gap:8px;
-  margin:-16px -16px 0;
-  padding:14px 14px 12px;
-  border-bottom:1px solid var(--v4-line);
-  background:rgba(3,7,12,.28);
-}
-.v4-back-btn,.v4-more-btn{
-  min-height:42px!important;
-  width:42px!important;
-  padding:0!important;
-  display:grid!important;
-  place-items:center!important;
-  border-radius:999px!important;
-  background:transparent!important;
-  border:0!important;
-  font-size:28px!important;
-}
-.v4-job-title{
-  text-align:center;
-  color:#fff;
-  font-size:22px;
-  font-weight:950;
-  letter-spacing:-.45px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.progressTabs,.v4-progress-tabs{
-  display:flex!important;
-  grid-template-columns:none!important;
-  gap:0!important;
-  overflow-x:auto!important;
-  margin:0 -16px 14px!important;
-  padding:0 8px!important;
-  border-bottom:1px solid var(--v4-line)!important;
-}
-.progressTabs button,.v4-progress-tabs button{
-  flex:0 0 96px!important;
-  min-height:72px!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  color:#d9dee8!important;
-  box-shadow:none!important;
-  position:relative!important;
-}
-.progressTabs button.active,.v4-progress-tabs button.active{
-  color:#83a4ff!important;
-  background:transparent!important;
-}
-.progressTabs button.active:after,.v4-progress-tabs button.active:after{
-  content:"";
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:0;
-  height:3px;
-  background:var(--v4-blue);
-  border-radius:999px 999px 0 0;
-}
-.v4-section-card{
-  border-radius:14px;
-  border:1px solid var(--v4-line);
-  background:linear-gradient(135deg,rgba(17,25,36,.78),rgba(8,13,19,.90));
-  overflow:hidden;
-  margin-bottom:14px;
-}
-.v4-section-title{
-  padding:13px 16px;
-  border-bottom:1px solid var(--v4-line-2);
-  font-size:14px;
-  font-weight:950;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  color:#e2e8f0;
-}
-.v4-status-row{
-  display:grid;
-  grid-template-columns:24px 1fr auto;
-  align-items:center;
-  gap:12px;
-  padding:18px 16px;
-}
-.v4-status-main{
-  color:var(--v4-yellow);
-  font-size:19px;
-  font-weight:950;
-  line-height:1.15;
-}
-.v4-status-sub{
-  color:var(--v4-muted);
-  margin-top:6px;
-  font-size:13px;
-}
-.v4-progress-body{
-  padding:16px;
-}
-.v4-select{
-  width:100%!important;
-  border-color:var(--v4-purple)!important;
-  box-shadow:0 0 0 1px rgba(168,85,247,.26)!important;
-}
-.v4-inspection-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
-  margin-top:12px;
-}
-@media(min-width:520px){
-  .v4-inspection-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-.v4-inspect-tile{
-  min-height:104px!important;
-  padding:12px 8px!important;
-  display:flex!important;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  border-radius:12px!important;
-  text-align:center;
-  font-size:16px!important;
-  line-height:1.18;
-  font-weight:950!important;
-  position:relative;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 28px rgba(0,0,0,.34)!important;
-}
-.v4-tile-icon{
-  font-size:30px;
-  line-height:1;
-}
-.v4-tile-water{background:linear-gradient(135deg,rgba(30,64,175,.24),rgba(8,13,19,.94))!important;border-color:rgba(59,130,246,.55)!important;color:#bfdbfe!important}
-.v4-tile-ditch,.v4-tile-partial{background:linear-gradient(135deg,rgba(124,45,18,.50),rgba(20,12,6,.94))!important;border-color:rgba(251,146,60,.55)!important;color:#fff!important}
-.v4-tile-bond{background:linear-gradient(135deg,rgba(20,184,166,.30),rgba(8,13,19,.94))!important;border-color:rgba(45,212,191,.55)!important;color:#ccfbf1!important}
-.v4-tile-final{background:linear-gradient(135deg,rgba(75,23,112,.92),rgba(22,9,45,.95))!important;border-color:rgba(168,85,247,.94)!important;color:#fff!important}
-.v4-tile-halo{background:linear-gradient(135deg,rgba(113,63,18,.88),rgba(30,20,5,.92))!important;border-color:rgba(250,204,21,.55)!important;color:#fff!important}
-.v4-tile-passed{background:linear-gradient(135deg,rgba(20,83,45,.90),rgba(5,46,22,.94))!important;border-color:rgba(74,222,128,.55)!important;color:#fff!important}
-.v4-tile-failed{background:linear-gradient(135deg,rgba(127,29,29,.90),rgba(69,10,10,.95))!important;border-color:rgba(239,68,68,.60)!important;color:#fff!important}
-.v4-check-list{
-  overflow:hidden;
-}
-.v4-check-row{
-  display:grid;
-  grid-template-columns:1fr 28px;
-  gap:12px;
-  align-items:center;
-  padding:11px 16px;
-  border-bottom:1px solid var(--v4-line-2);
-}
-.v4-check-row:last-child{border-bottom:0}
-.v4-check-box{
-  width:24px!important;
-  height:24px!important;
-  margin:0!important;
-  accent-color:var(--v4-green);
-}
-.v4-notes{
-  min-height:86px!important;
-}
-.v4-save-btn{
-  width:100%;
-  min-height:50px;
-  font-size:17px!important;
-  font-weight:950!important;
-}
-.v4-saved{
-  text-align:center;
-  margin-top:10px;
-  color:#cbd5e1;
-}
-.v4-saved span{color:#22c55e}
-
-/* Original inspection cards also get v4 tile look */
-.currentInspectionStatus{
-  padding:13px 14px!important;
-  border-radius:15px!important;
-  font-size:16px!important;
-  font-weight:950!important;
-  border-width:1px!important;
-}
-.inspectActionBtn{
-  min-height:58px!important;
-  border-radius:14px!important;
-  font-weight:950!important;
-}
-.inspectBtnFinal{
-  box-shadow:0 0 0 1px rgba(168,85,247,.35),0 0 24px rgba(168,85,247,.25)!important;
-}
-
-/* Alerts / overlays */
-.moveOverlay{
-  background:rgba(0,0,0,.74)!important;
-  backdrop-filter:blur(14px);
-}
-.moveModal{border-radius:20px!important}
-.notice{
-  background:#052e16!important;
-  color:#bbf7d0!important;
-  border:1px solid #166534!important;
-}
-.bad{
-  background:#450a0a!important;
-  color:#fecaca!important;
-  border:1px solid #991b1b!important;
-}
-.lowStock{
-  background:linear-gradient(135deg,rgba(69,10,10,.92),rgba(15,23,42,.94))!important;
-  border-color:rgba(239,68,68,.72)!important;
-}
-.lowStockText{
-  background:rgba(239,68,68,.14)!important;
-  color:#fecaca!important;
-}
-.drivePill,a{color:#8fb0ff!important}
-.galleryGrid img{border-color:var(--v4-line)!important}
-hr{border-color:var(--v4-line)!important}
-.versionBadge:after{content:" â¢ v4 Mockup UI"}
-
-
-
-/* ============================================================
-   NEU Tickets v4.1 Compact Cleanup
-   Smaller tabs/buttons + removes weird emoji icons.
-   ============================================================ */
-
-header:before{
-  content:""!important;
-  width:34px!important;
-  height:22px!important;
-  display:block!important;
-  border-top:4px solid #fff!important;
-  border-bottom:4px solid #fff!important;
-  background:linear-gradient(#fff,#fff) center/100% 4px no-repeat!important;
-  opacity:.95!important;
-}
-header:after{
-  content:"+"!important;
-  width:46px!important;
-  height:46px!important;
-  font-size:32px!important;
-}
-.topNav{
-  top:76px!important;
-  padding:6px 6px 0!important;
-}
-.topNav button{
-  flex:0 0 78px!important;
-  width:78px!important;
-  min-height:56px!important;
-  padding:6px 2px 9px!important;
-  font-size:11px!important;
-  line-height:1.15!important;
-  font-weight:800!important;
-}
-.topNav .navIcon{
-  display:none!important;
-}
-.topNav button:after{
-  left:8px!important;
-  right:8px!important;
-  height:3px!important;
-}
-.page{
-  padding:10px!important;
-}
-.card{
-  padding:13px!important;
-  border-radius:16px!important;
-}
-h1{
-  font-size:26px!important;
-}
-h2{
-  font-size:18px!important;
-}
-h3{
-  font-size:15px!important;
-}
-.folderGrid{
-  gap:9px!important;
-}
-.folderCard{
-  grid-template-columns:48px minmax(0,1fr) 24px!important;
-  gap:10px!important;
-  min-height:78px!important;
-  padding:10px!important;
-}
-.driveFolderIcon,.folderIcon{
-  width:44px!important;
-  min-width:44px!important;
-  height:40px!important;
-  font-size:28px!important;
-}
-.driveFolderIcon svg{
-  width:44px!important;
-  height:34px!important;
-}
-.driveFolderName,.folderName,.ticketTitle,.recentJobTitle{
-  font-size:18px!important;
-}
-.driveFolderMeta,.folderStats{
-  font-size:12px!important;
-  margin-top:3px!important;
-}
-.v4-card-menu{
-  font-size:20px!important;
-}
-.driveFolderBtns,.v4-hidden-actions{
-  margin-top:6px!important;
-}
-.v4-job-head{
-  grid-template-columns:38px 1fr 38px!important;
-  padding:10px 10px 8px!important;
-}
-.v4-job-title{
-  font-size:20px!important;
-}
-.v4-back-btn,.v4-more-btn{
-  width:36px!important;
-  min-height:36px!important;
-  height:36px!important;
-  font-size:22px!important;
-}
-.v4-progress-tabs{
-  margin:0 -13px 12px!important;
-  padding:0 6px!important;
-}
-.v4-progress-tabs button{
-  flex:0 0 76px!important;
-  min-height:52px!important;
-  font-size:11px!important;
-}
-.v4-section-title{
-  padding:10px 12px!important;
-  font-size:12px!important;
-}
-.v4-status-row{
-  grid-template-columns:18px 1fr auto!important;
-  gap:9px!important;
-  padding:12px!important;
-}
-.v4-status-main{
-  font-size:17px!important;
-}
-.v4-status-sub{
-  font-size:12px!important;
-}
-.v4-progress-body{
-  padding:12px!important;
-}
-.v4-inspection-grid{
-  gap:8px!important;
-  margin-top:10px!important;
-}
-.v4-inspect-tile{
-  min-height:68px!important;
-  padding:8px 6px!important;
-  gap:4px!important;
-  font-size:13px!important;
-  line-height:1.12!important;
-}
-.v4-tile-icon{
-  display:none!important;
-}
-.v4-tile-code{
-  display:block;
-  font-size:12px;
-  line-height:1;
-  font-weight:950;
-  letter-spacing:.08em;
-  opacity:.85;
-  margin-bottom:2px;
-}
-.v4-check-row{
-  padding:9px 12px!important;
-  font-size:14px!important;
-}
-.v4-check-box{
-  width:22px!important;
-  height:22px!important;
-}
-.v4-notes{
-  min-height:68px!important;
-}
-.v4-save-btn{
-  min-height:44px!important;
-  font-size:15px!important;
-}
-.inspectActionBtn{
-  min-height:44px!important;
-  padding:8px 10px!important;
-  font-size:12px!important;
-}
-button{
-  font-size:14px!important;
-}
-.mini{
-  min-height:30px!important;
-  padding:6px 9px!important;
-  font-size:11px!important;
-}
-@media(max-width:430px){
-  .topNav button{
-    flex-basis:70px!important;
-    width:70px!important;
-    font-size:10px!important;
-  }
-  header{
-    min-height:72px!important;
-    padding:12px 14px!important;
-  }
-  header:after{
-    width:42px!important;
-    height:42px!important;
-    font-size:30px!important;
-  }
-  h1{
-    font-size:24px!important;
-  }
-  .v4-inspect-tile{
-    min-height:62px!important;
-    font-size:12px!important;
-  }
-}
-
-
-
-/* ============================================================
-   NEU Tickets v4.3 Tabs Restored
-   - Tabs visible again
-   - No blue plus button
-   - Weird symbols hidden
-   - Compact layout
-   ============================================================ */
-
-/* Remove fake blue plus */
-header:after{
-  display:none!important;
-  content:""!important;
-}
-
-/* Keep hamburger visual only */
-header{
-  grid-template-columns:46px 1fr!important;
-  min-height:72px!important;
-  padding:12px 14px!important;
-}
-header:before{
-  width:34px!important;
-  height:22px!important;
-  border-top:4px solid #fff!important;
-  border-bottom:4px solid #fff!important;
-  background:linear-gradient(#fff,#fff) center/100% 4px no-repeat!important;
-}
-
-/* Restore tabs as compact wrapped grid, no horizontal scroll needed */
-.topNav{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  position:sticky!important;
-  top:72px!important;
-  z-index:1900!important;
-  overflow:visible!important;
-  white-space:normal!important;
+  padding:6px!important;
   gap:6px!important;
-  padding:8px!important;
-  margin:0!important;
-  background:linear-gradient(180deg,rgba(6,10,17,.98),rgba(9,14,22,.95))!important;
-  border-bottom:1px solid rgba(148,163,184,.18)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.35)!important;
 }
 
 .topNav button{
-  width:auto!important;
-  flex:auto!important;
-  min-height:42px!important;
-  padding:7px 4px!important;
-  border-radius:12px!important;
-  background:rgba(15,23,36,.78)!important;
-  border:1px solid rgba(148,163,184,.16)!important;
-  color:#d9dee8!important;
+  min-height:48px!important;
+  border-radius:13px!important;
+  background:rgba(15,23,36,.86)!important;
+  border:1px solid rgba(148,163,184,.14)!important;
+  color:#dbe6ff!important;
   font-size:11px!important;
   line-height:1.1!important;
-  font-weight:900!important;
+  padding:7px 3px!important;
+  box-shadow:none!important;
 }
 
 .topNav button.active{
@@ -1578,64 +681,224 @@ header:before{
   border-color:rgba(79,115,255,.75)!important;
 }
 
-.topNav button:after{
-  display:none!important;
+.navIcon{display:none!important}
+
+.card,.ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox,.materialGrid,.moveModal,.authCard{
+  background:linear-gradient(135deg,rgba(17,25,36,.95),rgba(8,13,19,.97))!important;
+  border:1px solid var(--neu4-line)!important;
+  color:var(--neu4-text)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 14px 34px rgba(0,0,0,.36)!important;
 }
 
-.topNav .navIcon{
-  display:none!important;
+input,select,textarea{
+  background:#050912!important;
+  color:#fff!important;
+  border:1px solid rgba(148,163,184,.26)!important;
 }
 
-/* Hide the weird symbol menu on folder cards */
-.v4-card-menu{
-  display:none!important;
+.gray{
+  background:rgba(15,23,36,.90)!important;
+  color:#dbe7ff!important;
+  border:1px solid rgba(148,163,184,.22)!important;
 }
 
-.folderCard{
-  grid-template-columns:48px minmax(0,1fr)!important;
-  padding-right:10px!important;
-  overflow:hidden!important;
+.green{
+  background:linear-gradient(180deg,#4f73ff,#3154e6)!important;
+  color:#fff!important;
 }
 
-/* Keep action buttons readable and not weird */
-.v4-hidden-actions button,
-.driveFolderBtns button,
-.v4-path-actions button{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+.red{
+  background:linear-gradient(180deg,#7f1d1d,#450a0a)!important;
+  color:#fecaca!important;
+  border:1px solid rgba(239,68,68,.50)!important;
 }
 
-/* Smaller content */
-.page{
-  padding:10px!important;
+.small,.folderStats,.folderCount,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails,.recentJobMeta{
+  color:var(--neu4-muted)!important;
 }
 
-.card{
-  margin-bottom:10px!important;
+#foldersPage > .card:first-child{
+  padding:14px!important;
+  border-radius:20px!important;
+  overflow:hidden;
 }
 
-.v4-path-card{
-  padding:12px!important;
-  margin-bottom:10px!important;
+#folderTitle{
+  font-size:22px!important;
+  letter-spacing:-.45px!important;
+  margin-bottom:12px!important;
 }
 
-.v4-inspect-tile{
-  min-height:60px!important;
+#foldersPage label{
+  color:#dbe4f0!important;
+  text-transform:uppercase!important;
+  letter-spacing:.065em!important;
   font-size:12px!important;
+  font-weight:900!important;
 }
 
-/* More compact on small iPhones */
-@media(max-width:430px){
-  .topNav{
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    gap:5px!important;
-    padding:6px!important;
-  }
-  .topNav button{
-    min-height:38px!important;
-    font-size:10px!important;
-    padding:6px 2px!important;
-  }
+#foldersGrid.neu4-folder-list{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+  margin-top:14px!important;
 }
+
+.neu4-path-card{
+  background:linear-gradient(135deg,rgba(15,23,36,.88),rgba(8,13,19,.96));
+  border:1px solid var(--neu4-line);
+  border-radius:16px;
+  padding:12px;
+  margin:12px 0 12px;
+}
+
+.neu4-path-kicker{
+  color:#94a3b8;
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:7px;
+}
+
+.neu4-path-main{
+  color:#fff;
+  font-size:15px;
+  font-weight:900;
+  line-height:1.35;
+}
+
+.neu4-path-main span{color:#8fb0ff}
+
+.folderCard.neu4-folder-card{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:48px minmax(0,1fr) 34px!important;
+  gap:12px!important;
+  align-items:center!important;
+  min-height:82px!important;
+  margin:0!important;
+  padding:12px!important;
+  border-radius:16px!important;
+  overflow:hidden!important;
+  cursor:pointer;
+}
+
+.folderCard.neu4-folder-card:active{transform:scale(.992)}
+
+.neu4-folder-icon{
+  width:48px;
+  height:42px;
+  display:grid;
+  place-items:center;
+}
+
+.neu4-folder-icon svg{
+  width:48px;
+  height:38px;
+  display:block;
+}
+
+.neu4-folder-main{min-width:0}
+
+.neu4-folder-name{
+  color:#fff;
+  font-size:17px;
+  font-weight:950;
+  letter-spacing:-.35px;
+  line-height:1.16;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.neu4-folder-sub{
+  color:var(--neu4-muted);
+  font-size:12px;
+  font-weight:750;
+  line-height:1.35;
+  margin-top:4px;
+}
+
+.neu4-status-row{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+
+.neu4-status-dot{
+  width:9px;
+  height:9px;
+  border-radius:999px;
+  display:inline-block;
+  box-shadow:0 0 14px currentColor;
+  background:#94a3b8;
+  color:#94a3b8;
+}
+
+.neu4-status-dot.green{background:var(--neu4-green);color:var(--neu4-green)}
+.neu4-status-dot.yellow{background:var(--neu4-yellow);color:var(--neu4-yellow)}
+.neu4-status-dot.blue{background:var(--neu4-blue);color:var(--neu4-blue)}
+.neu4-status-dot.red{background:var(--neu4-red);color:var(--neu4-red)}
+
+.neu4-status-text{
+  font-size:12px;
+  color:#dbeafe;
+  font-weight:850;
+}
+
+.neu4-menu-btn{
+  width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:rgba(15,23,36,.90)!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:950!important;
+  display:grid!important;
+  place-items:center!important;
+}
+
+.neu4-actions{
+  grid-column:1 / -1;
+  display:none;
+  flex-wrap:wrap;
+  gap:7px;
+  padding-top:10px;
+  border-top:1px solid var(--neu4-line2);
+  margin-top:2px;
+}
+
+.neu4-folder-card.actions-open .neu4-actions{display:flex}
+
+.neu4-actions .mini{
+  margin:0!important;
+  min-height:30px!important;
+  padding:6px 10px!important;
+  font-size:11px!important;
+  border-radius:999px!important;
+}
+
+.neu4-empty{
+  color:var(--neu4-muted);
+  font-size:14px;
+  padding:12px;
+}
+
+.neu4-current-job{
+  border-color:rgba(79,115,255,.45)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 0 0 1px rgba(79,115,255,.18),0 14px 34px rgba(0,0,0,.36)!important;
+}
+
+#folderTicketsCard,#jobProgressCard{border-radius:20px!important}
+
+.versionBadge:after{content:" â¢ v4 Folders Preview"}
 
 </style>
 
@@ -3357,9 +2620,9 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 });if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 
-<script id="neu-v4-mockup-ui">
+<script id="neu-v4-folders-only">
 (function(){
-  function q(id){return document.getElementById(id);}
+  function byId(id){return document.getElementById(id);}
   function esc(v){
     return String(v == null ? "" : v)
       .replace(/&/g,"&amp;")
@@ -3371,712 +2634,151 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   function escJs(v){
     return String(v == null ? "" : v).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
   }
-  function clean(v){
-    try{
-      if(typeof cleanFolderNameText === "function") return cleanFolderNameText(v);
-    }catch(e){}
-    return String(v||"").replace(/^ð\s*/,"").trim();
+  function cleanName(v){
+    try{ return cleanFolderNameText(v); }catch(e){ return String(v||"").replace(/^ð\s*/,"").trim(); }
   }
-  function dte(v){
-    try{return displayDate(String(v||"").slice(0,10));}catch(e){return String(v||"").slice(0,10);}
+  function folderSvg(){
+    return `<span class="neu4-folder-icon" aria-hidden="true"><svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg"><path d="M4 10c0-3.3 2.7-6 6-6h15c2 0 3.9 1 5 2.7L33 11h21c3.3 0 6 2.7 6 6v3H4V10z" fill="#f8c14a"/><path d="M4 18h56v20c0 3.3-2.7 6-6 6H10c-3.3 0-6-2.7-6-6V18z" fill="#ffd166"/><path d="M4 18h56v5H4z" fill="#f6be42"/></svg></span>`;
   }
-  function jobStatus(f){
+  function getStatus(f){
     try{
       var s = inspectionStatus(f);
-      if(s === "Ready for Inspection") s = "Not Ready";
-      return s || "Not Ready";
-    }catch(e){return (f && f.inspection_status) || "Not Ready";}
+      return s === "Ready for Inspection" ? "Not Ready" : (s || "Not Ready");
+    }catch(e){
+      return (f && f.inspection_status) || "Not Ready";
+    }
   }
-  function statusDot(status){
-    status = String(status || "");
+  function dotColor(status){
+    status = String(status||"");
     if(status.indexOf("Final") >= 0 || status.indexOf("Partial") >= 0 || status.indexOf("Called") >= 0) return "yellow";
-    if(status.indexOf("Halo") >= 0 || status.indexOf("Planning") >= 0) return "blue";
-    if(status === "Passed" || status === "In Progress") return "green";
+    if(status.indexOf("Halo") >= 0) return "blue";
+    if(status === "Passed") return "green";
     if(status === "Failed") return "red";
-    return "gray";
+    return "";
   }
-  function statusShort(status){
-    status = String(status || "Not Ready");
-    if(status === "Ready for Final Inspection") return "Ready for Final Inspection";
-    if(status === "Ready for Partial Inspection") return "Ready for Partial Inspection";
-    if(status === "Ready for Halo Inspection") return "Ready for Halo Inspection";
-    if(status.indexOf("Called") >= 0) return status;
-    if(status === "Passed") return "Passed";
-    if(status === "Failed") return "Failed";
-    if(status === "Not Needed") return "Not Needed";
-    if(status === "Not Ready") return "In Progress";
-    return status;
-  }
-  function folderIcon(){
-    return `<span class="driveFolderIcon" aria-hidden="true"><svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg"><path d="M4 10c0-3.3 2.7-6 6-6h15c2 0 3.9 1 5 2.7L33 11h21c3.3 0 6 2.7 6 6v3H4V10z" fill="#f8c14a"/><path d="M4 18h56v20c0 3.3-2.7 6-6 6H10c-3.3 0-6-2.7-6-6V18z" fill="#ffd166"/><path d="M4 18h56v5H4z" fill="#f6be42"/></svg></span>`;
-  }
-  function updatedText(f){
-    var raw = (f && (f.inspection_updated_at || f.updated_at || f.created_at)) || "";
-    return raw ? dte(raw) : "";
-  }
-  function builderName(f){
-    try{return browserBuilderName(f) || f.builder_name || "";}catch(e){return (f && f.builder_name) || "";}
-  }
-  function activeTicketCount(folderId){
-    try{
-      return (data.tickets||[]).filter(function(t){
-        return String(t.folder_id||"") === String(folderId||"") && !(typeof isCompleted === "function" && isCompleted(t));
-      }).length;
-    }catch(e){return 0;}
-  }
-
-  function v4BuilderCard(builder){
-    var jobs = [];
-    try{ jobs = folderBrowserJobs(builder) || []; }catch(e){}
-    return `<div class="folderCard v4-folder-card" onclick="openBuilderFolder('${escJs(builder)}')">
-      ${folderIcon()}
-      <div class="driveFolderText">
-        <div class="driveFolderName">${esc(builder)}</div>
-        <div class="driveFolderMeta">${jobs.length} job folder(s)</div>
-      </div>
-      <div class="v4-card-menu">â¢â¢â¢</div>
-      <div class="v4-hidden-actions">
-        <button type="button" class="mini green" onclick="event.stopPropagation();openBuilderFolder('${escJs(builder)}')">Open</button>
-        <button type="button" class="mini gray" onclick="event.stopPropagation();if(q('folderName'))q('folderName').focus()">New Job Folder</button>
-      </div>
-    </div>`;
-  }
-
-  function v4JobCard(f){
-    var st = jobStatus(f);
-    var upd = updatedText(f);
-    var activeCount = activeTicketCount(f.id);
-    return `<div class="folderCard v4-folder-card" onclick="if(event.target.closest('button'))return;openJobFolder('${escJs(f.id)}')">
-      ${folderIcon()}
-      <div class="driveFolderText">
-        <div class="driveFolderName">${esc(clean(f.name)||"Job")}</div>
-        <div class="driveFolderMeta"><span class="v4-dot ${statusDot(st)}"></span>${esc(statusShort(st))}${upd ? `<br>Updated: ${esc(upd)}` : ""}${activeCount ? `<br>${activeCount} active ticket(s)` : ""}</div>
-      </div>
-      <div class="v4-card-menu">â¢â¢â¢</div>
-      <div class="v4-hidden-actions">
-        <button type="button" class="mini green" onclick="event.stopPropagation();openJobFolder('${escJs(f.id)}')">Open</button>
-        ${f.drive_url ? `<button type="button" class="mini gray" onclick="event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Photos</button>` : ""}
-        <button type="button" class="mini gray" onclick="event.stopPropagation();moveFolder('${escJs(f.id)}')">Move</button>
-        <button type="button" class="mini red" onclick="event.stopPropagation();deleteFolder('${escJs(f.id)}')">Delete</button>
-      </div>
-    </div>`;
-  }
-
-  function v4PathCard(path, options){
-    options = options || {};
-    var move = options.move && currentFolder ? `<button type="button" class="mini gray" onclick="moveFolder('${escJs(currentFolder)}')">âª Move Folder</button>` : "";
-    var newJob = options.newJob ? `<button type="button" class="mini gray" onclick="if(q('folderName'))q('folderName').focus()">+ New Job Folder</button>` : "";
-    var refresh = `<button type="button" class="mini gray" onclick="draw()">â»</button>`;
-    return `<div class="v4-path-card">
-      <div class="v4-kicker">Current Folder Path</div>
-      <div class="v4-path-line"><span>${path}</span></div>
-      <div class="v4-path-actions">${move}${newJob}${refresh}</div>
-    </div>`;
-  }
-
-  function v4RenderFolderBrowser(){
-    if(!q("foldersGrid")) return;
-
-    var showBack = !!(currentFolderBuilder || currentFolder);
-    if(q("folderBackBtn")) q("folderBackBtn").classList.toggle("hidden", !showBack);
-    if(q("folderBuilderSelect") && currentFolderBuilder){ q("folderBuilderSelect").value = currentFolderBuilder; }
-
-    var grid = q("foldersGrid");
-    var folderTicketsCard = q("folderTicketsCard");
-    var jobProgressCard = q("jobProgressCard");
-    if(folderTicketsCard) hide(folderTicketsCard);
-    if(jobProgressCard) hide(jobProgressCard);
-
-    var left = "";
-    var right = "";
-    var hasDetail = false;
-
-    if(!currentFolderBuilder && !currentFolder){
-      var builders = [];
-      try{ builders = folderBrowserBuilders() || []; }catch(e){}
-      if(q("folderTitle")) q("folderTitle").textContent = "Folders";
-      left = v4PathCard(`<span>NEU Tickets</span>`, {newJob:false}) +
-        `<div class="folderGrid">${builders.length ? builders.map(v4BuilderCard).join("") : '<p class="small">No builders found.</p>'}</div>`;
-    } else if(currentFolderBuilder && !currentFolder){
-      var jobs = [];
-      try{ jobs = folderBrowserJobs(currentFolderBuilder) || []; }catch(e){}
-      if(q("folderTitle")) q("folderTitle").textContent = currentFolderBuilder;
-      left = v4PathCard(`<span>NEU Tickets</span> <span style="color:#cbd5e1">/</span> <span>${esc(currentFolderBuilder)}</span>`, {newJob:true}) +
-        `<div class="folderCard" style="grid-template-columns:60px 1fr auto;margin-bottom:12px">
-          ${folderIcon()}
-          <div><div class="driveFolderName">Jobs</div><div class="driveFolderMeta">${jobs.length} folder(s)</div></div>
-          <button type="button" class="mini gray" onclick="draw()">â»</button>
-        </div>` +
-        `<div class="folderGrid">${jobs.length ? jobs.map(v4JobCard).join("") : '<p class="small">No job folders under this builder yet.</p>'}</div>`;
-    } else if(currentFolder){
-      hasDetail = true;
-      var f = (data.folders||[]).find(function(x){ return String(x.id) === String(currentFolder); });
-      var b = f ? (builderName(f) || currentFolderBuilder || "") : (currentFolderBuilder || "");
-      var jobsForSide = [];
-      try{ jobsForSide = b ? (folderBrowserJobs(b)||[]) : (data.folders||[]).filter(isJobFolder); }catch(e){ jobsForSide = []; }
-      if(q("folderTitle")) q("folderTitle").textContent = f ? (clean(f.name)||"Job") : "Job";
-      left = v4PathCard(`<span>NEU Tickets</span> <span style="color:#cbd5e1">/</span> <span>${esc(b || "Jobs")}</span>`, {newJob:true, move:true}) +
-        `<div class="folderGrid">${jobsForSide.length ? jobsForSide.map(v4JobCard).join("") : ""}</div>`;
-
-      if(folderTicketsCard && q("folderTickets")){
-        var ft=(data.tickets||[]).filter(function(t){
-          return String(t.folder_id||"") === String(currentFolder||"") && !(typeof isCompleted === "function" && isCompleted(t));
-        });
-        q("folderTickets").innerHTML = ft.length ? ft.map(function(t){return ticketCard(t,true);}).join("") : '<p class="small">No tickets in this job yet.</p>';
-      }
-      right = `<div id="v4ProgressMount"></div>`;
-    }
-
-    grid.className = "v4-folder-layout" + (hasDetail ? " has-detail" : "");
-    grid.innerHTML = `<div class="v4-left-pane">${left}</div>${hasDetail ? `<div class="v4-right-pane">${right}</div>` : ""}`;
-
-    if(hasDetail){
-      renderJobProgress();
-    }
-  }
-
-  function progressOptions(){
-    try{return PROGRESS_OPTIONS;}catch(e){
-      return [
-        ["Water Bond Inspection","Water Bond"],
-        ["Ditch Inspection","Ditch"],
-        ["Bonding Inspection","Bonding"],
-        ["Ready for Partial Inspection","Partial"],
-        ["Ready for Final Inspection","Final"],
-        ["Ready for Halo Inspection","Halo"],
-        ["Passed","Passed"],
-        ["Failed","Failed"]
-      ];
-    }
-  }
-  function progressChecks(){
-    try{return PROGRESS_CHECKS;}catch(e){
-      return ["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran","GFCI protection installed","Breakers labeled","Panel schedule installed"];
-    }
-  }
-  function tileClass(status){
-    status = String(status||"");
-    if(status.indexOf("Water") >= 0) return "v4-tile-water";
-    if(status.indexOf("Ditch") >= 0) return "v4-tile-ditch";
-    if(status.indexOf("Bond") >= 0) return "v4-tile-bond";
-    if(status.indexOf("Partial") >= 0) return "v4-tile-partial";
-    if(status.indexOf("Final") >= 0) return "v4-tile-final";
-    if(status.indexOf("Halo") >= 0) return "v4-tile-halo";
-    if(status === "Passed") return "v4-tile-passed";
-    if(status === "Failed") return "v4-tile-failed";
-    return "v4-tile-water";
-  }
-  function tileIcon(status){
-    status = String(status||"");
-    if(status.indexOf("Water") >= 0) return "ð§";
-    if(status.indexOf("Ditch") >= 0) return "âï¸";
-    if(status.indexOf("Bond") >= 0) return "ð§·";
-    if(status.indexOf("Partial") >= 0) return "ðª";
-    if(status.indexOf("Final") >= 0) return "â";
-    if(status.indexOf("Halo") >= 0) return "â¼";
-    if(status === "Passed") return "â";
-    if(status === "Failed") return "Ã";
-    return "â";
-  }
-  function selectLabel(status){
-    if(status === "Ready for Final Inspection") return "Final Inspection";
-    if(status === "Ready for Partial Inspection") return "Partial Inspection";
-    if(status === "Ready for Halo Inspection") return "Halo Inspection";
-    return status;
-  }
-
-  function v4RenderJobProgress(){
-    var mount = q("v4ProgressMount");
-    var legacy = q("jobProgressCard");
-    if(!currentFolder){
-      if(legacy) hide(legacy);
-      return;
-    }
-    var f = (data.folders||[]).find(function(x){return String(x.id) === String(currentFolder);});
-    if(!f){
-      if(legacy) hide(legacy);
-      return;
-    }
-
-    var status = jobStatus(f);
-    var p = {};
-    try{ p = readJobProgress(currentFolder) || {}; }catch(e){ p = {}; }
-    var checks = p.checks || {};
-    var allChecks = progressChecks();
-    var done = allChecks.filter(function(c){return checks[c];}).length;
-    var upd = updatedText(f);
-    var options = progressOptions();
-
-    var html = `<div class="card" id="jobProgressCard">
-      <div class="v4-job-head">
-        <button type="button" class="v4-back-btn" onclick="backFolderBrowser()">â¹</button>
-        <div class="v4-job-title">${esc(clean(f.name)||"Job")}</div>
-        <button type="button" class="v4-more-btn">â¢â¢â¢</button>
-      </div>
-
-      <div class="v4-progress-tabs">
-        <button type="button" onclick="renderJobProgress()">â·<br>Overview</button>
-        <button type="button" onclick="showPage('ticketsPage')">ð·ï¸<br>Tickets</button>
-        <button type="button" class="active" onclick="renderJobProgress()">â<br>Progress</button>
-        <button type="button" onclick="openCurrentJobPhotos()">ð¼ï¸<br>Photos</button>
-        <button type="button" onclick="focusJobNotes()">ð<br>Notes</button>
-      </div>
-
-      <div class="v4-section-card">
-        <div class="v4-section-title">Inspection Progress</div>
-        <div class="v4-status-row">
-          <span class="v4-dot ${statusDot(status)}"></span>
-          <div>
-            <div class="v4-kicker" style="margin:0 0 5px">Current Status</div>
-            <div class="v4-status-main">${esc(status)}</div>
-            <div class="v4-status-sub">${upd ? "Updated: " + esc(upd) : "Updated automatically when saved"}</div>
-          </div>
-          <button type="button" class="mini gray" onclick="focusJobNotes()">â Change Status</button>
-        </div>
-      </div>
-
-      <div class="v4-section-card">
-        <div class="v4-progress-body">
-          <label>Inspection Type</label>
-          <select class="v4-select" id="jobProgressSelect" onchange="setJobProgressStatus(this.value)">
-            ${options.map(function(o){
-              var val = o[0], label = selectLabel(o[0]);
-              return `<option value="${esc(val)}" ${val===status ? "selected" : ""}>${esc(label)}</option>`;
-            }).join("")}
-          </select>
-          <div class="small" style="margin-top:10px">Double tap an option to mark as âCalled Inâ.</div>
-          <div class="v4-inspection-grid">
-            ${options.map(function(o){
-              var val=o[0], label=o[1] || o[0];
-              return `<button type="button" class="v4-inspect-tile ${tileClass(val)}" onclick="event.preventDefault();event.stopPropagation();setJobProgressStatus('${escJs(val)}')"><span class="v4-tile-icon">${tileIcon(val)}</span><span>${esc(label).replace(" ","<br>")}</span></button>`;
-            }).join("")}
-          </div>
-        </div>
-      </div>
-
-      <div class="v4-section-card v4-check-list">
-        <div class="v4-section-title" style="display:flex;justify-content:space-between;color:var(--v4-purple)"><span>Final Inspection Checklist</span><span>${done} / ${allChecks.length}</span></div>
-        ${allChecks.map(function(c){
-          return `<label class="v4-check-row" style="text-transform:none;letter-spacing:0;font-size:16px!important;font-weight:500!important;color:#fff!important;margin:0">
-            <span>${esc(c)}</span>
-            <input class="v4-check-box" type="checkbox" ${checks[c] ? "checked" : ""} onchange="toggleJobProgressCheck('${escJs(c)}')">
-          </label>`;
-        }).join("")}
-      </div>
-
-      <div class="v4-section-card">
-        <div class="v4-progress-body">
-          <label>Notes</label>
-          <textarea id="jobProgressNotes" class="v4-notes" placeholder="Add notes about this inspection...">${esc(p.notes||"")}</textarea>
-        </div>
-      </div>
-      <button type="button" class="v4-save-btn" onclick="saveJobProgressNotes()">ð¾ Save Progress</button>
-      <div class="v4-saved"><span>â</span> Progress saved automatically</div>
-    </div>`;
-
-    if(mount){
-      mount.innerHTML = html;
-      if(legacy && legacy.parentElement && legacy.parentElement.id !== "v4ProgressMount") hide(legacy);
-    }else if(legacy){
-      legacy.outerHTML = html;
-    }
-  }
-
-  function v4CurrentInspectionLabel(status){
+  function shortStatus(status){
     status = String(status||"Not Ready");
-    if(status === "Ready for Inspection") status = "Not Ready";
-    return `<div class="currentInspectionStatus ${typeof statusBadgeClass === "function" ? statusBadgeClass(status) : "statusNotReady"}"><span class="v4-dot ${statusDot(status)}"></span> ${esc(status)}</div>`;
-  }
-
-  function v4InspectionButtons(f){
-    var options=[
-      ["Not Ready","Not Ready"],
-      ["Ready for Partial Inspection","Partial"],
-      ["Ready for Final Inspection","Final"],
-      ["Ready for Halo Inspection","Halo"],
-      ["Passed","Passed"],
-      ["Failed","Failed"],
-      ["Not Needed","Not Needed"]
-    ];
-    return `<div class="v4-inspection-grid">${options.map(function(o){
-      return `<button type="button" class="v4-inspect-tile ${tileClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();handleInspectionTap('${escJs(f.id)}','${escJs(o[0])}')"><span class="v4-tile-icon">${tileIcon(o[0])}</span><span>${esc(o[1])}</span></button>`;
-    }).join("")}</div><div class="small" style="margin-top:10px">Double tap Partial, Final, or Halo to mark that inspection called in.</div>`;
-  }
-
-  function v4InspectionJobCard(f){
-    var activeCount = activeTicketCount(f.id);
-    var status = jobStatus(f);
-    return `<div class="ticketCard">
-      <div class="ticketTitle">${esc(clean(f.name)||"Job")}</div>
-      <div class="small">${esc(builderName(f)||"No builder")}<br>${activeCount} active ticket(s)</div>
-      ${v4CurrentInspectionLabel(status)}
-      ${v4InspectionButtons(f)}
-      <button class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteInspectionJob('${escJs(f.id)}')">Delete</button>
-      ${f.drive_url ? `<button class="mini gray" onclick="event.preventDefault();event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>` : ""}
-    </div>`;
-  }
-
-  function installV4(){
-    try{ document.body.classList.add("neu-v4"); }catch(e){}
-    try{ driveFolderIconSvg = folderIcon; }catch(e){}
-    try{ folderBrowserJobCard = v4JobCard; }catch(e){}
-    try{ renderFolderBrowser = v4RenderFolderBrowser; }catch(e){}
-    try{ renderJobProgress = v4RenderJobProgress; }catch(e){}
-    try{ currentInspectionLabel = v4CurrentInspectionLabel; }catch(e){}
-    try{ inspectionButtons = v4InspectionButtons; }catch(e){}
-    try{ inspectionJobCard = v4InspectionJobCard; }catch(e){}
-
-    try{
-      var buttons = Array.prototype.slice.call(document.querySelectorAll(".topNav button"));
-      var order = {
-        foldersPage:1,
-        createTicketPage:2,
-        drivePage:3,
-        inspectionsPage:4,
-        ticketsPage:5,
-        inventoryPage:6,
-        hoursPage:7,
-        settingsPage:8,
-        dashboardPage:9
-      };
-      buttons.forEach(function(b){
-        var p=b.getAttribute("data-page");
-        if(order[p]) b.style.order=order[p];
-      });
-    }catch(e){}
-  }
-
-  installV4();
-
-  var oldDraw = null;
-  try{ oldDraw = draw; }catch(e){}
-  if(typeof oldDraw === "function"){
-    try{
-      draw = function(){
-        oldDraw();
-        try{
-          if(currentFolder && q("v4ProgressMount")) v4RenderJobProgress();
-        }catch(e){}
-      };
-    }catch(e){}
-  }
-
-  window.addEventListener("load", function(){
-    setTimeout(function(){
-      try{ installV4(); if(typeof draw === "function") draw(); }catch(e){}
-    }, 350);
-  });
-
-  // Prevent blank app area if startup hits a runtime issue.
-  setTimeout(function(){
-    try{
-      var setup=q("setupPage"), pin=q("pinPage"), app=q("appPage");
-      function visible(n){
-        if(!n) return false;
-        var cs=getComputedStyle(n);
-        return !n.classList.contains("hidden") && cs.display !== "none" && cs.visibility !== "hidden";
-      }
-      if(visible(setup)||visible(pin)||visible(app)) return;
-      var cfg=null;
-      try{cfg=JSON.parse(localStorage.getItem("neu_pin_supabase")||"null");}catch(e){}
-      if(cfg&&cfg.url&&cfg.key){ if(pin) pin.classList.remove("hidden"); }
-      else { if(setup) setup.classList.remove("hidden"); }
-      if(q("errorBox")){
-        q("errorBox").textContent="Startup did not finish, so v4 opened the login/setup screen instead of leaving a blank page.";
-        q("errorBox").classList.remove("hidden");
-      }
-    }catch(e){}
-  }, 2500);
-})();
-</script>
-
-
-<script id="neu-v4-1-compact-cleanup">
-(function(){
-  function q(id){return document.getElementById(id);}
-  function esc(v){
-    return String(v == null ? "" : v)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#39;");
-  }
-  function escJs(v){
-    return String(v == null ? "" : v).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
-  }
-  function clean(v){
-    try{ if(typeof cleanFolderNameText === "function") return cleanFolderNameText(v); }catch(e){}
-    return String(v||"").replace(/^ð\s*/,"").trim();
-  }
-  function dte(v){
-    try{return displayDate(String(v||"").slice(0,10));}catch(e){return String(v||"").slice(0,10);}
-  }
-  function jobStatus(f){
-    try{
-      var s = inspectionStatus(f);
-      if(s === "Ready for Inspection") s = "Not Ready";
-      return s || "Not Ready";
-    }catch(e){return (f && f.inspection_status) || "Not Ready";}
-  }
-  function statusDot(status){
-    status = String(status || "");
-    if(status.indexOf("Final") >= 0 || status.indexOf("Partial") >= 0 || status.indexOf("Called") >= 0) return "yellow";
-    if(status.indexOf("Halo") >= 0 || status.indexOf("Planning") >= 0) return "blue";
-    if(status === "Passed" || status === "In Progress") return "green";
-    if(status === "Failed") return "red";
-    return "gray";
-  }
-  function statusShort(status){
-    status = String(status || "Not Ready");
     if(status === "Ready for Final Inspection") return "Ready for Final";
     if(status === "Ready for Partial Inspection") return "Ready for Partial";
     if(status === "Ready for Halo Inspection") return "Ready for Halo";
-    if(status.indexOf("Called") >= 0) return status.replace("Inspection Called In","Called In");
+    if(status.indexOf("Called In") >= 0) return status.replace("Inspection Called In","Called In");
     if(status === "Not Ready") return "In Progress";
     return status;
   }
-  function builderName(f){
-    try{return browserBuilderName(f) || f.builder_name || "";}catch(e){return (f && f.builder_name) || "";}
+  function dateText(f){
+    var raw = (f && (f.inspection_updated_at || f.updated_at || f.created_at)) || "";
+    if(!raw) return "";
+    try{ return displayDate(String(raw).slice(0,10)); }catch(e){ return String(raw).slice(0,10); }
   }
-  function activeTicketCount(folderId){
+  function builderFor(f){
+    try{ return browserBuilderName(f) || f.builder_name || ""; }catch(e){ return (f && f.builder_name) || ""; }
+  }
+  function activeTickets(folderId){
     try{
       return (data.tickets||[]).filter(function(t){
         return String(t.folder_id||"") === String(folderId||"") && !(typeof isCompleted === "function" && isCompleted(t));
       }).length;
-    }catch(e){return 0;}
+    }catch(e){ return 0; }
   }
-  function progressOptions(){
-    return [
-      ["Not Ready","Not Ready","NR"],
-      ["Ready for Partial Inspection","Partial","PART"],
-      ["Ready for Final Inspection","Final","FINAL"],
-      ["Ready for Halo Inspection","Halo","HALO"],
-      ["Passed","Passed","PASS"],
-      ["Failed","Failed","FAIL"],
-      ["Not Needed","Not Needed","N/A"]
-    ];
+  function pathCard(parts){
+    return `<div class="neu4-path-card"><div class="neu4-path-kicker">Current Path</div><div class="neu4-path-main">${parts.map(function(p,i){
+      return i ? ` <span>/</span> ${esc(p)}` : esc(p);
+    }).join("")}</div></div>`;
   }
-  function progressChecks(){
-    try{return PROGRESS_CHECKS;}catch(e){
-      return ["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran","GFCI protection installed","Breakers labeled","Panel schedule installed"];
-    }
+  function builderCard(builder){
+    var jobs = [];
+    try{ jobs = folderBrowserJobs(builder) || []; }catch(e){}
+    var b = escJs(builder);
+    return `<div class="folderCard neu4-folder-card" onclick="openBuilderFolder('${b}')">
+      ${folderSvg()}
+      <div class="neu4-folder-main">
+        <div class="neu4-folder-name">${esc(builder)}</div>
+        <div class="neu4-folder-sub">${jobs.length} job folder(s)</div>
+      </div>
+      <button type="button" class="neu4-menu-btn" onclick="event.stopPropagation();this.closest('.neu4-folder-card').classList.toggle('actions-open')">...</button>
+      <div class="neu4-actions">
+        <button type="button" class="mini green" onclick="event.stopPropagation();openBuilderFolder('${b}')">Open</button>
+        <button type="button" class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${b}')">Move</button>
+        <button type="button" class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${b}')">Delete</button>
+      </div>
+    </div>`;
   }
-  function tileClass(status){
-    status = String(status||"");
-    if(status.indexOf("Partial") >= 0) return "v4-tile-partial";
-    if(status.indexOf("Final") >= 0) return "v4-tile-final";
-    if(status.indexOf("Halo") >= 0) return "v4-tile-halo";
-    if(status === "Passed") return "v4-tile-passed";
-    if(status === "Failed") return "v4-tile-failed";
-    return "v4-tile-water";
-  }
-  function selectLabel(status){
-    if(status === "Ready for Final Inspection") return "Final Inspection";
-    if(status === "Ready for Partial Inspection") return "Partial Inspection";
-    if(status === "Ready for Halo Inspection") return "Halo Inspection";
-    return status;
-  }
-
-  function renderCompactProgress(){
-    var mount = q("v4ProgressMount");
-    var legacy = q("jobProgressCard");
-    if(!currentFolder){
-      if(legacy) hide(legacy);
-      return;
-    }
-    var f = (data.folders||[]).find(function(x){return String(x.id) === String(currentFolder);});
-    if(!f){
-      if(legacy) hide(legacy);
-      return;
-    }
-
-    var status = jobStatus(f);
-    var p = {};
-    try{ p = readJobProgress(currentFolder) || {}; }catch(e){ p = {}; }
-    var checks = p.checks || {};
-    var allChecks = progressChecks();
-    var done = allChecks.filter(function(c){return checks[c];}).length;
-    var raw = (f && (f.inspection_updated_at || f.updated_at || f.created_at)) || "";
-    var upd = raw ? dte(raw) : "";
-    var options = progressOptions();
-
-    var html = `
-      <div class="card" id="jobProgressCard">
-        <div class="v4-job-head">
-          <button type="button" class="v4-back-btn" onclick="backFolderBrowser()">â¹</button>
-          <div class="v4-job-title">${esc(clean(f.name)||"Job")}</div>
-          <button type="button" class="v4-more-btn">...</button>
-        </div>
-
-        <div class="v4-progress-tabs">
-          <button type="button" onclick="renderJobProgress()">Overview</button>
-          <button type="button" onclick="showPage('ticketsPage')">Tickets</button>
-          <button type="button" class="active" onclick="renderJobProgress()">Progress</button>
-          <button type="button" onclick="openCurrentJobPhotos()">Photos</button>
-          <button type="button" onclick="focusJobNotes()">Notes</button>
-        </div>
-
-        <div class="v4-section-card">
-          <div class="v4-section-title">Inspection Progress</div>
-          <div class="v4-status-row">
-            <span class="v4-dot ${statusDot(status)}"></span>
-            <div>
-              <div class="v4-kicker" style="margin:0 0 5px">Current Status</div>
-              <div class="v4-status-main">${esc(status)}</div>
-              <div class="v4-status-sub">${upd ? "Updated: " + esc(upd) : "Updated automatically"}</div>
-            </div>
-            <button type="button" class="mini gray" onclick="focusJobNotes()">Change</button>
-          </div>
-        </div>
-
-        <div class="v4-section-card">
-          <div class="v4-progress-body">
-            <label>Inspection Type</label>
-            <select class="v4-select" id="jobProgressSelect" onchange="setJobProgressStatus(this.value)">
-              ${options.map(function(o){
-                var val=o[0], label=selectLabel(o[0]);
-                return `<option value="${esc(val)}" ${val===status ? "selected" : ""}>${esc(label)}</option>`;
-              }).join("")}
-            </select>
-            <div class="small" style="margin-top:8px">Double tap option to mark called in.</div>
-            <div class="v4-inspection-grid">
-              ${options.map(function(o){
-                var val=o[0], label=o[1], code=o[2];
-                return `<button type="button" class="v4-inspect-tile ${tileClass(val)}" onclick="event.preventDefault();event.stopPropagation();setJobProgressStatus('${escJs(val)}')"><span class="v4-tile-code">${esc(code)}</span><span>${esc(label)}</span></button>`;
-              }).join("")}
-            </div>
-          </div>
-        </div>
-
-        <div class="v4-section-card v4-check-list">
-          <div class="v4-section-title" style="display:flex;justify-content:space-between;color:var(--v4-purple)"><span>Final Checklist</span><span>${done} / ${allChecks.length}</span></div>
-          ${allChecks.map(function(c){
-            return `<label class="v4-check-row" style="text-transform:none;letter-spacing:0;font-size:14px!important;font-weight:500!important;color:#fff!important;margin:0">
-              <span>${esc(c)}</span>
-              <input class="v4-check-box" type="checkbox" ${checks[c] ? "checked" : ""} onchange="toggleJobProgressCheck('${escJs(c)}')">
-            </label>`;
-          }).join("")}
-        </div>
-
-        <div class="v4-section-card">
-          <div class="v4-progress-body">
-            <label>Notes</label>
-            <textarea id="jobProgressNotes" class="v4-notes" placeholder="Add notes...">${esc(p.notes||"")}</textarea>
-          </div>
-        </div>
-        <button type="button" class="v4-save-btn" onclick="saveJobProgressNotes()">Save Progress</button>
-        <div class="v4-saved"><span>OK</span> Progress saved automatically</div>
-      </div>`;
-
-    if(mount){
-      mount.innerHTML = html;
-      if(legacy && legacy.parentElement && legacy.parentElement.id !== "v4ProgressMount") hide(legacy);
-    }else if(legacy){
-      legacy.outerHTML = html;
-    }
-  }
-
-  function compactCurrentInspectionLabel(status){
-    status = String(status||"Not Ready");
-    if(status === "Ready for Inspection") status = "Not Ready";
-    return `<div class="currentInspectionStatus ${typeof statusBadgeClass === "function" ? statusBadgeClass(status) : "statusNotReady"}"><span class="v4-dot ${statusDot(status)}"></span> ${esc(statusShort(status))}</div>`;
-  }
-
-  function compactInspectionButtons(f){
-    var options=progressOptions();
-    return `<div class="v4-inspection-grid">${options.map(function(o){
-      return `<button type="button" class="v4-inspect-tile ${tileClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();handleInspectionTap('${escJs(f.id)}','${escJs(o[0])}')"><span class="v4-tile-code">${esc(o[2])}</span><span>${esc(o[1])}</span></button>`;
-    }).join("")}</div><div class="small" style="margin-top:10px">Double tap Partial, Final, or Halo to mark called in.</div>`;
-  }
-
-  function compactInspectionJobCard(f){
-    var activeCount = activeTicketCount(f.id);
-    var status = jobStatus(f);
-    return `<div class="ticketCard">
-      <div class="ticketTitle">${esc(clean(f.name)||"Job")}</div>
-      <div class="small">${esc(builderName(f)||"No builder")}<br>${activeCount} active ticket(s)</div>
-      ${compactCurrentInspectionLabel(status)}
-      ${compactInspectionButtons(f)}
-      <button class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteInspectionJob('${escJs(f.id)}')">Delete</button>
-      ${f.drive_url ? `<button class="mini gray" onclick="event.preventDefault();event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>` : ""}
+  function jobCard(f, current){
+    var status = getStatus(f);
+    var builder = builderFor(f) || "No builder";
+    var count = activeTickets(f.id);
+    var updated = dateText(f);
+    var name = cleanName(f.name) || "Job";
+    var id = escJs(f.id);
+    var photoBtn = f.drive_url ? `<button type="button" class="mini gray" onclick="event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Photos</button>` : "";
+    return `<div class="folderCard neu4-folder-card ${current ? "neu4-current-job" : ""}" onclick="if(event.target.closest('button'))return;openJobFolder('${id}')">
+      ${folderSvg()}
+      <div class="neu4-folder-main">
+        <div class="neu4-folder-name">${esc(name)}</div>
+        <div class="neu4-folder-sub">${esc(builder)}${count ? " â¢ " + count + " active ticket(s)" : ""}${updated ? "<br>Updated " + esc(updated) : ""}</div>
+        <div class="neu4-status-row"><span class="neu4-status-dot ${dotColor(status)}"></span><span class="neu4-status-text">${esc(shortStatus(status))}</span></div>
+      </div>
+      <button type="button" class="neu4-menu-btn" onclick="event.stopPropagation();this.closest('.neu4-folder-card').classList.toggle('actions-open')">...</button>
+      <div class="neu4-actions">
+        <button type="button" class="mini green" onclick="event.stopPropagation();openJobFolder('${id}')">Open</button>
+        ${photoBtn}
+        <button type="button" class="mini gray" onclick="event.stopPropagation();moveFolder('${id}')">Move</button>
+        <button type="button" class="mini red" onclick="event.stopPropagation();deleteFolder('${id}')">Delete</button>
+      </div>
     </div>`;
   }
 
+  function renderFoldersV4(){
+    var grid = byId("foldersGrid");
+    if(!grid) return;
+
+    grid.className = "folderGrid neu4-folder-list";
+
+    var showBack = !!(currentFolderBuilder || currentFolder);
+    var back = byId("folderBackBtn");
+    if(back) back.classList.toggle("hidden", !showBack);
+
+    if(byId("folderTicketsCard")) hide(byId("folderTicketsCard"));
+    if(byId("jobProgressCard")) hide(byId("jobProgressCard"));
+
+    if(!currentFolderBuilder && !currentFolder){
+      if(byId("folderTitle")) byId("folderTitle").textContent = "Folders";
+      var builders = [];
+      try{ builders = folderBrowserBuilders() || []; }catch(e){}
+      grid.innerHTML = pathCard(["NEU Tickets"]) + (builders.length ? builders.map(builderCard).join("") : '<div class="neu4-empty">No builders found.</div>');
+      return;
+    }
+
+    if(currentFolderBuilder && !currentFolder){
+      if(byId("folderTitle")) byId("folderTitle").textContent = currentFolderBuilder;
+      if(byId("folderBuilderSelect")) byId("folderBuilderSelect").value = currentFolderBuilder;
+      var jobs = [];
+      try{ jobs = folderBrowserJobs(currentFolderBuilder) || []; }catch(e){}
+      grid.innerHTML = pathCard(["NEU Tickets", currentFolderBuilder]) + (jobs.length ? jobs.map(function(f){return jobCard(f,false);}).join("") : '<div class="neu4-empty">No job folders under this builder yet.</div>');
+      return;
+    }
+
+    var job = (data.folders||[]).find(function(f){ return String(f.id) === String(currentFolder); });
+    var title = job ? cleanName(job.name) : "Job";
+    var builder = job ? builderFor(job) : (currentFolderBuilder || "Jobs");
+
+    if(byId("folderTitle")) byId("folderTitle").textContent = title;
+    grid.innerHTML = pathCard(["NEU Tickets", builder, title]) + (job ? jobCard(job,true) : '<div class="neu4-empty">Job not found.</div>');
+
+    if(byId("folderTicketsCard") && byId("folderTickets")){
+      show(byId("folderTicketsCard"));
+      var ft = (data.tickets||[]).filter(function(t){
+        return String(t.folder_id||"") === String(currentFolder||"") && !(typeof isCompleted === "function" && isCompleted(t));
+      });
+      byId("folderTickets").innerHTML = ft.length ? ft.map(function(t){return ticketCard(t,true);}).join("") : '<p class="small">No tickets in this job yet.</p>';
+    }
+
+    try{ renderJobProgress(); }catch(e){}
+  }
+
   function install(){
-    try{ renderJobProgress = renderCompactProgress; }catch(e){}
-    try{ currentInspectionLabel = compactCurrentInspectionLabel; }catch(e){}
-    try{ inspectionButtons = compactInspectionButtons; }catch(e){}
-    try{ inspectionJobCard = compactInspectionJobCard; }catch(e){}
-    try{
-      document.querySelectorAll(".topNav .navIcon").forEach(function(n){ n.textContent = ""; });
-    }catch(e){}
+    try{ folderBrowserJobCard = function(f){ return jobCard(f,false); }; }catch(e){}
+    try{ renderFolderBrowser = renderFoldersV4; }catch(e){}
   }
 
   install();
-  window.addEventListener("load", function(){
-    setTimeout(function(){
-      install();
-      try{ if(typeof draw === "function") draw(); }catch(e){}
-    }, 300);
-  });
-})();
-</script>
-
-
-<script id="neu-v4-3-tabs-restored">
-(function(){
-  function cleanButtons(){
-    document.querySelectorAll(".v4-card-menu").forEach(function(el){
-      el.textContent = "";
-    });
-    document.querySelectorAll(".v4-hidden-actions button,.driveFolderBtns button,.v4-path-actions button").forEach(function(btn){
-      var txt = String(btn.textContent || "");
-      txt = txt.replace(/[^A-Za-z0-9 .\/+-]/g,"").replace(/\s+/g," ").trim();
-      if(txt) btn.textContent = txt;
-    });
-  }
-
-  function orderTabs(){
-    var order = {
-      foldersPage:1,
-      createTicketPage:2,
-      drivePage:3,
-      inspectionsPage:4,
-      ticketsPage:5,
-      inventoryPage:6,
-      hoursPage:7,
-      settingsPage:8,
-      dashboardPage:9
-    };
-    document.querySelectorAll(".topNav button").forEach(function(b){
-      var p = b.getAttribute("data-page");
-      if(order[p]) b.style.order = order[p];
-    });
-  }
-
-  function run(){
-    cleanButtons();
-    orderTabs();
-  }
-
-  run();
-  window.addEventListener("load", function(){
-    setTimeout(run,300);
-    setTimeout(run,900);
-  });
-
-  var oldDraw = null;
-  try{ oldDraw = draw; }catch(e){}
-  if(typeof oldDraw === "function" && !window.NEU_V43_DRAW_PATCHED){
-    window.NEU_V43_DRAW_PATCHED = true;
-    draw = function(){
-      oldDraw();
-      setTimeout(run,0);
-    };
-  }
-})();
-</script>
-
-</body>
-</html>
