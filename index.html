@@ -904,53 +904,152 @@ input,select,textarea{
 
 
 
+
+
 /* ============================================================
-   NEU Tickets v4.2 â Static Folder Search Tab
-   The Browse/Search controls are now part of the Folders HTML.
+   NEU Tickets v4.4 â Cleaner Folders
+   Removes extra folder tabs, adds one simple job search bar,
+   and hides noisy action buttons until More is tapped.
    ============================================================ */
 
-.neu4-folder-tabs{
-  display:grid!important;
-  grid-template-columns:1fr 1fr!important;
-  gap:8px!important;
-  margin:4px 0 12px!important;
+.topNav{
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:5px!important;
+  padding:6px!important;
+  border-radius:18px!important;
 }
 
-.neu4-folder-tabs button{
+.topNav button{
+  min-height:38px!important;
+  font-size:10.5px!important;
+  padding:6px 2px!important;
+  border-radius:12px!important;
+}
+
+#foldersPage > .card:first-child{
+  padding:14px!important;
+}
+
+#folderTitle{
+  margin-bottom:10px!important;
+}
+
+.neu4-folder-search-simple{
+  margin:0 0 12px!important;
+}
+
+.neu4-folder-search-simple input{
+  margin-top:0!important;
+  min-height:44px!important;
+  border-radius:15px!important;
+  font-size:15px!important;
+  font-weight:750!important;
+  padding-left:14px!important;
+}
+
+#foldersPage label,
+#folderBuilderSelect,
+#newBuilderName,
+#folderName,
+#createFolderBtn,
+#importDriveFoldersPageBtn,
+#cleanDuplicateFoldersBtn{
+  transition:max-height .22s ease, opacity .18s ease, margin .18s ease, padding .18s ease, border-width .18s ease;
+}
+
+#foldersPage.neu4-clean #folderBuilderSelect,
+#foldersPage.neu4-clean #newBuilderName,
+#foldersPage.neu4-clean #folderName,
+#foldersPage.neu4-clean #createFolderBtn,
+#foldersPage.neu4-clean #importDriveFoldersPageBtn,
+#foldersPage.neu4-clean #cleanDuplicateFoldersBtn,
+#foldersPage.neu4-clean label[for],
+#foldersPage.neu4-clean label{
+  max-height:0!important;
+  opacity:0!important;
+  overflow:hidden!important;
   margin:0!important;
-  width:100%!important;
-  min-height:42px!important;
-  border-radius:14px!important;
-  padding:9px 10px!important;
-  font-size:13px!important;
-  font-weight:950!important;
-  box-shadow:none!important;
-  background:rgba(15,23,36,.90)!important;
-  color:#dbe7ff!important;
-  border:1px solid rgba(148,163,184,.22)!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  border-width:0!important;
 }
 
-.neu4-folder-tabs button.active{
+.neu4-folder-tools{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:0 0 12px;
+}
+
+.neu4-folder-tools button{
+  margin:0!important;
+  min-height:36px!important;
+  border-radius:13px!important;
+  font-size:12px!important;
+  padding:8px 10px!important;
+  box-shadow:none!important;
+}
+
+.neu4-folder-tools .active{
   background:linear-gradient(180deg,#4f73ff,#3154e6)!important;
   color:#fff!important;
   border-color:rgba(79,115,255,.75)!important;
 }
 
-.neu4-folder-search-box{
+.neu4-create-panel{
+  display:none;
+  border:1px solid rgba(148,163,184,.16);
+  border-radius:16px;
+  padding:12px;
+  margin:0 0 12px;
+  background:rgba(3,7,12,.28);
+}
+
+.neu4-create-panel.open{
+  display:block;
+}
+
+.neu4-folder-card{
+  grid-template-columns:46px minmax(0,1fr) auto!important;
+}
+
+.neu4-menu-btn{
+  font-size:12px!important;
+  width:auto!important;
+  min-width:48px!important;
+  padding:0 10px!important;
+}
+
+.neu4-menu-btn::before{
+  content:"More";
+}
+
+.neu4-menu-btn{
+  color:transparent!important;
+}
+
+.neu4-menu-btn::before{
+  color:#fff!important;
+}
+
+.neu4-actions{
   display:none!important;
-  margin:0 0 12px!important;
 }
 
-.neu4-folder-search-box.active{
-  display:block!important;
+.neu4-folder-card.actions-open .neu4-actions{
+  display:flex!important;
 }
 
-.neu4-folder-search-box input{
-  margin-top:0!important;
-  min-height:46px!important;
-  border-radius:15px!important;
-  font-size:15px!important;
-  font-weight:750!important;
+.folderCard:not(.neu4-folder-card) .driveFolderBtns,
+.folderCard:not(.neu4-folder-card) > button,
+.folderCard:not(.neu4-folder-card) .mini{
+  display:none!important;
+}
+
+.neu4-add-folder-btn{
+  background:rgba(15,23,36,.90)!important;
+  color:#dbe7ff!important;
+  border:1px solid rgba(148,163,184,.22)!important;
 }
 
 .neu4-search-count{
@@ -965,22 +1064,11 @@ input,select,textarea{
   font-size:13px;
   font-weight:700;
   line-height:1.4;
-  padding:10px 2px 2px;
+  padding:8px 2px 6px;
 }
 
 .versionBadge:after{
-  content:" â¢ v4.3 Job Search";
-}
-
-
-
-/* ============================================================
-   NEU Tickets v4.3 â Job Name Search
-   Folder search now searches job/folder names, not builders.
-   ============================================================ */
-
-.neu4-search-note strong{
-  color:#ffffff;
+  content:" â¢ v4.4 Cleaner Folders";
 }
 
 </style>
@@ -1074,7 +1162,7 @@ input,select,textarea{
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><div id="neu4FolderTabs" class="neu4-folder-tabs"><button type="button" id="neu4BrowseFoldersBtn" class="active">Browse</button><button type="button" id="neu4SearchFoldersBtn">Search Job</button></div><div id="neu4FolderSearchBox" class="neu4-folder-search-box"><input id="neu4FolderSearchInput" placeholder="Search job name / address"></div><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><div id="neu4FolderSearchSimple" class="neu4-folder-search-simple"><input id="neu4FolderSearchInput" placeholder="Search job name / address"></div><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div>
 <div id="jobProgressCard" class="card hidden">
   <h2 id="jobProgressTitle">Inspection Progress</h2>
   <div class="progressTabs">
@@ -2877,11 +2965,12 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 
 
 
-<script id="neu-v4-2-static-folder-search">
+
+<script id="neu-v4-4-cleaner-folders">
 (function(){
-  var folderSearchMode = "browse";
-  var folderSearchText = "";
-  var baseRenderFolderBrowser = null;
+  var searchText = "";
+  var baseRender = null;
+  var showCreatePanel = false;
 
   function byId(id){return document.getElementById(id);}
   function esc(v){
@@ -2892,80 +2981,40 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
       .replace(/"/g,"&quot;")
       .replace(/'/g,"&#39;");
   }
-  function folderDisplayName(f){
+  function jobName(f){
     try{return cleanFolderNameText(f.name || "");}
     catch(e){return String((f && f.name) || "").replace(/^ð\s*/,"").trim();}
   }
-  function folderBuilder(f){
+  function builderName(f){
     try{return browserBuilderName(f) || f.builder_name || "";}
     catch(e){return (f && f.builder_name) || "";}
   }
-  function setTabs(){
-    var browse = byId("neu4BrowseFoldersBtn");
-    var search = byId("neu4SearchFoldersBtn");
-    var box = byId("neu4FolderSearchBox");
-    var input = byId("neu4FolderSearchInput");
-
-    if(browse) browse.classList.toggle("active", folderSearchMode === "browse");
-    if(search) search.classList.toggle("active", folderSearchMode === "search");
-    if(box) box.classList.toggle("active", folderSearchMode === "search");
-    if(input && input.value !== folderSearchText) input.value = folderSearchText;
+  function searchHaystack(f){
+    var parts = [jobName(f), f.job_address || ""];
+    try{
+      (data.tickets || []).forEach(function(t){
+        if(String(t.folder_id || "") === String(f.id || "")){
+          if(t.job_address) parts.push(t.job_address);
+        }
+      });
+    }catch(e){}
+    return parts.join(" ").toLowerCase();
   }
-  function bindTabs(){
-    var browse = byId("neu4BrowseFoldersBtn");
-    var search = byId("neu4SearchFoldersBtn");
-    var input = byId("neu4FolderSearchInput");
-
-    if(browse && !browse.__neu42Bound){
-      browse.__neu42Bound = true;
-      browse.addEventListener("click",function(){
-        folderSearchMode = "browse";
-        setTabs();
-        try{renderFolderBrowser();}catch(e){}
-      });
-    }
-
-    if(search && !search.__neu42Bound){
-      search.__neu42Bound = true;
-      search.addEventListener("click",function(){
-        folderSearchMode = "search";
-        try{currentFolder = null; currentFolderBuilder = null;}catch(e){}
-        setTabs();
-        try{renderFolderBrowser();}catch(e){}
-        setTimeout(function(){
-          var i = byId("neu4FolderSearchInput");
-          if(i) i.focus();
-        },80);
-      });
-    }
-
-    if(input && !input.__neu42Bound){
-      input.__neu42Bound = true;
-      input.addEventListener("input",function(){
-        folderSearchText = this.value || "";
-        try{renderFolderBrowser();}catch(e){}
-      });
-    }
-
-    setTabs();
-  }
-  function allFoldersForSearch(){
+  function allJobFolders(){
     var out = [];
     var seen = {};
-
     try{
-      (folderBrowserBuilders() || []).forEach(function(builder){
-        try{
+      if(typeof folderBrowserBuilders === "function" && typeof folderBrowserJobs === "function"){
+        (folderBrowserBuilders() || []).forEach(function(builder){
           (folderBrowserJobs(builder) || []).forEach(function(f){
             var key = String(f && f.id);
             if(!f || seen[key]) return;
             seen[key] = true;
             out.push(f);
           });
-        }catch(e){}
-      });
+        });
+      }
     }catch(e){}
-
     if(!out.length){
       try{
         (data.folders || []).forEach(function(f){
@@ -2976,97 +3025,158 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
         });
       }catch(e){}
     }
-
+    out.sort(function(a,b){
+      var byBuilder = builderName(a).localeCompare(builderName(b));
+      if(byBuilder) return byBuilder;
+      return jobName(a).localeCompare(jobName(b));
+    });
     return out;
   }
-  function searchPath(){
-    return '<div class="neu4-path-card">' +
-      '<div class="neu4-path-kicker">Folder Search</div>' +
-      '<div class="neu4-path-main">NEU Tickets <span>/</span> Search Job</div>' +
-    '</div>';
+  function pathCard(parts){
+    return '<div class="neu4-path-card"><div class="neu4-path-kicker">Current Path</div><div class="neu4-path-main">' +
+      parts.map(function(p,i){return i ? ' <span>/</span> ' + esc(p) : esc(p);}).join("") +
+      '</div></div>';
   }
-  function renderSearchFolders(){
-    bindTabs();
+  function ensureTools(){
+    var page = byId("foldersPage");
+    var title = byId("folderTitle");
+    var search = byId("neu4FolderSearchInput");
+    if(!page || !title) return;
+
+    page.classList.add("neu4-clean");
+
+    if(search && !search.__neu44Bound){
+      search.__neu44Bound = true;
+      search.addEventListener("input",function(){
+        searchText = this.value || "";
+        try{renderFolderBrowser();}catch(e){}
+      });
+    }
+
+    if(!byId("neu4FolderTools")){
+      var tools = document.createElement("div");
+      tools.id = "neu4FolderTools";
+      tools.className = "neu4-folder-tools";
+      tools.innerHTML =
+        '<button type="button" id="neu4AddFolderToggle" class="neu4-add-folder-btn">Add Folder</button>' +
+        '<button type="button" id="neu4RefreshFoldersBtn" class="gray">Refresh Drive</button>';
+      var searchBox = byId("neu4FolderSearchSimple");
+      (searchBox || title).insertAdjacentElement("afterend", tools);
+
+      var panel = document.createElement("div");
+      panel.id = "neu4CreatePanel";
+      panel.className = "neu4-create-panel";
+      panel.innerHTML =
+        '<label>Builder</label>' +
+        '<div id="neu4BuilderMount"></div>' +
+        '<label>Job Name</label>' +
+        '<div id="neu4JobNameMount"></div>' +
+        '<div id="neu4CreateBtnMount"></div>';
+      tools.insertAdjacentElement("afterend", panel);
+
+      var builder = byId("folderBuilderSelect");
+      var newBuilder = byId("newBuilderName");
+      var folderName = byId("folderName");
+      var createBtn = byId("createFolderBtn");
+
+      if(builder) byId("neu4BuilderMount").appendChild(builder);
+      if(newBuilder) byId("neu4BuilderMount").appendChild(newBuilder);
+      if(folderName) byId("neu4JobNameMount").appendChild(folderName);
+      if(createBtn) byId("neu4CreateBtnMount").appendChild(createBtn);
+    }
+
+    var add = byId("neu4AddFolderToggle");
+    var refresh = byId("neu4RefreshFoldersBtn");
+    var panel = byId("neu4CreatePanel");
+
+    if(add && !add.__neu44Bound){
+      add.__neu44Bound = true;
+      add.addEventListener("click",function(){
+        showCreatePanel = !showCreatePanel;
+        updatePanel();
+      });
+    }
+
+    if(refresh && !refresh.__neu44Bound){
+      refresh.__neu44Bound = true;
+      refresh.addEventListener("click",function(){
+        try{importDriveFoldersFromDrive();}catch(e){}
+      });
+    }
+
+    function updatePanel(){
+      if(panel) panel.classList.toggle("open", showCreatePanel);
+      if(add){
+        add.classList.toggle("active", showCreatePanel);
+        add.textContent = showCreatePanel ? "Close Add" : "Add Folder";
+      }
+    }
+    updatePanel();
+
+    var input = byId("neu4FolderSearchInput");
+    if(input && input.value !== searchText) input.value = searchText;
+  }
+  function renderSearchOrBase(){
+    ensureTools();
+
+    var q = String(searchText || "").trim().toLowerCase();
+
+    if(!q){
+      if(baseRender) baseRender();
+      ensureTools();
+      hideOriginalBulkButtons();
+      return;
+    }
 
     var grid = byId("foldersGrid");
     if(!grid) return;
 
     grid.className = "folderGrid neu4-folder-list";
-
     if(byId("folderTitle")) byId("folderTitle").textContent = "Folders";
     if(byId("folderBackBtn")) byId("folderBackBtn").classList.add("hidden");
     if(byId("folderTicketsCard")) hide(byId("folderTicketsCard"));
     if(byId("jobProgressCard")) hide(byId("jobProgressCard"));
 
-    var q = String(folderSearchText || "").trim().toLowerCase();
-    var folders = allFoldersForSearch();
-
-    if(q){
-      folders = folders.filter(function(f){
-        var relatedTicketAddresses = "";
-        try{
-          relatedTicketAddresses = (data.tickets || []).filter(function(t){
-            return String(t.folder_id || "") === String(f.id || "");
-          }).map(function(t){return t.job_address || "";}).join(" ");
-        }catch(e){}
-        var text = [
-          folderDisplayName(f),
-          f.job_address || "",
-          relatedTicketAddresses
-        ].join(" ").toLowerCase();
-        return text.indexOf(q) >= 0;
-      });
-    }
-
-    folders.sort(function(a,b){
-      var ba = folderBuilder(a).localeCompare(folderBuilder(b));
-      if(ba) return ba;
-      return folderDisplayName(a).localeCompare(folderDisplayName(b));
+    var results = allJobFolders().filter(function(f){
+      return searchHaystack(f).indexOf(q) >= 0;
     });
 
-    var html = searchPath();
+    var html = pathCard(["NEU Tickets","Search"]) +
+      '<div class="neu4-search-note">Searching job names and addresses only.</div>' +
+      '<div class="neu4-search-count">' + results.length + ' job result(s)</div>';
 
-    if(!q){
-      html += '<div class="neu4-search-note">Type in the search box above to find a job folder by job name or address.</div>';
-    }
-
-    html += '<div class="neu4-search-count">' + folders.length + ' job result(s)</div>';
-
-    if(folders.length){
-      html += folders.map(function(f){
-        try{return folderBrowserJobCard(f);}
-        catch(e){return '<div class="neu4-empty">' + esc(folderDisplayName(f)) + '</div>';}
-      }).join("");
-    }else{
-      html += '<div class="neu4-empty">No folders match that search.</div>';
-    }
+    html += results.length
+      ? results.map(function(f){try{return folderBrowserJobCard(f);}catch(e){return '<div class="neu4-empty">' + esc(jobName(f)) + '</div>';}}).join("")
+      : '<div class="neu4-empty">No jobs match that search.</div>';
 
     grid.innerHTML = html;
+    ensureTools();
+    hideOriginalBulkButtons();
   }
-  function patchRender(){
+  function hideOriginalBulkButtons(){
+    var importPage = byId("importDriveFoldersPageBtn");
+    var clean = byId("cleanDuplicateFoldersBtn");
+    if(importPage) importPage.style.display = "none";
+    if(clean) clean.style.display = "none";
+  }
+  function patch(){
     if(typeof window.renderFolderBrowser !== "function") return false;
-    if(window.renderFolderBrowser.__neu42SearchPatched) return true;
+    if(window.renderFolderBrowser.__neu44CleanerPatched) return true;
 
-    baseRenderFolderBrowser = window.renderFolderBrowser;
+    baseRender = window.renderFolderBrowser;
 
     window.renderFolderBrowser = function(){
-      bindTabs();
-      if(folderSearchMode === "search"){
-        renderSearchFolders();
-      }else{
-        baseRenderFolderBrowser();
-        bindTabs();
-      }
+      renderSearchOrBase();
     };
 
-    window.renderFolderBrowser.__neu42SearchPatched = true;
+    window.renderFolderBrowser.__neu44CleanerPatched = true;
     return true;
   }
   function boot(){
-    bindTabs();
-    if(patchRender()){
-      try{if(typeof draw === "function") draw();}catch(e){}
-    }
+    ensureTools();
+    patch();
+    hideOriginalBulkButtons();
+    try{if(typeof draw === "function") draw();}catch(e){}
   }
 
   if(document.readyState === "loading"){
@@ -3076,156 +3186,8 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   }
 
   window.addEventListener("load",function(){
-    setTimeout(boot,200);
-    setTimeout(boot,800);
+    setTimeout(boot,250);
+    setTimeout(boot,900);
   });
 })();
 </script>
-
-
-<script id="neu-v4-3-job-name-search">
-(function(){
-  function byId(id){return document.getElementById(id);}
-
-  function jobNameOnlyText(folder){
-    var parts = [];
-
-    try{
-      parts.push(cleanFolderNameText(folder.name || ""));
-    }catch(e){
-      parts.push(String((folder && folder.name) || "").replace(/^ð\s*/,"").trim());
-    }
-
-    if(folder && folder.job_address){
-      parts.push(folder.job_address);
-    }
-
-    try{
-      (data.tickets || []).forEach(function(t){
-        if(String(t.folder_id || "") === String(folder.id || "")){
-          if(t.job_address) parts.push(t.job_address);
-        }
-      });
-    }catch(e){}
-
-    return parts.join(" ").toLowerCase();
-  }
-
-  function patchSearchFilter(){
-    if(typeof window.renderFolderBrowser !== "function") return false;
-
-    var original = window.renderFolderBrowser;
-    if(original.__neu43JobSearchPatched) return true;
-
-    window.renderFolderBrowser = function(){
-      original();
-
-      var searchBox = byId("neu4FolderSearchBox");
-      var input = byId("neu4FolderSearchInput");
-      var grid = byId("foldersGrid");
-      var searchButton = byId("neu4SearchFoldersBtn");
-
-      if(input){
-        input.placeholder = "Search job name / address";
-      }
-
-      if(searchButton){
-        searchButton.textContent = "Search Job";
-      }
-
-      if(!searchBox || !searchBox.classList.contains("active") || !input || !grid){
-        return;
-      }
-
-      var q = String(input.value || "").trim().toLowerCase();
-      var cards = Array.prototype.slice.call(grid.querySelectorAll(".neu4-folder-card"));
-
-      cards.forEach(function(card){
-        card.style.display = "";
-      });
-
-      var count = 0;
-
-      try{
-        var all = [];
-        var seen = {};
-
-        if(typeof folderBrowserBuilders === "function" && typeof folderBrowserJobs === "function"){
-          (folderBrowserBuilders() || []).forEach(function(builder){
-            (folderBrowserJobs(builder) || []).forEach(function(f){
-              var key = String(f && f.id);
-              if(!f || seen[key]) return;
-              seen[key] = true;
-              all.push(f);
-            });
-          });
-        }
-
-        if(!all.length && window.data && Array.isArray(data.folders)){
-          data.folders.forEach(function(f){
-            var key = String(f && f.id);
-            if(!f || seen[key]) return;
-            seen[key] = true;
-            all.push(f);
-          });
-        }
-
-        if(q){
-          all = all.filter(function(f){
-            return jobNameOnlyText(f).indexOf(q) >= 0;
-          });
-        }
-
-        var note = grid.querySelector(".neu4-search-note");
-        if(note){
-          note.innerHTML = q
-            ? 'Showing job folders that match <strong>' + q.replace(/</g,"&lt;").replace(/>/g,"&gt;") + '</strong>. Builder names are not used for this search.'
-            : 'Type a <strong>job name or address</strong>. This search does not search builder names.';
-        }
-
-        var countEl = grid.querySelector(".neu4-search-count");
-        if(countEl){
-          countEl.textContent = all.length + " job result(s)";
-        }
-
-      }catch(e){}
-    };
-
-    window.renderFolderBrowser.__neu43JobSearchPatched = true;
-    return true;
-  }
-
-  function boot(){
-    patchSearchFilter();
-
-    var input = byId("neu4FolderSearchInput");
-    var btn = byId("neu4SearchFoldersBtn");
-
-    if(input){
-      input.placeholder = "Search job name / address";
-    }
-
-    if(btn){
-      btn.textContent = "Search Job";
-    }
-
-    try{
-      if(typeof draw === "function") draw();
-    }catch(e){}
-  }
-
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", boot);
-  }else{
-    boot();
-  }
-
-  window.addEventListener("load", function(){
-    setTimeout(boot, 250);
-    setTimeout(boot, 900);
-  });
-})();
-</script>
-
-</body>
-</html>
