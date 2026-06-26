@@ -291,6 +291,206 @@ button{background:#2563eb;color:#fff;box-shadow:0 4px 12px #0005}.green{backgrou
 .progressGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}.progressOption{background:#0b1118;border:1px solid #263241;border-radius:16px;padding:12px 8px;min-height:78px;color:#f8fafc;font-weight:900;text-align:center}.progressOption.active{border-color:#a855f7;box-shadow:0 0 0 2px #a855f744 inset}
 .progressChecklist{margin-top:12px;border:1px solid #263241;border-radius:16px;overflow:hidden}.progressCheckRow{display:grid;grid-template-columns:1fr auto;gap:12px;padding:12px;border-bottom:1px solid #1f2937;align-items:center}.progressCheckRow:last-child{border-bottom:0}.progressCheckRow input{width:22px!important;height:22px!important;margin:0!important;accent-color:#35c46b}.progressSave{margin-top:12px;background:#2563eb!important;color:#fff!important}
 
+
+/* v3.4 mockup-inspired redesign */
+:root{
+  --navy:#060b12;
+  --green:#35c46b;
+  --bg:#03070c;
+  --text:#f8fafc;
+  --line:#1f2937;
+  --glass:#0b1118cc;
+  --blue:#3b82f6;
+  --purple:#a855f7;
+}
+*{-webkit-tap-highlight-color:transparent}
+body{
+  padding:0 10px 18px;
+  background:
+    radial-gradient(circle at 15% -10%,#12243a 0,transparent 35%),
+    radial-gradient(circle at 90% 15%,#0b1d46 0,transparent 28%),
+    linear-gradient(180deg,#02050a,#05080d 45%,#02050a);
+}
+header{
+  margin:0 -10px 14px;
+  padding:20px 14px 22px;
+  border-radius:0 0 28px 28px;
+  background:linear-gradient(135deg,#071a2b,#020814);
+  border-bottom:1px solid #233041;
+  box-shadow:0 20px 45px #000c;
+}
+.logoRow{gap:14px}
+.logo{
+  width:86px;
+  height:86px;
+  border-radius:22px;
+  background:#06131f;
+  border:1px solid #365370;
+  box-shadow:0 12px 30px #0008;
+}
+h1{font-size:31px;letter-spacing:-1px}
+.topNav{
+  position:sticky;
+  top:0;
+  z-index:999;
+  padding:10px 0 12px;
+  background:linear-gradient(180deg,#03070c 0%,#03070cee 78%,transparent);
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.topNav button{
+  min-height:76px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#141b24,#101720);
+  border:1px solid #263241;
+  color:#d8dee8;
+  box-shadow:0 10px 24px #0008;
+}
+.topNav button.active{
+  background:linear-gradient(180deg,#08243a,#061827);
+  border-color:#3b82f6;
+  color:white;
+}
+.navIcon{font-size:24px}
+.card{
+  border-radius:22px;
+  padding:16px;
+  background:linear-gradient(180deg,#0d141c,#080e15);
+  border:1px solid #233041;
+  box-shadow:0 16px 38px #0009;
+}
+.page{padding-bottom:18px}
+.folderGrid{
+  grid-template-columns:1fr;
+  gap:12px;
+}
+@media (min-width:560px){
+ .folderGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.folderCard{
+  min-height:92px;
+  border-radius:18px;
+  padding:14px;
+  background:linear-gradient(135deg,#111b25,#0a1017);
+  border:1px solid #263241;
+  box-shadow:0 14px 32px #0009;
+}
+.driveFolderTop{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+.driveFolderName{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.4px;
+}
+.driveFolderMeta{
+  font-size:13px;
+  color:#a7b0bd!important;
+}
+.driveFolderBtns{
+  margin-top:12px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.driveFolderBtns .mini,.mini{
+  border-radius:999px!important;
+  padding:8px 11px!important;
+  font-size:12px!important;
+}
+.dashGrid{
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.dashBox{
+  min-height:105px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#111b25,#0a1017);
+  border:1px solid #263241;
+  box-shadow:0 16px 34px #0009;
+}
+.dashNumber{
+  font-size:46px;
+  color:#f8fafc;
+}
+.dashLabel{
+  color:#a7b0bd;
+  letter-spacing:.6px;
+}
+.ticketCard{
+  border-radius:19px;
+  background:linear-gradient(135deg,#111b25,#0a1017);
+  border:1px solid #263241;
+  box-shadow:0 14px 30px #0008;
+}
+.ticketTitle{font-size:22px;letter-spacing:-.4px}
+.progressTabs{
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+.progressTabs button{
+  min-height:64px;
+  background:#0b1118;
+  border:1px solid #263241;
+  border-radius:16px;
+  color:#d1d5db;
+}
+.progressTabs button.active{
+  color:#60a5fa;
+  border-color:#3b82f6;
+  background:#0b1d46;
+}
+.progressGrid{
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.progressOption{
+  min-height:96px;
+  background:linear-gradient(135deg,#0b1118,#111827);
+  border:1px solid #263241;
+  border-radius:18px;
+  color:#f8fafc;
+  font-size:15px;
+  box-shadow:0 10px 24px #0007;
+}
+.progressOption.active{
+  border-color:#a855f7;
+  background:linear-gradient(135deg,#2e1065,#111827);
+}
+.progressChecklist{
+  border-radius:18px;
+  background:#080d13;
+}
+.progressCheckRow{
+  font-size:16px;
+  padding:14px;
+}
+.progressCheckRow input{
+  width:26px!important;
+  height:26px!important;
+}
+label{color:#f8fafc}
+input,select,textarea{
+  min-height:52px;
+  background:#05080d;
+  color:#f8fafc;
+  border:1px solid #334155;
+}
+textarea{min-height:100px}
+button{min-height:44px}
+.green{background:#35c46b!important;color:#03120a!important}
+.gray{background:#1f2937!important;color:#f8fafc!important;border:1px solid #334155!important}
+.red{background:#b91c1c!important;color:white!important}
+#folderTitle,#jobProgressTitle{
+  font-size:25px;
+  letter-spacing:-.5px;
+}
+.currentInspectionStatus{
+  font-size:17px!important;
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -382,7 +582,7 @@ button{background:#2563eb;color:#fff;box-shadow:0 4px 12px #0005}.green{backgrou
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><p class="small" id="folderSubtitle">Google Drive style job folders</p><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div>
 <div id="jobProgressCard" class="card hidden">
   <h2 id="jobProgressTitle">Job Progress</h2>
   <div class="progressTabs">
@@ -428,7 +628,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.3 Dark Job Progress</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.4 Mockup Redesign</div></div></section>
 </div>
 
 
@@ -1524,7 +1724,7 @@ function renderFolderBrowser(){
  if($('folderBuilderSelect')&&currentFolderBuilder){$('folderBuilderSelect').value=currentFolderBuilder;}
  if(!currentFolderBuilder){
   let builders=folderBrowserBuilders();
-  $('folderTitle').textContent='Folders';
+  $('folderTitle').textContent='Folders'; if($('folderSubtitle'))$('folderSubtitle').textContent='Builder folders';
   hide($('folderTicketsCard'));hide($('jobProgressCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
@@ -1534,14 +1734,14 @@ function renderFolderBrowser(){
  }
  if(currentFolderBuilder&&!currentFolder){
   let jobs=folderBrowserJobs(currentFolderBuilder);
-  $('folderTitle').textContent=currentFolderBuilder;
+  $('folderTitle').textContent=currentFolderBuilder; if($('folderSubtitle'))$('folderSubtitle').textContent='Job folders';
   hide($('folderTicketsCard'));hide($('jobProgressCard'));
   $('foldersGrid').innerHTML=jobs.length?jobs.map(folderBrowserJobCard).join(''):'<p class="small">No job folders under this builder yet.</p>';
   return;
  }
  let job=(data.folders||[]).find(f=>String(f.id)===String(currentFolder));
  title=job?cleanFolderNameText(job.name):'Job';
- $('folderTitle').textContent=title;
+ $('folderTitle').textContent=title; if($('folderSubtitle'))$('folderSubtitle').textContent='Job dashboard';
  $('foldersGrid').innerHTML=job?folderBrowserJobCard(job):'<p class="small">Job not found.</p>';
  if($('folderTicketsCard')&&$('folderTickets')){
   show($('folderTicketsCard'));
