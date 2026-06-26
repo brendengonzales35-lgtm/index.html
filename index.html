@@ -1305,6 +1305,213 @@ button{
 hr{border-color:var(--v4-line)!important}
 .versionBadge:after{content:" â¢ v4 Mockup UI"}
 
+
+
+/* ============================================================
+   NEU Tickets v4.1 Compact Cleanup
+   Smaller tabs/buttons + removes weird emoji icons.
+   ============================================================ */
+
+header:before{
+  content:""!important;
+  width:34px!important;
+  height:22px!important;
+  display:block!important;
+  border-top:4px solid #fff!important;
+  border-bottom:4px solid #fff!important;
+  background:linear-gradient(#fff,#fff) center/100% 4px no-repeat!important;
+  opacity:.95!important;
+}
+header:after{
+  content:"+"!important;
+  width:46px!important;
+  height:46px!important;
+  font-size:32px!important;
+}
+.topNav{
+  top:76px!important;
+  padding:6px 6px 0!important;
+}
+.topNav button{
+  flex:0 0 78px!important;
+  width:78px!important;
+  min-height:56px!important;
+  padding:6px 2px 9px!important;
+  font-size:11px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+}
+.topNav .navIcon{
+  display:none!important;
+}
+.topNav button:after{
+  left:8px!important;
+  right:8px!important;
+  height:3px!important;
+}
+.page{
+  padding:10px!important;
+}
+.card{
+  padding:13px!important;
+  border-radius:16px!important;
+}
+h1{
+  font-size:26px!important;
+}
+h2{
+  font-size:18px!important;
+}
+h3{
+  font-size:15px!important;
+}
+.folderGrid{
+  gap:9px!important;
+}
+.folderCard{
+  grid-template-columns:48px minmax(0,1fr) 24px!important;
+  gap:10px!important;
+  min-height:78px!important;
+  padding:10px!important;
+}
+.driveFolderIcon,.folderIcon{
+  width:44px!important;
+  min-width:44px!important;
+  height:40px!important;
+  font-size:28px!important;
+}
+.driveFolderIcon svg{
+  width:44px!important;
+  height:34px!important;
+}
+.driveFolderName,.folderName,.ticketTitle,.recentJobTitle{
+  font-size:18px!important;
+}
+.driveFolderMeta,.folderStats{
+  font-size:12px!important;
+  margin-top:3px!important;
+}
+.v4-card-menu{
+  font-size:20px!important;
+}
+.driveFolderBtns,.v4-hidden-actions{
+  margin-top:6px!important;
+}
+.v4-job-head{
+  grid-template-columns:38px 1fr 38px!important;
+  padding:10px 10px 8px!important;
+}
+.v4-job-title{
+  font-size:20px!important;
+}
+.v4-back-btn,.v4-more-btn{
+  width:36px!important;
+  min-height:36px!important;
+  height:36px!important;
+  font-size:22px!important;
+}
+.v4-progress-tabs{
+  margin:0 -13px 12px!important;
+  padding:0 6px!important;
+}
+.v4-progress-tabs button{
+  flex:0 0 76px!important;
+  min-height:52px!important;
+  font-size:11px!important;
+}
+.v4-section-title{
+  padding:10px 12px!important;
+  font-size:12px!important;
+}
+.v4-status-row{
+  grid-template-columns:18px 1fr auto!important;
+  gap:9px!important;
+  padding:12px!important;
+}
+.v4-status-main{
+  font-size:17px!important;
+}
+.v4-status-sub{
+  font-size:12px!important;
+}
+.v4-progress-body{
+  padding:12px!important;
+}
+.v4-inspection-grid{
+  gap:8px!important;
+  margin-top:10px!important;
+}
+.v4-inspect-tile{
+  min-height:68px!important;
+  padding:8px 6px!important;
+  gap:4px!important;
+  font-size:13px!important;
+  line-height:1.12!important;
+}
+.v4-tile-icon{
+  display:none!important;
+}
+.v4-tile-code{
+  display:block;
+  font-size:12px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:.08em;
+  opacity:.85;
+  margin-bottom:2px;
+}
+.v4-check-row{
+  padding:9px 12px!important;
+  font-size:14px!important;
+}
+.v4-check-box{
+  width:22px!important;
+  height:22px!important;
+}
+.v4-notes{
+  min-height:68px!important;
+}
+.v4-save-btn{
+  min-height:44px!important;
+  font-size:15px!important;
+}
+.inspectActionBtn{
+  min-height:44px!important;
+  padding:8px 10px!important;
+  font-size:12px!important;
+}
+button{
+  font-size:14px!important;
+}
+.mini{
+  min-height:30px!important;
+  padding:6px 9px!important;
+  font-size:11px!important;
+}
+@media(max-width:430px){
+  .topNav button{
+    flex-basis:70px!important;
+    width:70px!important;
+    font-size:10px!important;
+  }
+  header{
+    min-height:72px!important;
+    padding:12px 14px!important;
+  }
+  header:after{
+    width:42px!important;
+    height:42px!important;
+    font-size:30px!important;
+  }
+  h1{
+    font-size:24px!important;
+  }
+  .v4-inspect-tile{
+    min-height:62px!important;
+    font-size:12px!important;
+  }
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -3455,6 +3662,239 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
       }
     }catch(e){}
   }, 2500);
+})();
+</script>
+
+
+<script id="neu-v4-1-compact-cleanup">
+(function(){
+  function q(id){return document.getElementById(id);}
+  function esc(v){
+    return String(v == null ? "" : v)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#39;");
+  }
+  function escJs(v){
+    return String(v == null ? "" : v).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+  }
+  function clean(v){
+    try{ if(typeof cleanFolderNameText === "function") return cleanFolderNameText(v); }catch(e){}
+    return String(v||"").replace(/^ð\s*/,"").trim();
+  }
+  function dte(v){
+    try{return displayDate(String(v||"").slice(0,10));}catch(e){return String(v||"").slice(0,10);}
+  }
+  function jobStatus(f){
+    try{
+      var s = inspectionStatus(f);
+      if(s === "Ready for Inspection") s = "Not Ready";
+      return s || "Not Ready";
+    }catch(e){return (f && f.inspection_status) || "Not Ready";}
+  }
+  function statusDot(status){
+    status = String(status || "");
+    if(status.indexOf("Final") >= 0 || status.indexOf("Partial") >= 0 || status.indexOf("Called") >= 0) return "yellow";
+    if(status.indexOf("Halo") >= 0 || status.indexOf("Planning") >= 0) return "blue";
+    if(status === "Passed" || status === "In Progress") return "green";
+    if(status === "Failed") return "red";
+    return "gray";
+  }
+  function statusShort(status){
+    status = String(status || "Not Ready");
+    if(status === "Ready for Final Inspection") return "Ready for Final";
+    if(status === "Ready for Partial Inspection") return "Ready for Partial";
+    if(status === "Ready for Halo Inspection") return "Ready for Halo";
+    if(status.indexOf("Called") >= 0) return status.replace("Inspection Called In","Called In");
+    if(status === "Not Ready") return "In Progress";
+    return status;
+  }
+  function builderName(f){
+    try{return browserBuilderName(f) || f.builder_name || "";}catch(e){return (f && f.builder_name) || "";}
+  }
+  function activeTicketCount(folderId){
+    try{
+      return (data.tickets||[]).filter(function(t){
+        return String(t.folder_id||"") === String(folderId||"") && !(typeof isCompleted === "function" && isCompleted(t));
+      }).length;
+    }catch(e){return 0;}
+  }
+  function progressOptions(){
+    return [
+      ["Not Ready","Not Ready","NR"],
+      ["Ready for Partial Inspection","Partial","PART"],
+      ["Ready for Final Inspection","Final","FINAL"],
+      ["Ready for Halo Inspection","Halo","HALO"],
+      ["Passed","Passed","PASS"],
+      ["Failed","Failed","FAIL"],
+      ["Not Needed","Not Needed","N/A"]
+    ];
+  }
+  function progressChecks(){
+    try{return PROGRESS_CHECKS;}catch(e){
+      return ["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran","GFCI protection installed","Breakers labeled","Panel schedule installed"];
+    }
+  }
+  function tileClass(status){
+    status = String(status||"");
+    if(status.indexOf("Partial") >= 0) return "v4-tile-partial";
+    if(status.indexOf("Final") >= 0) return "v4-tile-final";
+    if(status.indexOf("Halo") >= 0) return "v4-tile-halo";
+    if(status === "Passed") return "v4-tile-passed";
+    if(status === "Failed") return "v4-tile-failed";
+    return "v4-tile-water";
+  }
+  function selectLabel(status){
+    if(status === "Ready for Final Inspection") return "Final Inspection";
+    if(status === "Ready for Partial Inspection") return "Partial Inspection";
+    if(status === "Ready for Halo Inspection") return "Halo Inspection";
+    return status;
+  }
+
+  function renderCompactProgress(){
+    var mount = q("v4ProgressMount");
+    var legacy = q("jobProgressCard");
+    if(!currentFolder){
+      if(legacy) hide(legacy);
+      return;
+    }
+    var f = (data.folders||[]).find(function(x){return String(x.id) === String(currentFolder);});
+    if(!f){
+      if(legacy) hide(legacy);
+      return;
+    }
+
+    var status = jobStatus(f);
+    var p = {};
+    try{ p = readJobProgress(currentFolder) || {}; }catch(e){ p = {}; }
+    var checks = p.checks || {};
+    var allChecks = progressChecks();
+    var done = allChecks.filter(function(c){return checks[c];}).length;
+    var raw = (f && (f.inspection_updated_at || f.updated_at || f.created_at)) || "";
+    var upd = raw ? dte(raw) : "";
+    var options = progressOptions();
+
+    var html = `
+      <div class="card" id="jobProgressCard">
+        <div class="v4-job-head">
+          <button type="button" class="v4-back-btn" onclick="backFolderBrowser()">â¹</button>
+          <div class="v4-job-title">${esc(clean(f.name)||"Job")}</div>
+          <button type="button" class="v4-more-btn">...</button>
+        </div>
+
+        <div class="v4-progress-tabs">
+          <button type="button" onclick="renderJobProgress()">Overview</button>
+          <button type="button" onclick="showPage('ticketsPage')">Tickets</button>
+          <button type="button" class="active" onclick="renderJobProgress()">Progress</button>
+          <button type="button" onclick="openCurrentJobPhotos()">Photos</button>
+          <button type="button" onclick="focusJobNotes()">Notes</button>
+        </div>
+
+        <div class="v4-section-card">
+          <div class="v4-section-title">Inspection Progress</div>
+          <div class="v4-status-row">
+            <span class="v4-dot ${statusDot(status)}"></span>
+            <div>
+              <div class="v4-kicker" style="margin:0 0 5px">Current Status</div>
+              <div class="v4-status-main">${esc(status)}</div>
+              <div class="v4-status-sub">${upd ? "Updated: " + esc(upd) : "Updated automatically"}</div>
+            </div>
+            <button type="button" class="mini gray" onclick="focusJobNotes()">Change</button>
+          </div>
+        </div>
+
+        <div class="v4-section-card">
+          <div class="v4-progress-body">
+            <label>Inspection Type</label>
+            <select class="v4-select" id="jobProgressSelect" onchange="setJobProgressStatus(this.value)">
+              ${options.map(function(o){
+                var val=o[0], label=selectLabel(o[0]);
+                return `<option value="${esc(val)}" ${val===status ? "selected" : ""}>${esc(label)}</option>`;
+              }).join("")}
+            </select>
+            <div class="small" style="margin-top:8px">Double tap option to mark called in.</div>
+            <div class="v4-inspection-grid">
+              ${options.map(function(o){
+                var val=o[0], label=o[1], code=o[2];
+                return `<button type="button" class="v4-inspect-tile ${tileClass(val)}" onclick="event.preventDefault();event.stopPropagation();setJobProgressStatus('${escJs(val)}')"><span class="v4-tile-code">${esc(code)}</span><span>${esc(label)}</span></button>`;
+              }).join("")}
+            </div>
+          </div>
+        </div>
+
+        <div class="v4-section-card v4-check-list">
+          <div class="v4-section-title" style="display:flex;justify-content:space-between;color:var(--v4-purple)"><span>Final Checklist</span><span>${done} / ${allChecks.length}</span></div>
+          ${allChecks.map(function(c){
+            return `<label class="v4-check-row" style="text-transform:none;letter-spacing:0;font-size:14px!important;font-weight:500!important;color:#fff!important;margin:0">
+              <span>${esc(c)}</span>
+              <input class="v4-check-box" type="checkbox" ${checks[c] ? "checked" : ""} onchange="toggleJobProgressCheck('${escJs(c)}')">
+            </label>`;
+          }).join("")}
+        </div>
+
+        <div class="v4-section-card">
+          <div class="v4-progress-body">
+            <label>Notes</label>
+            <textarea id="jobProgressNotes" class="v4-notes" placeholder="Add notes...">${esc(p.notes||"")}</textarea>
+          </div>
+        </div>
+        <button type="button" class="v4-save-btn" onclick="saveJobProgressNotes()">Save Progress</button>
+        <div class="v4-saved"><span>OK</span> Progress saved automatically</div>
+      </div>`;
+
+    if(mount){
+      mount.innerHTML = html;
+      if(legacy && legacy.parentElement && legacy.parentElement.id !== "v4ProgressMount") hide(legacy);
+    }else if(legacy){
+      legacy.outerHTML = html;
+    }
+  }
+
+  function compactCurrentInspectionLabel(status){
+    status = String(status||"Not Ready");
+    if(status === "Ready for Inspection") status = "Not Ready";
+    return `<div class="currentInspectionStatus ${typeof statusBadgeClass === "function" ? statusBadgeClass(status) : "statusNotReady"}"><span class="v4-dot ${statusDot(status)}"></span> ${esc(statusShort(status))}</div>`;
+  }
+
+  function compactInspectionButtons(f){
+    var options=progressOptions();
+    return `<div class="v4-inspection-grid">${options.map(function(o){
+      return `<button type="button" class="v4-inspect-tile ${tileClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();handleInspectionTap('${escJs(f.id)}','${escJs(o[0])}')"><span class="v4-tile-code">${esc(o[2])}</span><span>${esc(o[1])}</span></button>`;
+    }).join("")}</div><div class="small" style="margin-top:10px">Double tap Partial, Final, or Halo to mark called in.</div>`;
+  }
+
+  function compactInspectionJobCard(f){
+    var activeCount = activeTicketCount(f.id);
+    var status = jobStatus(f);
+    return `<div class="ticketCard">
+      <div class="ticketTitle">${esc(clean(f.name)||"Job")}</div>
+      <div class="small">${esc(builderName(f)||"No builder")}<br>${activeCount} active ticket(s)</div>
+      ${compactCurrentInspectionLabel(status)}
+      ${compactInspectionButtons(f)}
+      <button class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteInspectionJob('${escJs(f.id)}')">Delete</button>
+      ${f.drive_url ? `<button class="mini gray" onclick="event.preventDefault();event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>` : ""}
+    </div>`;
+  }
+
+  function install(){
+    try{ renderJobProgress = renderCompactProgress; }catch(e){}
+    try{ currentInspectionLabel = compactCurrentInspectionLabel; }catch(e){}
+    try{ inspectionButtons = compactInspectionButtons; }catch(e){}
+    try{ inspectionJobCard = compactInspectionJobCard; }catch(e){}
+    try{
+      document.querySelectorAll(".topNav .navIcon").forEach(function(n){ n.textContent = ""; });
+    }catch(e){}
+  }
+
+  install();
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      install();
+      try{ if(typeof draw === "function") draw(); }catch(e){}
+    }, 300);
+  });
 })();
 </script>
 
