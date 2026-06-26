@@ -1289,6 +1289,36 @@ input,select,textarea{
   content:" â¢ v4.7 Job Overview Fixed";
 }
 
+
+
+/* ============================================================
+   NEU Tickets v4.8 â Folder Click Fix
+   Makes folder cards clearly tappable and preserves More buttons.
+   ============================================================ */
+
+.neu4-folder-card{
+  cursor:pointer!important;
+  pointer-events:auto!important;
+}
+
+.neu4-folder-card .neu4-folder-main,
+.neu4-folder-card .neu4-folder-icon{
+  pointer-events:none!important;
+}
+
+.neu4-folder-card button,
+.neu4-folder-card .neu4-actions{
+  pointer-events:auto!important;
+}
+
+.neu4-folder-card:active{
+  transform:scale(.99)!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.8 Folder Click Fix";
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -3611,6 +3641,88 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
         if(currentFolder){ renderJobOverviewFixed(); }
       }catch(e){}
     }, 1200);
+  });
+})();
+</script>
+
+
+<script id="neu-v4-8-folder-click-fix">
+(function(){
+  function readInlineTarget(card){
+    var raw = card.getAttribute("onclick") || "";
+    var m = raw.match(/openJobFolder\('([^']+)'\)/);
+    if(m) return {type:"job", value:m[1]};
+    m = raw.match(/openBuilderFolder\('([^']+)'\)/);
+    if(m) return {type:"builder", value:m[1]};
+    return null;
+  }
+
+  function cleanEscaped(v){
+    return String(v || "").replace(/\\'/g,"'").replace(/\\\\/g,"\\");
+  }
+
+  function attachFolderClicks(){
+    document.querySelectorAll(".neu4-folder-card").forEach(function(card){
+      if(card.__neu48ClickFixed) return;
+      card.__neu48ClickFixed = true;
+
+      var target = readInlineTarget(card);
+      if(!target) return;
+
+      // Remove the inline onclick so the new listener is the only open handler.
+      card.removeAttribute("onclick");
+
+      card.addEventListener("click",function(e){
+        if(e.target.closest("button") || e.target.closest(".neu4-actions")){
+          return;
+        }
+
+        try{
+          if(target.type === "job"){
+            openJobFolder(cleanEscaped(target.value));
+          }else if(target.type === "builder"){
+            openBuilderFolder(cleanEscaped(target.value));
+          }
+        }catch(err){
+          try{
+            error("Folder did not open: " + (err && err.message ? err.message : err));
+          }catch(e2){}
+        }
+      });
+    });
+  }
+
+  function patchRender(){
+    if(typeof window.renderFolderBrowser !== "function") return false;
+    if(window.renderFolderBrowser.__neu48ClickPatch) return true;
+
+    var old = window.renderFolderBrowser;
+    window.renderFolderBrowser = function(){
+      old();
+      attachFolderClicks();
+    };
+    window.renderFolderBrowser.__neu48ClickPatch = true;
+    return true;
+  }
+
+  function boot(){
+    patchRender();
+    attachFolderClicks();
+    try{
+      if(typeof draw === "function") draw();
+    }catch(e){}
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", boot);
+  }else{
+    boot();
+  }
+
+  window.addEventListener("load",function(){
+    setTimeout(boot,150);
+    setTimeout(boot,600);
+    setTimeout(attachFolderClicks,1200);
   });
 })();
 </script>
