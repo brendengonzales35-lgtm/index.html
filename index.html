@@ -234,7 +234,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="hoursPage" class="page">
 <div class="card">
@@ -268,7 +268,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.3 Drive Import</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.5 Duplicate Cleanup</div></div></section>
 </div>
 
 
@@ -991,6 +991,54 @@ async function createGoogleDriveJobFolder(builderName,jobName){
 
 
 
+
+function duplicateFolderKey(f){
+ let builder=String(f.builder_name||"").trim().toLowerCase();
+ let name=cleanFolderNameText(f.name||"").trim().toLowerCase();
+ if(!name)return "";
+ return builder+"||"+name;
+}
+function duplicateFolderScore(f){
+ let ticketCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)).length;
+ let score=0;
+ score+=ticketCount*100;
+ if(f.drive_url)score+=50;
+ if(f.parent_id)score+=5;
+ if(f.created_at)score+=1;
+ return score;
+}
+async function cleanDuplicateFolders(){
+ if(!confirm("Clean duplicate folders? Tickets will be moved into the folder we keep. Google Drive folders/photos will NOT be deleted."))return;
+ let groups={};
+ for(let f of (data.folders||[])){
+  let key=duplicateFolderKey(f);
+  if(!key)continue;
+  if(!groups[key])groups[key]=[];
+  groups[key].push(f);
+ }
+ let dupGroups=Object.values(groups).filter(g=>g.length>1);
+ if(!dupGroups.length)return notice("No duplicate folders found.");
+ let moved=0, deleted=0, failed=0;
+ for(let group of dupGroups){
+  group.sort((a,b)=>duplicateFolderScore(b)-duplicateFolderScore(a));
+  let keep=group[0];
+  let duplicates=group.slice(1);
+  for(let dupe of duplicates){
+   let ticketIds=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(dupe.id)).map(t=>t.id);
+   if(ticketIds.length){
+    let tr=await supabaseClient.from("tickets").update({folder_id:keep.id}).in("id",ticketIds);
+    if(tr.error){failed++;console.warn("Ticket move failed",tr.error);continue;}
+    moved+=ticketIds.length;
+   }
+   let dr=await supabaseClient.from("folders").delete().eq("id",dupe.id);
+   if(dr.error){failed++;console.warn("Duplicate delete failed",dr.error);}
+   else deleted++;
+  }
+ }
+ await loadAll();
+ notice("Duplicate cleanup done. Deleted "+deleted+" duplicate folder(s), moved "+moved+" ticket(s)"+(failed?(", failed "+failed):"")+".");
+}
+
 async function importDriveFoldersFromDrive(){
  let scriptUrl=localStorage.getItem("neu_drive_script_url")||"";
  if(!scriptUrl)return error("Paste and save your Apps Script Web App URL first.");
@@ -1001,7 +1049,11 @@ async function importDriveFoldersFromDrive(){
    action:"importFolders",
    parentId:NEU_DRIVE_PARENT_FOLDER_ID
   });
-  if(!res||!res.ok)return error((res&&res.error)||"Drive import failed.");
+  if(!res||!res.ok){
+   let msg=(res&&res.error)||"Drive import failed.";
+   if(String(msg).includes("Missing builderName"))msg="The app is still connected to the old Apps Script deployment. Redeploy the new Apps Script as a new version, copy the /exec Web App URL, paste it in Settings, and Save.";
+   return error(msg);
+  }
   let folders=res.folders||[];
   if(!folders.length)return notice("No job folders found in Google Drive.");
   let added=0, skipped=0, failed=0;
@@ -1251,8 +1303,8 @@ async function confirmMoveFolder(){
 async function createFolder(){
  let builder=($("folderBuilderSelect")&&$("folderBuilderSelect").value||"").trim();
  let n=$("folderName").value.trim();
- if(!builder)return error("Pick or add a builder.");
- if(!n)return error("Enter job name.");
+ if(!builder)return error("Pick a builder before saving a new job folder. To import existing Drive folders, tap Import Drive Folders.");
+ if(!n)return error("Enter a job name before saving a new folder. To import existing Drive folders, tap Import Drive Folders.");
  let builders=getBuilders();builders.push(builder);saveBuilders(builders);
  let parentForNew=(currentFolderBuilder?((findBuilderFolder(builder)||{}).id||null):null);
  let r=await supabaseClient.from("folders").insert({name:n,parent_id:parentForNew,builder_name:builder}).select().single();
