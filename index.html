@@ -615,12 +615,13 @@ a{
 
 
 /* ============================================================
-   NEU v3.2.8 FOLDER-SAFE PROFESSIONAL SKIN â CSS ONLY
-   - Uses your uploaded v3.2.5 file as the base
-   - NO JavaScript added
-   - NO folder logic changes
-   - NO folder browser/grid/card overrides
-   - Keeps all tabs and folders as the current app renders them
+   NEU v3.2.9 TAB-LINE + VERTICAL FOLDERS SKIN
+   CSS ONLY:
+   - no JavaScript added
+   - no Supabase/app logic changed
+   - keeps every existing tab
+   - makes tabs a straight horizontal line
+   - makes folders vertical list cards like the reference
    ============================================================ */
 :root{
   --navy:#050a10!important;
@@ -629,17 +630,19 @@ a{
   --text:#f8fafc!important;
   --line:#1f2937!important;
 
-  --fs-bg:#03070c;
-  --fs-panel:#0b111a;
-  --fs-panel2:#101823;
-  --fs-line:rgba(148,163,184,.20);
-  --fs-text:#f8fafc;
-  --fs-muted:#aeb8c7;
-  --fs-blue:#4f73ff;
-  --fs-green:#4ade80;
-  --fs-yellow:#fbbf24;
-  --fs-red:#ef4444;
-  --fs-purple:#a855f7;
+  --neu-bg:#02060b;
+  --neu-panel:#0b111a;
+  --neu-panel2:#101823;
+  --neu-line:rgba(148,163,184,.20);
+  --neu-line-soft:rgba(148,163,184,.11);
+  --neu-text:#f8fafc;
+  --neu-muted:#aeb8c7;
+  --neu-blue:#4f73ff;
+  --neu-blue2:#3154e6;
+  --neu-yellow:#ffd166;
+  --neu-green:#4ade80;
+  --neu-red:#ef4444;
+  --neu-purple:#a855f7;
 }
 
 html{
@@ -652,57 +655,64 @@ html{
 }
 
 body{
+  margin:0!important;
+  padding:0 0 28px!important;
+  color:var(--neu-text)!important;
   background:
-    radial-gradient(circle at 18% -8%,rgba(79,115,255,.17),transparent 34%),
-    radial-gradient(circle at 94% 10%,rgba(168,85,247,.11),transparent 30%),
-    linear-gradient(180deg,#02060b 0%,#071019 46%,#02060b 100%)!important;
-  color:var(--fs-text)!important;
-  padding:0 10px 28px!important;
+    radial-gradient(circle at 15% -8%,rgba(79,115,255,.18),transparent 34%),
+    radial-gradient(circle at 95% 4%,rgba(168,85,247,.13),transparent 30%),
+    linear-gradient(180deg,#02060b 0%,#071019 45%,#02060b 100%)!important;
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Arial,sans-serif!important;
+  overflow-x:hidden!important;
 }
 
 body:before{
   content:"";
   position:fixed;
   inset:0;
-  pointer-events:none;
   z-index:-1;
+  pointer-events:none;
   background-image:
-    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);
+    linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.017) 1px,transparent 1px);
   background-size:44px 44px;
-  opacity:.65;
-  mask-image:linear-gradient(180deg,rgba(0,0,0,.8),transparent 78%);
+  opacity:.66;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 78%);
 }
 
 #appPage,#setupPage,#pinPage,.authPage{
-  position:relative;
+  width:100%;
   max-width:640px;
-  margin:0 auto;
+  margin:0 auto!important;
+  position:relative;
 }
 
-/* Header: professional, but no fake buttons or JS */
+/* Header â clean, professional, reliable */
 header{
-  position:relative!important;
-  z-index:10!important;
-  margin:0 -10px 10px!important;
-  padding:20px 16px 18px!important;
-  border-radius:0 0 26px 26px!important;
-  background:linear-gradient(180deg,rgba(7,17,27,.98),rgba(3,7,12,.96))!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:2000!important;
+  margin:0!important;
+  padding:18px 16px 16px!important;
+  min-height:76px!important;
+  background:linear-gradient(180deg,rgba(2,6,12,.98),rgba(5,10,16,.96))!important;
   border:0!important;
-  border-bottom:1px solid var(--fs-line)!important;
-  box-shadow:0 18px 48px rgba(0,0,0,.58)!important;
+  border-bottom:1px solid var(--neu-line)!important;
+  border-radius:0!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.58)!important;
+  backdrop-filter:blur(18px);
 }
 
 .logoRow{
   justify-content:center!important;
   align-items:center!important;
+  gap:12px!important;
 }
 
 .logo{
-  width:56px!important;
-  height:56px!important;
-  border-radius:16px!important;
+  width:52px!important;
+  height:52px!important;
+  border-radius:15px!important;
   background:#fff!important;
   border:1px solid rgba(255,255,255,.18)!important;
   box-shadow:0 12px 28px rgba(0,0,0,.42)!important;
@@ -710,7 +720,8 @@ header{
 
 h1{
   color:#fff!important;
-  font-size:29px!important;
+  margin:0!important;
+  font-size:28px!important;
   line-height:1.05!important;
   font-weight:950!important;
   letter-spacing:-.85px!important;
@@ -719,6 +730,7 @@ h1{
 h2{
   color:#fff!important;
   font-size:20px!important;
+  line-height:1.15!important;
   font-weight:950!important;
   letter-spacing:-.35px!important;
 }
@@ -727,48 +739,88 @@ h3,.ticketTitle,.folderName,.driveFolderName{
   color:#fff!important;
 }
 
-/* Keep all existing tabs, just make them cleaner */
+/* ONE STRAIGHT TAB LINE UP TOP */
 .topNav{
   position:sticky!important;
-  top:0!important;
-  z-index:999!important;
-  display:grid!important;
-  grid-template-columns:repeat(4,1fr)!important;
-  gap:8px!important;
-  background:rgba(3,7,12,.94)!important;
-  border:1px solid var(--fs-line)!important;
-  border-radius:20px!important;
-  padding:8px!important;
-  margin:10px 0 14px!important;
-  box-shadow:0 14px 36px rgba(0,0,0,.42)!important;
-  backdrop-filter:blur(16px);
+  top:76px!important;
+  z-index:1900!important;
+  display:flex!important;
+  grid-template-columns:none!important;
+  flex-wrap:nowrap!important;
+  gap:0!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  overscroll-behavior-x:contain!important;
+  scrollbar-width:none!important;
+  margin:0!important;
+  padding:8px 10px 0!important;
+  background:linear-gradient(180deg,rgba(6,10,17,.97),rgba(9,14,22,.92))!important;
+  border:0!important;
+  border-bottom:1px solid var(--neu-line)!important;
+  border-radius:0!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.38)!important;
+  backdrop-filter:blur(18px);
+  white-space:nowrap!important;
+}
+
+.topNav::-webkit-scrollbar{
+  display:none!important;
 }
 
 .topNav button{
-  min-height:68px!important;
-  border-radius:16px!important;
-  background:rgba(15,23,36,.86)!important;
-  border:1px solid rgba(148,163,184,.15)!important;
-  color:#dbe6ff!important;
+  flex:0 0 108px!important;
+  width:108px!important;
+  min-height:82px!important;
+  margin:0!important;
+  padding:10px 4px 12px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#d9dee8!important;
   box-shadow:none!important;
-  font-weight:850!important;
+  font-size:13px!important;
+  font-weight:650!important;
+  position:relative!important;
+}
+
+.topNav button:after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:0;
+  height:3px;
+  border-radius:999px 999px 0 0;
+  background:transparent;
 }
 
 .topNav button.active{
-  background:linear-gradient(180deg,rgba(79,115,255,.30),rgba(30,58,138,.35))!important;
-  color:#9db6ff!important;
-  border-color:rgba(79,115,255,.72)!important;
-  box-shadow:0 0 22px rgba(79,115,255,.18)!important;
+  color:#8fb0ff!important;
+}
+
+.topNav button.active:after{
+  background:var(--neu-blue)!important;
+  box-shadow:0 0 20px rgba(79,115,255,.78);
 }
 
 .navIcon{
-  font-size:25px!important;
-  margin-bottom:4px!important;
+  display:inline-block!important;
+  font-size:28px!important;
+  line-height:1!important;
+  margin-bottom:8px!important;
+  filter:drop-shadow(0 8px 12px rgba(0,0,0,.32));
 }
 
-/* Professional cards */
+/* App section spacing */
+.page{
+  padding:12px 12px 28px!important;
+  position:relative!important;
+}
+
+/* Panels */
 .card,
 .ticketCard,
+.folderCard,
 .dashBox,
 .summaryCard,
 .weatherBox,
@@ -777,38 +829,19 @@ h3,.ticketTitle,.folderName,.driveFolderName{
 .materialGrid,
 .moveModal,
 .authCard{
-  background:linear-gradient(135deg,rgba(17,25,36,.95),rgba(8,13,19,.97))!important;
-  border:1px solid var(--fs-line)!important;
-  color:var(--fs-text)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 40px rgba(0,0,0,.42)!important;
+  background:linear-gradient(135deg,rgba(17,25,36,.96),rgba(8,13,19,.98))!important;
+  border:1px solid var(--neu-line)!important;
+  color:var(--neu-text)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 16px 40px rgba(0,0,0,.42)!important;
   backdrop-filter:blur(18px);
 }
 
 .card{
-  border-radius:20px!important;
-  padding:16px!important;
-  margin:12px 0!important;
-}
-
-/* IMPORTANT: folder cards are styled lightly only.
-   No display/grid/flex changes here, so all current folders stay visible exactly as app renders them. */
-.folderCard{
-  background:linear-gradient(135deg,rgba(17,25,36,.95),rgba(8,13,19,.97))!important;
-  border:1px solid var(--fs-line)!important;
-  color:var(--fs-text)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 40px rgba(0,0,0,.42)!important;
   border-radius:18px!important;
-}
-
-.folderCard:active,.ticketCard:active,.dashBox:active{
-  transform:scale(.992);
-}
-
-.ticketTitle,.folderName,.driveFolderName,.recentJobTitle{
-  font-size:20px!important;
-  font-weight:950!important;
-  letter-spacing:-.45px!important;
-  line-height:1.15!important;
+  padding:16px!important;
+  margin:0 0 14px!important;
 }
 
 .small,
@@ -819,12 +852,12 @@ h3,.ticketTitle,.folderName,.driveFolderName{
 .dashLabel,
 .weatherDetails,
 .recentJobMeta{
-  color:var(--fs-muted)!important;
+  color:var(--neu-muted)!important;
 }
 
 /* Forms */
 label{
-  color:#dbe5f2!important;
+  color:#dbe4f0!important;
   text-transform:uppercase!important;
   letter-spacing:.065em!important;
   font-size:12px!important;
@@ -832,9 +865,9 @@ label{
 }
 
 input,select,textarea{
-  background:rgba(2,6,12,.78)!important;
-  border:1px solid rgba(148,163,184,.28)!important;
+  background:#050912!important;
   color:#fff!important;
+  border:1px solid rgba(148,163,184,.26)!important;
   border-radius:13px!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
 }
@@ -845,8 +878,8 @@ input::placeholder,textarea::placeholder{
 
 input:focus,select:focus,textarea:focus{
   outline:0!important;
-  border-color:var(--fs-blue)!important;
-  box-shadow:0 0 0 3px rgba(79,115,255,.20)!important;
+  border-color:var(--neu-purple)!important;
+  box-shadow:0 0 0 3px rgba(168,85,247,.22)!important;
 }
 
 /* Buttons */
@@ -864,19 +897,22 @@ button{
 }
 
 .gray{
-  background:rgba(15,23,36,.92)!important;
+  background:rgba(15,23,36,.88)!important;
   color:#dbe7ff!important;
-  border:1px solid rgba(79,115,255,.36)!important;
+  border:1px solid rgba(79,115,255,.38)!important;
 }
 
 .red{
   background:linear-gradient(180deg,#7f1d1d,#450a0a)!important;
   color:#fecaca!important;
-  border:1px solid rgba(239,68,68,.48)!important;
+  border:1px solid rgba(239,68,68,.50)!important;
 }
 
 .mini{
-  border-radius:11px!important;
+  min-height:34px!important;
+  padding:8px 12px!important;
+  border-radius:10px!important;
+  font-size:12px!important;
   font-weight:900!important;
 }
 
@@ -887,31 +923,125 @@ button{
 
 .dashBox,.summaryCard{
   min-height:108px!important;
-  border-radius:18px!important;
   padding:16px!important;
+  border-radius:18px!important;
 }
 
 .dashNumber,.summaryNum,.weatherMain{
   color:#fff!important;
   font-size:42px!important;
   font-weight:950!important;
+  line-height:.96!important;
   letter-spacing:-1px!important;
 }
 
 .dashLabel,.summaryLabel{
+  color:var(--neu-muted)!important;
   text-transform:uppercase!important;
   letter-spacing:.075em!important;
   font-size:11px!important;
+  margin-top:8px!important;
 }
 
-/* Status badges */
+/* VERTICAL FOLDER LIST LIKE THE SCREENSHOT */
+.folderGrid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:12px!important;
+}
+
+.folderCard{
+  display:block!important;
+  min-height:auto!important;
+  margin:0!important;
+  padding:14px!important;
+  border-radius:14px!important;
+  background:linear-gradient(135deg,rgba(17,25,36,.96),rgba(8,13,19,.98))!important;
+  border:1px solid var(--neu-line)!important;
+  color:#fff!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 16px 40px rgba(0,0,0,.42)!important;
+}
+
+.folderCard:active,
+.ticketCard:active,
+.dashBox:active{
+  transform:scale(.992);
+}
+
+.driveFolderTop{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  min-width:0!important;
+}
+
+.driveFolderIcon,
+.folderIcon{
+  width:58px!important;
+  min-width:58px!important;
+  height:52px!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:38px!important;
+  filter:drop-shadow(0 10px 16px rgba(0,0,0,.36));
+}
+
+.driveFolderIcon svg{
+  width:54px!important;
+  height:42px!important;
+}
+
+.driveFolderText{
+  min-width:0!important;
+}
+
+.driveFolderName,
+.folderName,
+.ticketTitle,
+.recentJobTitle{
+  color:#fff!important;
+  font-size:21px!important;
+  line-height:1.12!important;
+  font-weight:950!important;
+  letter-spacing:-.45px!important;
+}
+
+.driveFolderMeta,
+.folderStats{
+  margin-top:5px!important;
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+
+.driveFolderBtns{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+  margin-top:12px!important;
+}
+
+.driveFolderBtns .mini{
+  margin:0!important;
+}
+
+/* Tickets */
+.ticketCard{
+  margin-top:12px!important;
+  padding:14px!important;
+  border-radius:14px!important;
+}
+
+/* Status colors */
 .statusBadge{
   display:inline-flex!important;
   align-items:center!important;
   gap:7px!important;
+  padding:7px 11px!important;
   border-radius:999px!important;
   border-width:1px!important;
-  padding:7px 11px!important;
+  font-size:12px!important;
   font-weight:900!important;
 }
 
@@ -920,7 +1050,7 @@ button{
   height:10px!important;
   border-radius:999px!important;
   display:inline-block!important;
-  box-shadow:0 0 15px currentColor;
+  box-shadow:0 0 16px currentColor;
 }
 
 .statusNotReady{background:rgba(148,163,184,.12)!important;color:#dbeafe!important;border-color:rgba(148,163,184,.30)!important}
@@ -937,38 +1067,87 @@ button{
 .statusDot.statusFailed{background:#ef4444!important;color:#ef4444!important}
 .statusDot.statusNeeded{background:#94a3b8!important;color:#94a3b8!important}
 
-/* Inspections */
+/* Inspections/progress */
 .currentInspectionStatus{
+  padding:13px 14px!important;
   border-radius:15px!important;
-  padding:12px 13px!important;
   font-size:16px!important;
   font-weight:950!important;
   border-width:1px!important;
 }
 
 .inspectActionBtn{
-  min-height:52px!important;
+  min-height:58px!important;
   border-radius:14px!important;
   font-weight:950!important;
 }
 
 .inspectBtnFinal{
-  box-shadow:0 0 0 1px rgba(168,85,247,.28),0 0 20px rgba(168,85,247,.20)!important;
+  box-shadow:0 0 0 1px rgba(168,85,247,.35),0 0 24px rgba(168,85,247,.25)!important;
 }
 
-/* Progress card */
+.progressTabs{
+  display:flex!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  overflow-x:auto!important;
+  margin:2px -16px 16px!important;
+  padding:0 8px!important;
+  border-bottom:1px solid var(--neu-line)!important;
+}
+
+.progressTabs button{
+  flex:0 0 96px!important;
+  min-height:70px!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  color:#d9dee8!important;
+  box-shadow:none!important;
+  position:relative!important;
+}
+
+.progressTabs button.active{
+  color:#83a4ff!important;
+  background:transparent!important;
+}
+
+.progressTabs button.active:after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:0;
+  height:3px;
+  background:var(--neu-blue);
+  border-radius:999px 999px 0 0;
+}
+
 .progressOption.active{
-  border-color:#a855f7!important;
-  background:linear-gradient(135deg,rgba(75,23,112,.88),rgba(20,12,32,.94))!important;
+  border-color:var(--neu-purple)!important;
+  background:linear-gradient(135deg,rgba(75,23,112,.90),rgba(22,9,45,.94))!important;
+  box-shadow:0 0 0 1px rgba(168,85,247,.35),0 0 24px rgba(168,85,247,.22)!important;
+}
+
+.progressChecklist{
+  border-color:var(--neu-line)!important;
+}
+
+.progressCheckRow{
+  border-bottom-color:var(--neu-line-soft)!important;
+}
+
+.progressCheckRow input{
+  accent-color:var(--neu-green)!important;
 }
 
 .progressSave{
   background:linear-gradient(180deg,#4f73ff,#3154e6)!important;
 }
 
-/* Alerts and overlays */
+/* Alerts / overlays */
 .moveOverlay{
-  background:rgba(0,0,0,.72)!important;
+  background:rgba(0,0,0,.74)!important;
   backdrop-filter:blur(14px);
 }
 
@@ -1003,15 +1182,15 @@ button{
 }
 
 .galleryGrid img{
-  border-color:var(--fs-line)!important;
+  border-color:var(--neu-line)!important;
 }
 
 hr{
-  border-color:var(--fs-line)!important;
+  border-color:var(--neu-line)!important;
 }
 
 .versionBadge:after{
-  content:" â¢ Folder-Safe Pro";
+  content:" â¢ Top Tabs + Vertical Folders";
 }
 
 </style>
@@ -2705,32 +2884,4 @@ function draw(){setStatusSelect("newInspection",$("newInspection").value);render
 $("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();renderBuilderSelect();drawDashboard();
 if($("archiveList")){
  let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
- let archived=data.tickets.filter(isCompleted).filter(t=>!aq||(t.builder||"").toLowerCase().includes(aq)||(t.job_address||"").toLowerCase().includes(aq));
- $("archiveList").innerHTML=archived.length?archived.map(t=>ticketCard(t,false)).join(""):'<p class="small">No completed tickets yet.</p>';
-}
-drawDashboard();
-
-if(typeof renderJobProgress==='function')renderJobProgress();if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
-if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSetting;$("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").value.trim());location.reload()};$("clearSetupBtn").onclick=()=>{localStorage.removeItem("neu_pin_supabase");location.reload()};$("pinLoginBtn").onclick=pinLogin;$("pinInput").addEventListener("keyup",e=>{if(e.key==="Enter"||$("pinInput").value.length===4)pinLogin()});$("signOutBtn").onclick=()=>{localStorage.removeItem("neu_current_employee");location.reload()};$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"NEU TICKETS",url:location.href});else prompt("Copy app link:",location.href)};document.body.addEventListener("click",e=>{
- let btn=e.target.closest("button");
- if(btn){
-  let action=btn.dataset.action;
-  let id=btn.dataset.ticketId;
-  if(action&&id){
-   e.preventDefault();
-   e.stopPropagation();
-   if(action==="open")return openTicket(id);
-   if(action==="edit")return safeEditTicket(id);
-   if(action==="photos")return openPhotos(id);
-   if(action==="email")return emailTicket(id);
-  }
-  let p=btn.dataset.page;
-  if(p){
-   e.preventDefault();
-   e.stopPropagation();
-   return showPage(p);
-  }
- }
-});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
-</script>
-</body>
+ let archived=data.tickets.filter(isCompleted).filter(t=>!aq||(t.builder||"").toLowerCase().includes(aq)||(t.job_address||"").toLowe
