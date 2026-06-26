@@ -268,7 +268,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.7 Folder Delete Only</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.8 Top Folder Buttons</div></div></section>
 </div>
 
 
@@ -1163,6 +1163,28 @@ function findBuilderFolder(builder){
  let target=normBuilderName(builder);
  return (data.folders||[]).find(f=>isBuilderFolder(f)&&normBuilderName(f.name)===target) || null;
 }
+
+function hiddenBuilderFolders(){
+ try{return JSON.parse(localStorage.getItem("neu_hidden_builder_folders")||"[]");}
+ catch(e){return [];}
+}
+function saveHiddenBuilderFolders(arr){
+ localStorage.setItem("neu_hidden_builder_folders",JSON.stringify([...new Set((arr||[]).filter(Boolean))]));
+}
+function isHiddenBuilderFolder(name){
+ let n=normBuilderName(name);
+ return hiddenBuilderFolders().some(x=>normBuilderName(x)===n);
+}
+function hideBuilderFolder(name){
+ let arr=hiddenBuilderFolders();
+ if(!arr.some(x=>normBuilderName(x)===normBuilderName(name)))arr.push(name);
+ saveHiddenBuilderFolders(arr);
+}
+function unhideBuilderFolder(name){
+ let n=normBuilderName(name);
+ saveHiddenBuilderFolders(hiddenBuilderFolders().filter(x=>normBuilderName(x)!==n));
+}
+
 function folderBrowserBuilders(){
  let names=[];
  (typeof FIXED_BUILDERS!=="undefined"?FIXED_BUILDERS:[]).forEach(b=>names.push(cleanFolderNameText(b)));
@@ -1171,7 +1193,9 @@ function folderBrowserBuilders(){
   let b=browserBuilderName(f);
   if(b)names.push(b);
  });
- return [...new Set(names.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)));
+ return [...new Set(names.filter(Boolean))]
+  .filter(b=>!isHiddenBuilderFolder(b)||folderBrowserJobs(b).length>0)
+  .sort((a,b)=>String(a).localeCompare(String(b)));
 }
 function folderBrowserJobs(builder){
  let target=normBuilderName(builder);
@@ -1213,7 +1237,7 @@ function renderFolderBrowser(){
   hide($('folderTicketsCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
-   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move Jobs</button></div>`;
+   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move Folder</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete Folder</button></div>`;
   }).join(''):'<p class="small">No builders found.</p>';
   return;
  }
@@ -1348,29 +1372,40 @@ function foldersForBuilderName(builder){
 }
 async function deleteBuilderFolder(builder){
  let related=foldersForBuilderName(builder);
- if(!related.length)return notice("No app folders found for "+builder+".");
+ if(!related.length){
+  if(!confirm("Delete this empty folder card from the app page? Google Drive folders/photos will NOT be deleted."))return;
+  hideBuilderFolder(builder);
+  currentFolderBuilder=null;
+  currentFolder=null;
+  notice("Folder removed from this app page. Google Drive was not deleted.");
+  draw();
+  return;
+ }
  let ids=related.map(f=>String(f.id));
- if(!confirm("Delete "+builder+" from the app? This removes "+ids.length+" folder record(s) from the app and unlinks tickets. Google Drive folders/photos will NOT be deleted."))return;
+ if(!confirm("Delete this folder from the app? This removes "+ids.length+" folder record(s) from the app and unlinks tickets. Google Drive folders/photos will NOT be deleted."))return;
  let tr=await supabaseClient.from("tickets").update({folder_id:null}).in("folder_id",ids);
  if(tr.error)return error(tr.error.message);
  let dr=await supabaseClient.from("folders").delete().in("id",ids);
  if(dr.error)return error(dr.error.message);
+ hideBuilderFolder(builder);
  currentFolderBuilder=null;
  currentFolder=null;
- notice("Builder deleted from app. Google Drive photos were not deleted.");
+ notice("Folder deleted from app. Google Drive photos were not deleted.");
  await loadAll();
 }
 async function moveBuilderJobs(builder){
- let to=prompt("Move all app job folders from "+builder+" to which builder?", builder);
+ let to=prompt("Move this folder's jobs to which builder/folder?", builder);
  if(to===null)return;
  to=String(to||"").trim();
- if(!to)return error("Enter a builder name.");
+ if(!to)return error("Enter a folder/builder name.");
  let jobs=folderBrowserJobs(builder);
- if(!jobs.length)return notice("No job folders found under "+builder+".");
+ if(!jobs.length)return notice("No job folders found inside this folder.");
  if(!confirm("Move "+jobs.length+" job folder(s) from "+builder+" to "+to+"?"))return;
  let ids=jobs.map(f=>String(f.id));
  let r=await supabaseClient.from("folders").update({builder_name:to,parent_id:null}).in("id",ids);
  if(r.error)return error(r.error.message);
+ hideBuilderFolder(builder);
+ unhideBuilderFolder(to);
  currentFolderBuilder=to;
  currentFolder=null;
  notice("Moved "+jobs.length+" job folder(s) to "+to+".");
