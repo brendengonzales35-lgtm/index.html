@@ -459,32 +459,23 @@ a{color:#60a5fa}
 .currentInspectionStatus.statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
 
 
-/* v3.2.8 mockup menu rewrite */
-:root{
-  --mock-bg:#03070c;
-  --mock-card:#0b1118;
-  --mock-card2:#111b25;
-  --mock-line:#263241;
-  --mock-blue:#3b82f6;
-  --mock-text:#f8fafc;
-  --mock-muted:#a7b0bd;
-}
+/* v3.2.9 working mockup menu */
 body{
   background:
-    radial-gradient(circle at 20% -10%,rgba(59,130,246,.13),transparent 34%),
+    radial-gradient(circle at 20% -10%,rgba(59,130,246,.14),transparent 34%),
     linear-gradient(180deg,#02060b,#050a10 48%,#02060b)!important;
-  color:var(--mock-text)!important;
+  color:#f8fafc!important;
   padding:0 10px 22px!important;
 }
 .mockAppHeader{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  margin:0 -10px;
-  padding:12px 12px 0;
-  background:linear-gradient(180deg,#03070c 0%,rgba(3,7,12,.98) 86%,rgba(3,7,12,.82));
-  border-radius:0!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:1000!important;
+  margin:0 -10px!important;
+  padding:10px 12px 0!important;
+  background:linear-gradient(180deg,#03070c 0%,rgba(3,7,12,.98) 86%,rgba(3,7,12,.82))!important;
   border:0!important;
+  border-radius:0!important;
   box-shadow:none!important;
 }
 .mockTopBar{
@@ -493,7 +484,7 @@ body{
   grid-template-columns:52px 1fr 52px;
   align-items:center;
   gap:8px;
-  border-bottom:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
 .mockAppTitle{
   text-align:center;
@@ -557,14 +548,7 @@ body{
   margin-bottom:5px!important;
   line-height:1!important;
 }
-.card{
-  background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98))!important;
-  border:1px solid #1f2937!important;
-  color:#f8fafc!important;
-  border-radius:20px!important;
-  box-shadow:0 16px 36px rgba(0,0,0,.58)!important;
-}
-.ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox{
+.card,.ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox{
   background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98))!important;
   border:1px solid #1f2937!important;
   color:#f8fafc!important;
@@ -606,80 +590,33 @@ button{box-shadow:none!important}
   font-size:12px!important;
   margin:7px 5px 0 0!important;
 }
-.statusBadge{
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:7px!important;
-  border-radius:999px!important;
-  padding:7px 11px!important;
-  font-size:12px!important;
-  font-weight:900!important;
-  margin:7px 5px 5px 0!important;
-  border:2px solid transparent!important;
-}
-.statusDot{width:10px!important;height:10px!important;border-radius:999px!important;display:inline-block!important}
-.statusNotReady{background:#450a0a!important;color:#fecaca!important;border-color:#ef4444!important}
-.statusCalled{background:#431407!important;color:#fed7aa!important;border-color:#f97316!important}
-.statusPartial{background:#422006!important;color:#fef08a!important;border-color:#fbbf24!important}
-.statusFinal{background:#052e16!important;color:#bbf7d0!important;border-color:#22c55e!important}
-.statusHalo{background:#0b1d46!important;color:#bfdbfe!important;border-color:#3b82f6!important}
-.statusPassed{background:#022c22!important;color:#a7f3d0!important;border-color:#10b981!important}
-.statusFailed{background:#1f0303!important;color:#fecaca!important;border-color:#dc2626!important}
-.statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
-.inspectActionBtn{
-  width:auto!important;
-  min-width:92px!important;
-  min-height:50px!important;
-  padding:10px 13px!important;
-  font-size:12px!important;
-  border-radius:14px!important;
-  margin:7px 5px 0 0!important;
-  border:2px solid transparent!important;
-  font-weight:900!important;
-}
-.inspectBtnNotReady{background:#7f1d1d!important;color:#fff!important;border-color:#ef4444!important}
-.inspectBtnCalled{background:#9a3412!important;color:#fff!important;border-color:#f97316!important}
-.inspectBtnPartial{background:#78350f!important;color:#fff!important;border-color:#f59e0b!important}
-.inspectBtnFinal{background:#14532d!important;color:#fff!important;border-color:#22c55e!important}
-.inspectBtnHalo{background:#1e3a8a!important;color:#fff!important;border-color:#3b82f6!important}
-.inspectBtnPassed{background:#064e3b!important;color:#fff!important;border-color:#10b981!important}
-.inspectBtnFailed{background:#450a0a!important;color:#fff!important;border-color:#ef4444!important}
-.inspectBtnNeeded{background:#374151!important;color:#fff!important;border-color:#9ca3af!important}
-.currentInspectionStatus{
-  display:block!important;
-  margin:10px 0 8px!important;
-  padding:12px 13px!important;
-  border-radius:14px!important;
-  font-size:16px!important;
-  font-weight:900!important;
-  border:2px solid transparent!important;
-}
 .sideMenu{
-  position:fixed;
-  inset:0;
-  z-index:2000;
-  background:rgba(0,0,0,.62);
-  backdrop-filter:blur(10px);
+  position:fixed!important;
+  inset:0!important;
+  z-index:3000!important;
+  background:rgba(0,0,0,.62)!important;
+  backdrop-filter:blur(10px)!important;
 }
 .sideMenu.hidden{display:none!important}
 .sideMenuPanel{
-  width:min(82vw,330px);
-  height:100%;
-  background:linear-gradient(180deg,#0b1118,#050a10);
-  border-right:1px solid #263241;
-  padding:18px;
-  box-shadow:20px 0 60px rgba(0,0,0,.7);
+  width:min(82vw,330px)!important;
+  height:100%!important;
+  background:linear-gradient(180deg,#0b1118,#050a10)!important;
+  border-right:1px solid #263241!important;
+  padding:18px!important;
+  box-shadow:20px 0 60px rgba(0,0,0,.7)!important;
 }
 .sideMenuPanel h2{
-  margin:18px 0;
+  margin:18px 0!important;
+  color:white!important;
 }
 .sideMenuPanel button:not(.mockIconBtn){
-  width:100%;
-  text-align:left;
+  width:100%!important;
+  text-align:left!important;
   background:#111827!important;
   border:1px solid #263241!important;
   color:#f8fafc!important;
-  margin:7px 0;
+  margin:7px 0!important;
   border-radius:14px!important;
 }
 
@@ -704,21 +641,23 @@ button{box-shadow:none!important}
   <div class="mockTopBar">
     <button class="mockIconBtn" type="button" onclick="toggleSideMenu()">â°</button>
     <div class="mockAppTitle">NEU Tickets</div>
-    <button class="mockAddBtn" type="button" onclick="showPage('createPage')">+</button>
+    <button class="mockAddBtn" type="button" data-page="createTicketPage">+</button>
   </div>
 </header>
+
 <div id="sideMenu" class="sideMenu hidden">
   <div class="sideMenuPanel">
-    <button class="mockIconBtn" type="button" onclick="toggleSideMenu()">Ã</button>
+    <button class="mockIconBtn sideCloseBtn" type="button" onclick="toggleSideMenu()">Ã</button>
     <h2>Menu</h2>
-    <button onclick="showPage('homePage');toggleSideMenu()">Home</button>
-    <button onclick="showPage('foldersPage');toggleSideMenu()">Folders</button>
-    <button onclick="showPage('ticketsPage');toggleSideMenu()">Tickets</button>
-    <button onclick="showPage('inspectionsPage');toggleSideMenu()">Inspections</button>
-    <button onclick="showPage('inventoryPage');toggleSideMenu()">Inventory</button>
-    <button onclick="showPage('hoursPage');toggleSideMenu()">Hours</button>
-    <button onclick="showPage('drivePage');toggleSideMenu()">Photos</button>
-    <button onclick="showPage('settingsPage');toggleSideMenu()">Settings</button>
+    <button data-page="dashboardPage">Home</button>
+    <button data-page="foldersPage">Folders</button>
+    <button data-page="createTicketPage">Create Ticket</button>
+    <button data-page="ticketsPage">Tickets</button>
+    <button data-page="inspectionsPage">Inspections</button>
+    <button data-page="drivePage">Photos</button>
+    <button data-page="inventoryPage">Inventory</button>
+    <button data-page="hoursPage">Hours</button>
+    <button data-page="settingsPage">Settings</button>
   </div>
 </div>
 <div id="errorBox" class="bad hidden"></div><div id="noticeBox" class="notice hidden"></div>
@@ -828,7 +767,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.8 Mockup Menu</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.9 Working Menu</div></div></section>
 </div>
 
 
@@ -969,7 +908,21 @@ function updateWeather(){
  );
 }
 
-function showPage(p){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$(p).classList.add("active");document.querySelectorAll(".topNav button").forEach(b=>b.classList.remove("active"));document.querySelector(`[data-page="${p}"]`).classList.add("active");draw()}
+function showPage(p){
+  const aliases={homePage:"dashboardPage",createPage:"createTicketPage",photosPage:"drivePage"};
+  p=aliases[p]||p;
+  const target=$(p);
+  if(!target){console.warn("Missing page",p);return;}
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  target.classList.add("active");
+  document.querySelectorAll(".topNav button").forEach(b=>b.classList.remove("active"));
+  const nav=document.querySelector(`.topNav button[data-page="${p}"]`);
+  if(nav)nav.classList.add("active");
+  const menu=document.getElementById("sideMenu");
+  if(menu)menu.classList.add("hidden");
+  draw();
+}
+
 function getCreateMaterialValues(){
  let vals=[];
  for(let i=1;i<=createMaterialLineCount;i++){
