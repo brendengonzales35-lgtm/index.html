@@ -144,27 +144,69 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .folderName{font-size:17px}
 
 
-/* v3.2 clean folder/photos polish */
-.folderPathBar{
-  background:#eef6e7;
-  border:1px solid #d7efc6;
-  border-radius:14px;
-  padding:10px 12px;
-  margin:8px 0 14px;
-  color:#06243b;
-  font-size:14px;
-  font-weight:900;
+/* v3.2 Google Drive style folders */
+.folderGrid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
-.cleanHint{font-size:12px;color:#6b7280;font-weight:800;margin:6px 0 10px}
-.cleanButtonRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.driveLinkCard{border:1px solid #e5e7eb;border-radius:18px;padding:14px;margin:10px 0;background:#fff;box-shadow:0 2px 12px #00000008;overflow:hidden}
-.driveLinkTitle{font-size:17px;font-weight:900;color:#111827;line-height:1.2}
-.driveLinkSub{font-size:13px;color:#6b7280;font-weight:800;margin-top:5px;word-break:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
-.driveLinkBtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.driveOpenBtn{display:inline-block;border:0;border-radius:999px;background:#8cc63f;color:#06243b;padding:10px 14px;font-size:15px;font-weight:900;text-decoration:none}
-.driveCopyBtn{border:0;border-radius:999px;background:#e5e7eb;color:#111827;padding:10px 14px;font-size:15px;font-weight:900}
-.folderActionRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.folderCard .mini{margin-top:6px}
+.folderCard{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:12px;
+  margin-top:0;
+  box-shadow:0 2px 10px #0000000a;
+  min-height:132px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.folderCard:active{transform:scale(.99)}
+.driveFolderTop{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.driveFolderIcon{
+  width:42px;
+  height:34px;
+  flex:0 0 42px;
+  display:block;
+}
+.driveFolderIcon svg{width:42px;height:34px;display:block}
+.driveFolderText{min-width:0}
+.driveFolderName{
+  font-weight:900;
+  font-size:15px;
+  line-height:1.15;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.driveFolderMeta{
+  font-size:12px;
+  color:#6b7280;
+  font-weight:700;
+  margin-top:4px;
+  line-height:1.25;
+}
+.driveFolderBtns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+.driveFolderBtns .mini{
+  width:auto!important;
+  margin:0!important;
+  padding:7px 9px!important;
+  font-size:11px!important;
+}
+@media (min-width:700px){
+  .folderGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 
 </style>
 
@@ -257,7 +299,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 <div id="inspectionRecentList"></div>
 </div>
 </section>
-<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><div id="folderPathLabel" class="folderPathBar">All folders</div><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
+<section id="foldersPage" class="page"><div class="card"><button class="mini gray hidden" id="folderBackBtn">&larr; Back</button><h2 id="folderTitle">Folders</h2><label>Builder</label><select id="folderBuilderSelect"></select><input id="newBuilderName" class="hidden"><button id="addBuilderBtn" class="gray hidden" type="button">Add Builder</button><label>Job Name</label><input id="folderName" placeholder="Job name / address"><button id="createFolderBtn" class="green">Save Job Folder</button><button id="importDriveFoldersPageBtn" class="gray" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button><button id="cleanDuplicateFoldersBtn" class="gray" type="button" onclick="cleanDuplicateFolders()">Clean Duplicate Folders</button><div id="foldersGrid" class="folderGrid"></div></div><div id="folderTicketsCard" class="card hidden"><h2>Tickets in This Folder</h2><div id="folderTickets"></div></div></section>
 <section id="inventoryPage" class="page"><div class="card"><h2>My Inventory</h2><label>Material Name</label><input id="invName"><div class="row"><div><label>Quantity</label><input id="invQty" type="number"></div><div><label>Unit</label><input id="invUnit"></div></div><label>Low Alert Qty</label><input id="invLow" type="number"><button id="addInvBtn">Save Material</button></div><div class="card"><h2>Inventory List</h2><div id="inventoryList"></div></div></section>
 <section id="hoursPage" class="page">
 <div class="card">
@@ -291,7 +333,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2 Clean Folder System</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2 Google Drive Folders</div></div></section>
 </div>
 
 
@@ -306,19 +348,6 @@ F-no work 1 PTO day"></textarea>
     <select id="moveFolderParentSelect"></select>
     <button id="confirmMoveFolderBtn" class="green">Move Folder</button>
     <button id="cancelMoveFolderBtn" class="gray">Cancel</button>
-  </div>
-</div>
-
-<div id="moveTopFolderOverlay" class="moveOverlay hidden">
-  <div class="moveModal">
-    <h2>Move Folder</h2>
-    <p id="moveTopFolderName" class="small"></p>
-    <label>Move jobs into existing folder</label>
-    <select id="moveTopFolderTarget"></select>
-    <label>Or new folder name</label>
-    <input id="moveTopFolderNew" placeholder="New folder name">
-    <button id="confirmMoveTopFolderBtn" class="green">Move Folder</button>
-    <button id="cancelMoveTopFolderBtn" class="gray">Cancel</button>
   </div>
 </div>
 
@@ -702,16 +731,7 @@ function openFolder(id){
  draw();
 }
 
-function openPhotos(id){
- let links=data.drive.filter(d=>String(d.ticket_id)===String(id));
- if(links.length){window.open(links[0].url,"_blank");return;}
- let t=ticket(id);
- let f=t?(data.folders||[]).find(x=>String(x.id)===String(t.folder_id||"")):null;
- if(f&&f.drive_url){window.open(f.drive_url,"_blank");return;}
- showPage("drivePage");
- $("driveTicket").value=id;
- notice("Add a Google Drive photo link for this ticket.");
-}
+function openPhotos(id){let links=data.drive.filter(d=>String(d.ticket_id)===String(id));if(links.length){window.open(links[0].url,"_blank");return}showPage("drivePage");$("driveTicket").value=id;notice("Add a Google Drive photo link for this ticket.")}
 
 function refreshEditMaterials(){
  if(!selectedTicket)return;
@@ -1128,7 +1148,7 @@ async function importDriveFoldersFromDrive(){
 }
 
 
-function inspectionStatus(folder){let s=(folder&&folder.inspection_status)||"Not Ready";return s==="Ready for Inspection"?"Not Ready":s}
+function inspectionStatus(folder){return folder.inspection_status||"Not Ready"}
 function inspectionClass(status){
  if(status==="Ready for Halo Inspection"||status==="Ready for Inspection")return"inspectHalo";
  if(status==="Ready for Partial Inspection")return"inspectPartial";
@@ -1193,7 +1213,6 @@ function renderInspections(){
 
 
 let selectedMoveFolder=null;
-let selectedMoveBuilderName=null;
 
 let currentFolderBuilder=null;
 
@@ -1269,7 +1288,7 @@ function backFolderBrowser(){
 }
 function folderBrowserJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
- return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div class="folderName">&#128193; ${cleanFolderNameText(f.name)||"Job"}</div><div class="folderStats">Builder: ${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open Job</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move Folder</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete Folder</button></div>`;
+ return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div><div class="driveFolderTop">${driveFolderIconSvg()}<div class="driveFolderText"><div class="driveFolderName">${cleanFolderNameText(f.name)||"Job"}</div><div class="driveFolderMeta">${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div></div></div></div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete</button></div></div>`;
 }
 function renderFolderBrowser(){
  if(!$('foldersGrid'))return;
@@ -1277,19 +1296,13 @@ function renderFolderBrowser(){
  let showBack=!!(currentFolderBuilder||currentFolder);
  $('folderBackBtn').classList.toggle('hidden',!showBack);
  if($('folderBuilderSelect')&&currentFolderBuilder){$('folderBuilderSelect').value=currentFolderBuilder;}
- if($('folderPathLabel')){
-  let pathText="All folders";
-  if(currentFolder){let jf=(data.folders||[]).find(f=>String(f.id)===String(currentFolder));pathText=(jf?(browserBuilderName(jf)||jf.builder_name||""):currentFolderBuilder||"")+(jf?(" / "+cleanFolderNameText(jf.name)):"");}
-  else if(currentFolderBuilder)pathText=currentFolderBuilder;
-  $('folderPathLabel').textContent=pathText;
- }
  if(!currentFolderBuilder){
   let builders=folderBrowserBuilders();
   $('folderTitle').textContent='Folders';
   hide($('folderTicketsCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
-   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><div class="folderActionRow"><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move Folder</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete Folder</button></div>`;
+   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div><div class="driveFolderTop">${driveFolderIconSvg()}<div class="driveFolderText"><div class="driveFolderName">${b}</div><div class="driveFolderMeta">${count} job folder(s)</div></div></div></div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete</button></div></div>`;
   }).join(''):'<p class="small">No builders found.</p>';
   return;
  }
@@ -1309,6 +1322,11 @@ function renderFolderBrowser(){
   let ft=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(currentFolder||"")&&!isCompleted(t));
   $('folderTickets').innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(''):'<p class="small">No tickets in this job yet.</p>';
  }
+}
+
+
+function driveFolderIconSvg(){
+ return `<span class="driveFolderIcon" aria-hidden="true"><svg viewBox="0 0 64 48" xmlns="http://www.w3.org/2000/svg"><path d="M4 10c0-3.3 2.7-6 6-6h15c2 0 3.9 1 5 2.7L33 11h21c3.3 0 6 2.7 6 6v3H4V10z" fill="#fbbc04"/><path d="M4 18h56v20c0 3.3-2.7 6-6 6H10c-3.3 0-6-2.7-6-6V18z" fill="#fdd663"/><path d="M4 18h56v5H4z" fill="#f6c343"/></svg></span>`;
 }
 
 function cleanFolderNameText(v){
@@ -1445,44 +1463,13 @@ async function deleteBuilderFolder(builder){
  notice("Folder deleted from app. Google Drive photos were not deleted.");
  await loadAll();
 }
-function renderTopFolderMoveTargets(selectedBuilder){
- let el=$("moveTopFolderTarget");
- if(!el)return;
- let current=normBuilderName(selectedBuilder||"");
- let names=folderBrowserBuilders().filter(b=>normBuilderName(b)!==current);
- el.innerHTML='<option value="">Pick destination folder</option>'+names.map(b=>`<option value="${String(b).replace(/"/g,'&quot;')}">${b}</option>`).join("");
-}
-function moveBuilderJobs(builder){
- selectedMoveBuilderName=builder;
- if($("moveTopFolderName"))$("moveTopFolderName").textContent="Moving: "+builder;
- if($("moveTopFolderNew"))$("moveTopFolderNew").value="";
- renderTopFolderMoveTargets(builder);
- show($("moveTopFolderOverlay"));
-}
-function cancelMoveTopFolder(){
- selectedMoveBuilderName=null;
- hide($("moveTopFolderOverlay"));
-}
-async function confirmMoveTopFolder(){
- let builder=selectedMoveBuilderName;
- if(!builder)return cancelMoveTopFolder();
- let typed=($("moveTopFolderNew")&&$("moveTopFolderNew").value||"").trim();
- let picked=($("moveTopFolderTarget")&&$("moveTopFolderTarget").value||"").trim();
- let to=typed||picked;
- if(!to)return error("Pick a destination folder or type a new folder name.");
- if(normBuilderName(to)===normBuilderName(builder))return error("Pick a different folder name.");
+async function moveBuilderJobs(builder){
+ let to=prompt("Move this folder's jobs to which builder/folder?", builder);
+ if(to===null)return;
+ to=String(to||"").trim();
+ if(!to)return error("Enter a folder/builder name.");
  let jobs=folderBrowserJobs(builder);
- if(!jobs.length){
-  if(!confirm("This folder has no job folders. Remove this empty folder card from the app page?"))return;
-  hideBuilderFolder(builder);
-  unhideBuilderFolder(to);
-  currentFolderBuilder=null;
-  currentFolder=null;
-  notice("Empty folder card removed. Google Drive was not changed.");
-  cancelMoveTopFolder();
-  draw();
-  return;
- }
+ if(!jobs.length)return notice("No job folders found inside this folder.");
  if(!confirm("Move "+jobs.length+" job folder(s) from "+builder+" to "+to+"?"))return;
  let ids=jobs.map(f=>String(f.id));
  let r=await supabaseClient.from("folders").update({builder_name:to,parent_id:null}).in("id",ids);
@@ -1492,7 +1479,6 @@ async function confirmMoveTopFolder(){
  currentFolderBuilder=to;
  currentFolder=null;
  notice("Moved "+jobs.length+" job folder(s) to "+to+".");
- cancelMoveTopFolder();
  await loadAll();
 }
 
@@ -1599,32 +1585,12 @@ function folderEditTicket(id){
 }
 
 
-function escapeHtml(v){return String(v||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
-function copyDatasetValue(btn,msg){
- let v=btn&&btn.dataset?btn.dataset.value:"";
- if(!v)return;
- if(navigator.clipboard&&navigator.clipboard.writeText){
-  navigator.clipboard.writeText(v).then(()=>notice(msg||"Copied.")).catch(()=>prompt("Copy this link:",v));
- }else prompt("Copy this link:",v);
-}
-function renderDriveListItem(d){
- let url=String((d&&d.url)||"").trim();
- let label=escapeHtml((d&&d.label)||"Google Drive Folder");
- let safeUrl=escapeHtml(url);
- let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(url)||url.includes("ticket-photos");
- if(isImg)return `<div class="ticketCard"><b>${label||"Photo"}</b><br><a href="${safeUrl}" target="_blank"><img src="${safeUrl}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a></div>`;
- return `<div class="driveLinkCard"><div class="driveLinkTitle">${label||"Google Drive Folder"}</div><div class="driveLinkSub">Google Drive photos folder</div><div class="driveLinkBtns"><a class="driveOpenBtn" href="${safeUrl}" target="_blank">Open Drive Folder</a><button class="driveCopyBtn" type="button" data-value="${safeUrl}" onclick="copyDatasetValue(this,'Drive link copied.')">Copy Link</button></div></div>`;
-}
-
 function renderPhotoLinks(links){
  if(!links.length)return "No photos or Drive links yet.";
  return links.map(l=>{
-  let url=String(l.url||"");
-  let safeUrl=escapeHtml(url);
-  let label=escapeHtml(l.label||"Drive Link");
-  let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(url)||url.includes("ticket-photos");
-  if(isImg)return `<a href="${safeUrl}" target="_blank"><img src="${safeUrl}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin:8px 0"></a><br><span class="small">${label||"Photo"}</span><br>`;
-  return `<div class="driveLinkBtns"><a class="driveOpenBtn" href="${safeUrl}" target="_blank">${label||"Open Drive Link"}</a><button class="driveCopyBtn" type="button" data-value="${safeUrl}" onclick="copyDatasetValue(this,'Drive link copied.')">Copy Link</button></div>`;
+  let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(l.url)||l.url.includes("ticket-photos");
+  if(isImg)return `<a href="${l.url}" target="_blank"><img src="${l.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin:8px 0"></a><br><span class="small">${l.label||"Photo"}</span><br>`;
+  return `<a class="drivePill" href="${l.url}" target="_blank">${l.label||"Open Drive Link"}</a>`;
  }).join("");
 }
 
@@ -1782,7 +1748,7 @@ function ticketCard(t,folderMode){
 function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br>${statusBadge(t.inspection_status)}</div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
 function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';renderFolderBrowser();let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
- $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(renderDriveListItem).join(""):'<p class="small">No photos or Drive links yet.</p>';
+ $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a href="${d.url}" target="_blank">${d.url}</a>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
 $("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();renderBuilderSelect();drawDashboard();
 if($("archiveList")){
  let aq=($("archiveSearch")?$("archiveSearch").value:"").toLowerCase();
@@ -1812,7 +1778,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
    return showPage(p);
   }
  }
-});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;if($("confirmMoveTopFolderBtn"))$("confirmMoveTopFolderBtn").onclick=confirmMoveTopFolder;if($("cancelMoveTopFolderBtn"))$("cancelMoveTopFolderBtn").onclick=cancelMoveTopFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
+});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 </body>
 </html>
