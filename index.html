@@ -612,49 +612,33 @@ a{
   color:#60a5fa;
 }
 
-</style>
-
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="neu-logo.PNG">
-<meta name="theme-color" content="#06243b">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="NEU Tickets">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 
-<!-- v3.2.6 CLEAN MOCKUP COSMETIC LAYER
-     Safe approach: keeps existing app JavaScript/workflows, adds visual polish only. -->
-<style id="neu-v326-clean-mockup-cosmetic">
+/* v3.2.6 CSS ONLY CLEAN POLISH
+   No JavaScript changes. No app logic changes. Safe visual layer only. */
 :root{
-  --neu-bg:#02060b;
-  --neu-bg2:#071019;
-  --neu-panel:rgba(15,22,32,.94);
-  --neu-panel2:rgba(20,29,41,.90);
-  --neu-line:rgba(148,163,184,.20);
-  --neu-line2:rgba(148,163,184,.12);
-  --neu-text:#f8fafc;
-  --neu-muted:#a9b4c3;
-  --neu-blue:#4f7cff;
-  --neu-blue2:#2f55e7;
-  --neu-green:#4ade80;
-  --neu-gold:#ffb020;
-  --neu-orange:#fb923c;
-  --neu-purple:#a855f7;
-  --neu-red:#ef4444;
+  --navy:#050a10!important;
+  --green:#4f7cff!important;
+  --bg:#02060b!important;
+  --text:#f8fafc!important;
+  --line:rgba(148,163,184,.20)!important;
+  --clean-panel:rgba(15,22,32,.94);
+  --clean-panel2:rgba(20,29,41,.90);
+  --clean-muted:#a9b4c3;
+  --clean-blue:#4f7cff;
+  --clean-purple:#a855f7;
+  --clean-gold:#ffb020;
+  --clean-green:#4ade80;
+  --clean-red:#ef4444;
 }
-html{
-  background:#02060b;
-  color-scheme:dark;
-}
-*{
-  -webkit-tap-highlight-color:transparent;
-}
+html{background:#02060b;color-scheme:dark}
+*{-webkit-tap-highlight-color:transparent}
 body{
   background:
     radial-gradient(circle at 12% -8%,rgba(79,124,255,.18),transparent 34%),
     radial-gradient(circle at 110% 12%,rgba(168,85,247,.13),transparent 32%),
     linear-gradient(180deg,#02060b 0%,#071019 48%,#02060b 100%)!important;
-  color:var(--neu-text)!important;
+  color:#f8fafc!important;
   padding:0 10px 30px!important;
   overflow-x:hidden;
 }
@@ -667,113 +651,62 @@ body:before{
     linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
   background-size:42px 42px;
-  opacity:.65;
+  opacity:.62;
   mask-image:linear-gradient(180deg,rgba(0,0,0,.85),transparent 78%);
 }
 #appPage,#setupPage,#pinPage,.authPage{
   position:relative;
-  max-width:590px;
+  max-width:620px;
   margin:0 auto;
 }
-@media(min-width:960px){
-  #appPage{
-    max-width:680px;
-    min-height:100vh;
-    border-left:1px solid rgba(148,163,184,.18);
-    border-right:1px solid rgba(148,163,184,.18);
-    box-shadow:0 24px 90px rgba(0,0,0,.65);
-  }
-}
-
-/* Header like the mockup */
 header{
-  position:sticky!important;
-  top:0!important;
-  z-index:1100!important;
-  margin:0 -10px!important;
-  min-height:82px!important;
-  padding:12px 16px!important;
-  display:grid!important;
-  grid-template-columns:58px 1fr 58px!important;
-  align-items:center!important;
+  position:relative!important;
+  z-index:10!important;
+  margin:0 -10px 10px!important;
+  padding:22px 16px!important;
   border-radius:0!important;
   background:linear-gradient(180deg,rgba(2,6,12,.98),rgba(6,11,18,.94))!important;
   border:0!important;
-  border-bottom:1px solid var(--neu-line)!important;
+  border-bottom:1px solid rgba(148,163,184,.20)!important;
   box-shadow:0 18px 44px rgba(0,0,0,.52)!important;
-  backdrop-filter:blur(18px);
 }
-header .logoRow{
-  grid-column:2!important;
+.logoRow{
   justify-content:center!important;
   gap:0!important;
-  min-width:0!important;
 }
-header .logo{
+.logo{
   display:none!important;
 }
-header h1{
+h1{
   margin:0!important;
   color:#fff!important;
   text-align:center!important;
-  font-size:26px!important;
+  font-size:30px!important;
   line-height:1.1!important;
   font-weight:950!important;
-  letter-spacing:-.8px!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
+  letter-spacing:-.9px!important;
 }
-.neuChromeBtn{
-  width:52px!important;
-  height:52px!important;
-  margin:0!important;
-  padding:0!important;
-  border-radius:999px!important;
-  display:grid!important;
-  place-items:center!important;
-  border:1px solid rgba(148,163,184,.14)!important;
-  box-shadow:none!important;
-  color:#fff!important;
-  font-weight:500!important;
-}
-.neuMenuBtn{
-  grid-column:1!important;
-  background:transparent!important;
-  font-size:34px!important;
-  line-height:1!important;
-}
-.neuAddBtn{
-  grid-column:3!important;
-  background:linear-gradient(180deg,#5877ff,#2d47d9)!important;
-  font-size:36px!important;
-  line-height:1!important;
-  box-shadow:0 14px 34px rgba(79,124,255,.42)!important;
-}
-
-/* Top navigation becomes clean horizontal tabs */
 .topNav{
   position:sticky!important;
-  top:82px!important;
-  z-index:1000!important;
+  top:0!important;
+  z-index:999!important;
   display:flex!important;
   grid-template-columns:none!important;
   gap:0!important;
   overflow-x:auto!important;
-  overscroll-behavior-x:contain!important;
   scrollbar-width:none!important;
   background:linear-gradient(180deg,rgba(4,8,13,.97),rgba(8,13,19,.91))!important;
-  border-bottom:1px solid var(--neu-line)!important;
+  border:1px solid rgba(148,163,184,.16)!important;
+  border-radius:18px!important;
   padding:8px 8px 0!important;
-  margin:0 -10px 12px!important;
+  margin:10px 0 14px!important;
+  box-shadow:0 14px 36px rgba(0,0,0,.42)!important;
   backdrop-filter:blur(18px);
 }
-.topNav::-webkit-scrollbar{
-  display:none;
-}
+.topNav::-webkit-scrollbar{display:none}
 .topNav button{
   flex:0 0 104px!important;
-  min-height:84px!important;
+  min-height:78px!important;
   margin:0!important;
   padding:10px 4px 12px!important;
   border:0!important;
@@ -781,7 +714,7 @@ header h1{
   background:transparent!important;
   color:#d8dee9!important;
   font-size:13px!important;
-  font-weight:600!important;
+  font-weight:700!important;
   box-shadow:none!important;
   position:relative!important;
 }
@@ -799,26 +732,23 @@ header h1{
   color:#87a6ff!important;
 }
 .topNav button.active:after{
-  background:var(--neu-blue)!important;
+  background:#4f7cff!important;
   box-shadow:0 0 18px rgba(79,124,255,.70);
 }
 .navIcon{
-  font-size:28px!important;
+  font-size:27px!important;
   line-height:1!important;
   display:inline-block!important;
-  margin-bottom:8px!important;
-  filter:drop-shadow(0 8px 14px rgba(0,0,0,.35));
+  margin-bottom:7px!important;
 }
-
-/* Cards, fields, and general layout */
 .page{
   position:relative;
   padding:0 2px 28px!important;
 }
 .card,.ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox,.materialGrid,.moveModal,.authCard{
   background:linear-gradient(135deg,rgba(17,25,36,.94),rgba(8,13,19,.96))!important;
-  border:1px solid var(--neu-line)!important;
-  color:var(--neu-text)!important;
+  border:1px solid rgba(148,163,184,.20)!important;
+  color:#f8fafc!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 45px rgba(0,0,0,.42)!important;
   backdrop-filter:blur(18px);
 }
@@ -837,7 +767,7 @@ h3,.ticketTitle,.folderName,.driveFolderName{
   color:#fff!important;
 }
 .small,.folderStats,.folderCount,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails,.recentJobMeta{
-  color:var(--neu-muted)!important;
+  color:#a9b4c3!important;
 }
 label{
   color:#d9e2ef!important;
@@ -853,12 +783,10 @@ input,select,textarea{
   border-radius:13px!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.03)!important;
 }
-input::placeholder,textarea::placeholder{
-  color:#697386!important;
-}
+input::placeholder,textarea::placeholder{color:#697386!important}
 input:focus,select:focus,textarea:focus{
   outline:none!important;
-  border-color:var(--neu-purple)!important;
+  border-color:#a855f7!important;
   box-shadow:0 0 0 3px rgba(168,85,247,.22)!important;
 }
 button{
@@ -888,11 +816,7 @@ button{
   border-radius:10px!important;
   font-weight:900!important;
 }
-
-/* Dashboard */
-.dashGrid,.summaryGrid{
-  gap:12px!important;
-}
+.dashGrid,.summaryGrid{gap:12px!important}
 .dashBox,.summaryCard{
   min-height:108px!important;
   border-radius:18px!important;
@@ -909,12 +833,13 @@ button{
   letter-spacing:.07em!important;
   font-size:11px!important;
 }
-
-/* Folder list similar to the left mockup */
 .folderGrid{
   display:grid!important;
   grid-template-columns:1fr!important;
   gap:12px!important;
+}
+@media(min-width:720px){
+  .folderGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 .folderCard{
   min-height:96px!important;
@@ -922,9 +847,7 @@ button{
   padding:14px!important;
   margin-top:0!important;
 }
-.folderCard:active,.ticketCard:active,.dashBox:active{
-  transform:scale(.992);
-}
+.folderCard:active,.ticketCard:active,.dashBox:active{transform:scale(.992)}
 .driveFolderTop{
   display:flex!important;
   align-items:center!important;
@@ -955,18 +878,12 @@ button{
   gap:7px!important;
   margin-top:12px!important;
 }
-.driveFolderBtns .mini{
-  margin:0!important;
-}
-
-/* Ticket cards */
+.driveFolderBtns .mini{margin:0!important}
 .ticketCard{
   border-radius:14px!important;
   padding:14px!important;
   margin-top:12px!important;
 }
-
-/* Status pills and dots */
 .statusBadge{
   display:inline-flex!important;
   align-items:center!important;
@@ -994,8 +911,6 @@ button{
 .statusDot.statusPassed{background:#4ade80!important;color:#4ade80!important}
 .statusDot.statusFailed{background:#ef4444!important;color:#ef4444!important}
 .statusDot.statusNeeded{background:#94a3b8!important;color:#94a3b8!important}
-
-/* Inspection page: clean large progress buttons */
 .currentInspectionStatus{
   border-radius:15px!important;
   padding:12px 13px!important;
@@ -1005,7 +920,7 @@ button{
 }
 .inspectActionBtn{
   width:calc(50% - 8px)!important;
-  min-height:86px!important;
+  min-height:76px!important;
   margin:8px 4px 0!important;
   padding:10px 8px!important;
   display:inline-flex!important;
@@ -1015,14 +930,12 @@ button{
   white-space:normal!important;
   line-height:1.18!important;
   border-radius:12px!important;
-  font-size:14px!important;
+  font-size:13px!important;
   font-weight:950!important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 28px rgba(0,0,0,.34)!important;
 }
 @media(min-width:560px){
-  .inspectActionBtn{
-    width:calc(33.333% - 9px)!important;
-  }
+  .inspectActionBtn{width:calc(33.333% - 9px)!important}
 }
 .inspectBtnNotReady,.inspectBtnNeeded{
   background:linear-gradient(135deg,rgba(30,41,59,.88),rgba(15,23,42,.94))!important;
@@ -1055,16 +968,14 @@ button{
   color:#fff!important;
   border-color:rgba(239,68,68,.60)!important;
 }
-
-/* Existing job progress mockup card gets closer to the screenshot */
 .progressTabs{
   gap:0!important;
-  border-bottom:1px solid var(--neu-line)!important;
+  border-bottom:1px solid rgba(148,163,184,.20)!important;
   margin:4px -16px 16px!important;
   padding:0 8px!important;
 }
 .progressTabs button{
-  min-height:72px!important;
+  min-height:70px!important;
   background:transparent!important;
   border:0!important;
   border-radius:0!important;
@@ -1074,7 +985,6 @@ button{
 .progressTabs button.active{
   color:#87a6ff!important;
   background:transparent!important;
-  border-color:transparent!important;
 }
 .progressTabs button.active:after{
   content:"";
@@ -1083,44 +993,32 @@ button{
   right:12px;
   bottom:0;
   height:3px;
-  background:var(--neu-blue);
+  background:#4f7cff;
   border-radius:999px 999px 0 0;
 }
-.progressGrid{
-  gap:10px!important;
-}
 .progressOption{
-  min-height:92px!important;
+  min-height:88px!important;
   border-radius:12px!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 28px rgba(0,0,0,.34)!important;
 }
 .progressOption.active{
-  border-color:var(--neu-purple)!important;
+  border-color:#a855f7!important;
   background:linear-gradient(135deg,rgba(75,23,112,.88),rgba(20,12,32,.94))!important;
 }
 .progressChecklist{
   border-radius:14px!important;
-  border-color:var(--neu-line)!important;
+  border-color:rgba(148,163,184,.20)!important;
 }
 .progressCheckRow{
   padding:12px 14px!important;
-  border-bottom-color:var(--neu-line2)!important;
+  border-bottom-color:rgba(148,163,184,.12)!important;
 }
-.progressCheckRow input{
-  accent-color:var(--neu-green)!important;
-}
-.progressSave{
-  background:linear-gradient(180deg,#4f7cff,#2f55e7)!important;
-}
-
-/* Popups and alerts */
+.progressCheckRow input{accent-color:#4ade80!important}
+.progressSave{background:linear-gradient(180deg,#4f7cff,#2f55e7)!important}
 .moveOverlay{
   background:rgba(0,0,0,.72)!important;
   backdrop-filter:blur(14px);
 }
-.moveModal{
-  border-radius:20px!important;
-}
+.moveModal{border-radius:20px!important}
 .notice{
   background:#052e16!important;
   color:#bbf7d0!important;
@@ -1139,58 +1037,18 @@ button{
   background:rgba(239,68,68,.14)!important;
   color:#fecaca!important;
 }
-.drivePill,a{
-  color:#8fb0ff!important;
-}
-.galleryGrid img{
-  border-color:var(--neu-line)!important;
-}
-hr{
-  border-color:var(--neu-line)!important;
-}
-.versionBadge:after{
-  content:" â¢ Clean Mockup Cosmetic";
-}
+.drivePill,a{color:#8fb0ff!important}
+.galleryGrid img{border-color:rgba(148,163,184,.20)!important}
+hr{border-color:rgba(148,163,184,.20)!important}
+
 </style>
 
-<script id="neu-v326-safe-header-shortcuts">
-(function(){
-  function addHeaderShortcuts(){
-    try{
-      var header=document.querySelector("header");
-      if(!header || header.querySelector(".neuMenuBtn")) return;
-
-      var menu=document.createElement("button");
-      menu.type="button";
-      menu.className="neuChromeBtn neuMenuBtn";
-      menu.setAttribute("aria-label","Folders");
-      menu.innerHTML="â°";
-      menu.onclick=function(){
-        try{ if(window.showPage) window.showPage("foldersPage"); }catch(e){}
-      };
-
-      var plus=document.createElement("button");
-      plus.type="button";
-      plus.className="neuChromeBtn neuAddBtn";
-      plus.setAttribute("aria-label","Create Ticket");
-      plus.innerHTML="+";
-      plus.onclick=function(){
-        try{ if(window.showPage) window.showPage("createTicketPage"); }catch(e){}
-      };
-
-      header.insertBefore(menu, header.firstChild);
-      header.appendChild(plus);
-    }catch(e){}
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded", addHeaderShortcuts);
-  }else{
-    addHeaderShortcuts();
-  }
-  window.addEventListener("load", addHeaderShortcuts);
-})();
-</script>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="neu-logo.PNG">
+<meta name="theme-color" content="#06243b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NEU Tickets">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 </head>
 <body>
@@ -2900,4 +2758,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
    return showPage(p);
   }
  }
-});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("con
+});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
+</script>
+</body>
+</html>
