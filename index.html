@@ -1512,6 +1512,229 @@ button{
   }
 }
 
+
+
+/* ============================================================
+   NEU Tickets v4.2 Hamburger Menu + No Weird Symbols
+   ============================================================ */
+
+/* Hide pseudo icon controls from earlier v4 versions */
+header:before,
+header:after{
+  display:none!important;
+  content:""!important;
+}
+
+/* Header with real clickable menu button */
+header{
+  display:grid!important;
+  grid-template-columns:54px 1fr!important;
+  gap:10px!important;
+  align-items:center!important;
+  padding:12px 14px!important;
+  min-height:72px!important;
+}
+
+.logoRow{
+  justify-content:flex-start!important;
+}
+
+.logo{
+  width:46px!important;
+  height:46px!important;
+  border-radius:13px!important;
+}
+
+h1{
+  font-size:24px!important;
+}
+
+.v42-menu-button{
+  width:46px!important;
+  height:46px!important;
+  min-height:46px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:12px!important;
+  background:transparent!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  display:grid!important;
+  place-items:center!important;
+  box-shadow:none!important;
+}
+
+.v42-menu-lines{
+  width:25px;
+  height:18px;
+  display:block;
+  position:relative;
+  border-top:3px solid #fff;
+  border-bottom:3px solid #fff;
+}
+
+.v42-menu-lines:before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:3px;
+  background:#fff;
+  transform:translateY(-50%);
+}
+
+/* Hide old scrolling top tabs */
+.topNav{
+  display:none!important;
+}
+
+/* Slide-down hamburger menu */
+.v42-menu-panel{
+  position:fixed;
+  top:72px;
+  left:12px;
+  right:12px;
+  z-index:3000;
+  max-width:620px;
+  margin:0 auto;
+  background:linear-gradient(135deg,rgba(17,25,36,.98),rgba(8,13,19,.99));
+  border:1px solid rgba(148,163,184,.22);
+  border-radius:18px;
+  box-shadow:0 24px 70px rgba(0,0,0,.70);
+  padding:10px;
+  display:none;
+  backdrop-filter:blur(18px);
+}
+
+.v42-menu-panel.open{
+  display:block;
+}
+
+.v42-menu-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+
+.v42-menu-item{
+  min-height:46px!important;
+  margin:0!important;
+  padding:10px 12px!important;
+  border-radius:13px!important;
+  background:rgba(15,23,36,.90)!important;
+  border:1px solid rgba(148,163,184,.18)!important;
+  color:#fff!important;
+  text-align:left!important;
+  font-size:14px!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+
+.v42-menu-item.active{
+  background:linear-gradient(180deg,#4f73ff,#3154e6)!important;
+  border-color:rgba(79,115,255,.75)!important;
+}
+
+/* Remove weird mojibake symbol area from cards */
+.v4-card-menu{
+  display:none!important;
+}
+
+.folderCard{
+  grid-template-columns:48px minmax(0,1fr)!important;
+}
+
+/* Hide action row by default to prevent crowding */
+.v4-hidden-actions,
+.driveFolderBtns{
+  display:none!important;
+}
+
+.folderCard.v42-actions-open .v4-hidden-actions,
+.folderCard.v42-actions-open .driveFolderBtns{
+  display:flex!important;
+}
+
+/* Add clean action button on each folder card */
+.v42-actions-button{
+  position:absolute;
+  right:10px;
+  top:10px;
+  width:32px!important;
+  height:32px!important;
+  min-height:32px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:rgba(15,23,36,.95)!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:900!important;
+}
+
+.folderCard{
+  position:relative!important;
+  padding-right:48px!important;
+}
+
+/* Compact the main content now that tabs are hidden */
+.page{
+  padding:10px!important;
+}
+
+.card{
+  margin-bottom:10px!important;
+}
+
+.v4-path-card{
+  padding:12px!important;
+  margin-bottom:10px!important;
+}
+
+.v4-path-actions{
+  gap:6px!important;
+  margin-top:9px!important;
+}
+
+.v4-path-actions button{
+  font-size:12px!important;
+}
+
+/* Replace all visible accidental overflow with clipping instead of spilling */
+.folderCard,
+.ticketCard,
+.card{
+  overflow:hidden!important;
+}
+
+.driveFolderName,
+.folderName,
+.ticketTitle{
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+
+/* Smaller inspection grid */
+.v4-inspection-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+
+.v4-inspect-tile{
+  min-height:58px!important;
+  font-size:12px!important;
+}
+
+.v4-section-card{
+  margin-bottom:10px!important;
+}
+
+@media(min-width:560px){
+  .v4-inspection-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -3792,111 +4015,4 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
           <button type="button" onclick="focusJobNotes()">Notes</button>
         </div>
 
-        <div class="v4-section-card">
-          <div class="v4-section-title">Inspection Progress</div>
-          <div class="v4-status-row">
-            <span class="v4-dot ${statusDot(status)}"></span>
-            <div>
-              <div class="v4-kicker" style="margin:0 0 5px">Current Status</div>
-              <div class="v4-status-main">${esc(status)}</div>
-              <div class="v4-status-sub">${upd ? "Updated: " + esc(upd) : "Updated automatically"}</div>
-            </div>
-            <button type="button" class="mini gray" onclick="focusJobNotes()">Change</button>
-          </div>
-        </div>
-
-        <div class="v4-section-card">
-          <div class="v4-progress-body">
-            <label>Inspection Type</label>
-            <select class="v4-select" id="jobProgressSelect" onchange="setJobProgressStatus(this.value)">
-              ${options.map(function(o){
-                var val=o[0], label=selectLabel(o[0]);
-                return `<option value="${esc(val)}" ${val===status ? "selected" : ""}>${esc(label)}</option>`;
-              }).join("")}
-            </select>
-            <div class="small" style="margin-top:8px">Double tap option to mark called in.</div>
-            <div class="v4-inspection-grid">
-              ${options.map(function(o){
-                var val=o[0], label=o[1], code=o[2];
-                return `<button type="button" class="v4-inspect-tile ${tileClass(val)}" onclick="event.preventDefault();event.stopPropagation();setJobProgressStatus('${escJs(val)}')"><span class="v4-tile-code">${esc(code)}</span><span>${esc(label)}</span></button>`;
-              }).join("")}
-            </div>
-          </div>
-        </div>
-
-        <div class="v4-section-card v4-check-list">
-          <div class="v4-section-title" style="display:flex;justify-content:space-between;color:var(--v4-purple)"><span>Final Checklist</span><span>${done} / ${allChecks.length}</span></div>
-          ${allChecks.map(function(c){
-            return `<label class="v4-check-row" style="text-transform:none;letter-spacing:0;font-size:14px!important;font-weight:500!important;color:#fff!important;margin:0">
-              <span>${esc(c)}</span>
-              <input class="v4-check-box" type="checkbox" ${checks[c] ? "checked" : ""} onchange="toggleJobProgressCheck('${escJs(c)}')">
-            </label>`;
-          }).join("")}
-        </div>
-
-        <div class="v4-section-card">
-          <div class="v4-progress-body">
-            <label>Notes</label>
-            <textarea id="jobProgressNotes" class="v4-notes" placeholder="Add notes...">${esc(p.notes||"")}</textarea>
-          </div>
-        </div>
-        <button type="button" class="v4-save-btn" onclick="saveJobProgressNotes()">Save Progress</button>
-        <div class="v4-saved"><span>OK</span> Progress saved automatically</div>
-      </div>`;
-
-    if(mount){
-      mount.innerHTML = html;
-      if(legacy && legacy.parentElement && legacy.parentElement.id !== "v4ProgressMount") hide(legacy);
-    }else if(legacy){
-      legacy.outerHTML = html;
-    }
-  }
-
-  function compactCurrentInspectionLabel(status){
-    status = String(status||"Not Ready");
-    if(status === "Ready for Inspection") status = "Not Ready";
-    return `<div class="currentInspectionStatus ${typeof statusBadgeClass === "function" ? statusBadgeClass(status) : "statusNotReady"}"><span class="v4-dot ${statusDot(status)}"></span> ${esc(statusShort(status))}</div>`;
-  }
-
-  function compactInspectionButtons(f){
-    var options=progressOptions();
-    return `<div class="v4-inspection-grid">${options.map(function(o){
-      return `<button type="button" class="v4-inspect-tile ${tileClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();handleInspectionTap('${escJs(f.id)}','${escJs(o[0])}')"><span class="v4-tile-code">${esc(o[2])}</span><span>${esc(o[1])}</span></button>`;
-    }).join("")}</div><div class="small" style="margin-top:10px">Double tap Partial, Final, or Halo to mark called in.</div>`;
-  }
-
-  function compactInspectionJobCard(f){
-    var activeCount = activeTicketCount(f.id);
-    var status = jobStatus(f);
-    return `<div class="ticketCard">
-      <div class="ticketTitle">${esc(clean(f.name)||"Job")}</div>
-      <div class="small">${esc(builderName(f)||"No builder")}<br>${activeCount} active ticket(s)</div>
-      ${compactCurrentInspectionLabel(status)}
-      ${compactInspectionButtons(f)}
-      <button class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteInspectionJob('${escJs(f.id)}')">Delete</button>
-      ${f.drive_url ? `<button class="mini gray" onclick="event.preventDefault();event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>` : ""}
-    </div>`;
-  }
-
-  function install(){
-    try{ renderJobProgress = renderCompactProgress; }catch(e){}
-    try{ currentInspectionLabel = compactCurrentInspectionLabel; }catch(e){}
-    try{ inspectionButtons = compactInspectionButtons; }catch(e){}
-    try{ inspectionJobCard = compactInspectionJobCard; }catch(e){}
-    try{
-      document.querySelectorAll(".topNav .navIcon").forEach(function(n){ n.textContent = ""; });
-    }catch(e){}
-  }
-
-  install();
-  window.addEventListener("load", function(){
-    setTimeout(function(){
-      install();
-      try{ if(typeof draw === "function") draw(); }catch(e){}
-    }, 300);
-  });
-})();
-</script>
-
-</body>
-</html>
+        <div 
