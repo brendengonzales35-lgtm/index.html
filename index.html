@@ -268,7 +268,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.6 Folder Move Delete</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.1.7 Folder Delete Only</div></div></section>
 </div>
 
 
@@ -1199,7 +1199,7 @@ function backFolderBrowser(){
 }
 function folderBrowserJobCard(f){
  let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
- return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div class="folderName">&#128193; ${cleanFolderNameText(f.name)||"Job"}</div><div class="folderStats">Builder: ${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open Job</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move Job</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete Job</button></div>`;
+ return `<div class="folderCard" onclick="if(event.target.closest('button'))return;openJobFolder('${f.id}')"><div class="folderName">&#128193; ${cleanFolderNameText(f.name)||"Job"}</div><div class="folderStats">Builder: ${browserBuilderName(f)||"No builder"}<br>${activeCount} active ticket(s)</div><button class="mini green" onclick="event.stopPropagation();openJobFolder('${f.id}')">Open Job</button>${f.drive_url?`<button class="mini green" onclick="event.stopPropagation();openDriveFolder('${f.drive_url}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${f.id}')">Move Folder</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${f.id}')">Delete Folder</button></div>`;
 }
 function renderFolderBrowser(){
  if(!$('foldersGrid'))return;
@@ -1213,7 +1213,7 @@ function renderFolderBrowser(){
   hide($('folderTicketsCard'));
   $('foldersGrid').innerHTML=builders.length?builders.map(b=>{
    let count=folderBrowserJobs(b).length;
-   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move Jobs</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Delete Builder</button></div>`;
+   return `<div class="folderCard" onclick="openBuilderFolder('${String(b).replace(/'/g,"\\'")}')"><div class="folderName">&#128193; ${b}</div><div class="folderStats">${count} job folder(s)</div><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${String(b).replace(/'/g,"\\'")}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${String(b).replace(/'/g,"\\'")}')">Move Jobs</button></div>`;
   }).join(''):'<p class="small">No builders found.</p>';
   return;
  }
