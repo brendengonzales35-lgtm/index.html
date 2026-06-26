@@ -273,6 +273,434 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 .statusNeeded.currentInspectionStatus{background:#f3f4f6!important;color:#374151!important;border-color:#6b7280!important}
 .statusCalled.currentInspectionStatus{background:#ffedd5!important;color:#7c2d12!important;border-color:#ea580c!important}
 
+
+/* v3.2.7 dark mockup clean - no overlap */
+:root{
+  --navy:#050a10;
+  --green:#22c55e;
+  --bg:#03070c;
+  --text:#f8fafc;
+  --line:#1f2937;
+  --blue:#3b82f6;
+  --yellow:#fbbf24;
+  --orange:#f97316;
+  --red:#ef4444;
+  --purple:#a855f7;
+}
+*{-webkit-tap-highlight-color:transparent}
+body{
+  background:
+    radial-gradient(circle at 20% -10%,rgba(59,130,246,.16),transparent 34%),
+    linear-gradient(180deg,#02060b,#050a10 48%,#02060b);
+  color:#f8fafc;
+  padding:12px 12px 26px;
+}
+header{
+  background:linear-gradient(180deg,#07111b,#03070c);
+  border:1px solid #1f2937;
+  border-radius:0 0 24px 24px;
+  box-shadow:0 16px 38px rgba(0,0,0,.72);
+  margin:-12px -12px 12px;
+  padding:18px 14px;
+}
+.logo{
+  background:#07111b;
+  border:1px solid #263241;
+  box-shadow:0 10px 24px rgba(0,0,0,.55);
+}
+h1,h2,h3,.ticketTitle,.folderName{color:#f8fafc}
+.card{
+  background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98));
+  border:1px solid #1f2937;
+  color:#f8fafc;
+  border-radius:20px;
+  box-shadow:0 16px 36px rgba(0,0,0,.58);
+}
+.topNav{
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:#03070c;
+  padding:10px 0 12px;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:0 0 12px;
+}
+.topNav button{
+  background:#080f16;
+  color:#d1d5db;
+  border:1px solid #1f2937;
+  box-shadow:none;
+  min-height:68px;
+  border-radius:16px;
+  font-size:12px;
+  padding:8px 4px;
+}
+.topNav button.active{
+  background:#0b1d46;
+  color:#60a5fa;
+  border-color:#3b82f6;
+}
+.navIcon{font-size:24px}
+input,select,textarea{
+  background:#050a10;
+  color:#f8fafc;
+  border:1px solid #334155;
+}
+input::placeholder,textarea::placeholder{color:#6b7280}
+button{
+  border-radius:14px;
+  box-shadow:none;
+}
+.green{background:#22c55e!important;color:#03120a!important}
+.gray{background:#111827!important;color:#f8fafc!important;border:1px solid #334155!important}
+.red{background:#b91c1c!important;color:#fff!important}
+.small,.folderStats,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails{color:#a7b0bd!important}
+.ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox{
+  background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98))!important;
+  border:1px solid #1f2937!important;
+  color:#f8fafc!important;
+  border-radius:18px!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.50)!important;
+}
+.ticketTitle,.folderName{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.3px;
+}
+.folderGrid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+@media(min-width:700px){
+  .folderGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.folderCard{
+  padding:16px!important;
+  min-height:105px;
+}
+.folderIcon{font-size:34px}
+.folderCard .mini,.ticketCard .mini,.mini{
+  border-radius:999px!important;
+  padding:8px 11px!important;
+  font-size:12px!important;
+  margin:7px 5px 0 0!important;
+}
+.dashGrid{grid-template-columns:repeat(2,1fr);gap:12px}
+.dashBox{padding:18px!important;min-height:106px}
+.dashNumber,.summaryNum,.weatherMain{
+  color:#f8fafc!important;
+  font-size:42px;
+  font-weight:900;
+}
+.notice{background:#052e16!important;color:#bbf7d0!important;border:1px solid #166534!important}
+.bad{background:#450a0a!important;color:#fecaca!important;border:1px solid #991b1b!important}
+a{color:#60a5fa}
+
+/* Strong status colors */
+.statusBadge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border-radius:999px;
+  padding:7px 11px;
+  font-size:12px;
+  font-weight:900;
+  margin:7px 5px 5px 0;
+  border:2px solid transparent;
+}
+.statusDot{width:10px;height:10px;border-radius:999px;display:inline-block}
+.statusNotReady{background:#450a0a!important;color:#fecaca!important;border-color:#ef4444!important}
+.statusCalled{background:#431407!important;color:#fed7aa!important;border-color:#f97316!important}
+.statusPartial{background:#422006!important;color:#fef08a!important;border-color:#fbbf24!important}
+.statusFinal{background:#052e16!important;color:#bbf7d0!important;border-color:#22c55e!important}
+.statusHalo{background:#0b1d46!important;color:#bfdbfe!important;border-color:#3b82f6!important}
+.statusPassed{background:#022c22!important;color:#a7f3d0!important;border-color:#10b981!important}
+.statusFailed{background:#1f0303!important;color:#fecaca!important;border-color:#dc2626!important}
+.statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
+
+/* Inspections look like clean app cards */
+.inspectActionBtn{
+  width:auto!important;
+  min-width:92px;
+  min-height:48px;
+  padding:10px 13px!important;
+  font-size:12px!important;
+  border-radius:14px!important;
+  margin:7px 5px 0 0!important;
+  border:2px solid transparent!important;
+  font-weight:900!important;
+}
+.inspectBtnNotReady{background:#7f1d1d!important;color:#fff!important;border-color:#ef4444!important}
+.inspectBtnCalled{background:#9a3412!important;color:#fff!important;border-color:#f97316!important}
+.inspectBtnPartial{background:#78350f!important;color:#fff!important;border-color:#f59e0b!important}
+.inspectBtnFinal{background:#14532d!important;color:#fff!important;border-color:#22c55e!important}
+.inspectBtnHalo{background:#1e3a8a!important;color:#fff!important;border-color:#3b82f6!important}
+.inspectBtnPassed{background:#064e3b!important;color:#fff!important;border-color:#10b981!important}
+.inspectBtnFailed{background:#450a0a!important;color:#fff!important;border-color:#ef4444!important}
+.inspectBtnNeeded{background:#374151!important;color:#fff!important;border-color:#9ca3af!important}
+.currentInspectionStatus{
+  display:block;
+  margin:10px 0 8px;
+  padding:12px 13px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:900;
+  border:2px solid transparent;
+}
+.currentInspectionStatus.statusNotReady{background:#450a0a!important;color:#fecaca!important;border-color:#ef4444!important}
+.currentInspectionStatus.statusCalled{background:#431407!important;color:#fed7aa!important;border-color:#f97316!important}
+.currentInspectionStatus.statusPartial{background:#422006!important;color:#fef08a!important;border-color:#fbbf24!important}
+.currentInspectionStatus.statusFinal{background:#052e16!important;color:#bbf7d0!important;border-color:#22c55e!important}
+.currentInspectionStatus.statusHalo{background:#0b1d46!important;color:#bfdbfe!important;border-color:#3b82f6!important}
+.currentInspectionStatus.statusPassed{background:#022c22!important;color:#a7f3d0!important;border-color:#10b981!important}
+.currentInspectionStatus.statusFailed{background:#1f0303!important;color:#fecaca!important;border-color:#dc2626!important}
+.currentInspectionStatus.statusNeeded{background:#111827!important;color:#e5e7eb!important;border-color:#6b7280!important}
+
+
+
+/* v3.2.8 mockup UI - matches supplied dark mobile design */
+:root{
+  --neu-bg:#04080d;
+  --neu-panel:rgba(11,16,24,.92);
+  --neu-panel-2:rgba(18,25,35,.88);
+  --neu-line:rgba(148,163,184,.18);
+  --neu-text:#f9fafb;
+  --neu-muted:#aeb8c7;
+  --neu-blue:#4f7cff;
+  --neu-blue-2:#2442d8;
+  --neu-purple:#a855f7;
+  --neu-gold:#ffb020;
+  --neu-green:#4ade80;
+  --neu-red:#ef4444;
+}
+html{background:#02050a;color-scheme:dark;}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 12% -5%,rgba(96,165,250,.16),transparent 32%),
+    radial-gradient(circle at 105% 4%,rgba(168,85,247,.13),transparent 30%),
+    linear-gradient(180deg,#02050a 0%,#071019 48%,#02050a 100%)!important;
+  color:var(--neu-text)!important;
+  padding:0 0 28px!important;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 75%);
+}
+#appPage,#setupPage,#pinPage,.authPage{
+  position:relative;
+  max-width:560px;
+  margin:0 auto;
+}
+@media(min-width:900px){
+  #appPage{max-width:680px;border-left:1px solid rgba(148,163,184,.22);border-right:1px solid rgba(148,163,184,.22);min-height:100vh;box-shadow:0 0 0 1px rgba(255,255,255,.03),0 24px 80px rgba(0,0,0,.65)}
+}
+.mockHeader{
+  position:sticky!important;
+  top:0;
+  z-index:1002;
+  display:grid;
+  grid-template-columns:56px 1fr 56px;
+  align-items:center;
+  min-height:78px;
+  margin:0!important;
+  padding:10px 14px 8px!important;
+  border-radius:0!important;
+  background:linear-gradient(180deg,rgba(2,6,12,.98),rgba(5,10,16,.93))!important;
+  border:0!important;
+  border-bottom:1px solid var(--neu-line)!important;
+  box-shadow:0 16px 40px rgba(0,0,0,.50)!important;
+  backdrop-filter:blur(18px);
+}
+.appTitle{
+  text-align:center;
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-.7px;
+  color:var(--neu-text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.appChromeBtn{
+  width:48px!important;
+  height:48px!important;
+  margin:0!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:999px!important;
+  border:0!important;
+  font-size:31px!important;
+  line-height:1!important;
+  color:#fff!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.appAddBtn{background:linear-gradient(180deg,#5777ff,#2c43d8)!important;box-shadow:0 12px 30px rgba(68,96,255,.42)!important;font-size:34px!important;font-weight:400!important;}
+.appMenuBtn{font-size:33px!important;color:#f8fafc!important;}
+.topNav{
+  position:sticky!important;
+  top:78px!important;
+  z-index:1001!important;
+  display:flex!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  overflow-x:auto!important;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
+  padding:8px 12px 0!important;
+  margin:0!important;
+  background:linear-gradient(180deg,rgba(4,8,13,.96),rgba(8,13,19,.90))!important;
+  border-bottom:1px solid var(--neu-line);
+  backdrop-filter:blur(18px);
+}
+.topNav::-webkit-scrollbar{display:none;}
+.topNav button{
+  flex:0 0 104px;
+  min-height:88px!important;
+  margin:0!important;
+  padding:10px 4px 13px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#e5e7eb!important;
+  font-size:13px!important;
+  font-weight:500!important;
+  box-shadow:none!important;
+  position:relative;
+}
+.topNav button:after{
+  content:"";
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:0;
+  height:3px;
+  border-radius:999px 999px 0 0;
+  background:transparent;
+}
+.topNav button.active{color:#82a2ff!important;}
+.topNav button.active:after{background:var(--neu-blue);box-shadow:0 0 18px rgba(79,124,255,.75);}
+.navIcon{font-size:27px!important;display:inline-block;margin-bottom:7px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));}
+.page{padding:12px 12px 24px;}
+.card,.ticketCard,.folderCard,.dashBox,.summaryCard,.weatherBox,.info,.manHoursBox,.materialGrid,.moveModal,.authCard{
+  background:linear-gradient(135deg,rgba(18,25,35,.92),rgba(8,13,19,.94))!important;
+  border:1px solid var(--neu-line)!important;
+  color:var(--neu-text)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 18px 45px rgba(0,0,0,.40)!important;
+  backdrop-filter:blur(20px);
+}
+.card{border-radius:18px!important;margin:10px 0 12px!important;padding:16px!important;}
+.card h2,.card h3{letter-spacing:.01em;}
+input,select,textarea{
+  background:rgba(2,6,12,.74)!important;
+  border:1px solid rgba(148,163,184,.28)!important;
+  color:#fff!important;
+  border-radius:12px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03)!important;
+}
+select:focus,input:focus,textarea:focus{outline:0;border-color:#a855f7!important;box-shadow:0 0 0 3px rgba(168,85,247,.22)!important;}
+label{color:#d7deea!important;text-transform:uppercase;letter-spacing:.06em;font-size:12px!important;}
+.small,.folderStats,.driveFolderMeta,.summaryLabel,.dashLabel,.weatherDetails,.recentJobMeta{color:var(--neu-muted)!important;}
+button{background:linear-gradient(180deg,#4f7cff,#2f4fd6)!important;color:#fff!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:14px!important;}
+.green{background:linear-gradient(180deg,#4f7cff,#2f4fd6)!important;color:#fff!important;}
+.gray{background:rgba(16,24,36,.86)!important;color:#dbe6ff!important;border:1px solid rgba(79,124,255,.40)!important;}
+.red{background:linear-gradient(180deg,#7f1d1d,#450a0a)!important;color:#fecaca!important;border:1px solid rgba(239,68,68,.45)!important;}
+.mini{min-height:34px!important;padding:8px 12px!important;border-radius:10px!important;font-weight:800!important;}
+.dashGrid,.summaryGrid{gap:12px!important;}
+.dashBox,.summaryCard{
+  min-height:112px!important;
+  padding:16px!important;
+  border-radius:18px!important;
+  cursor:pointer;
+}
+.dashNumber,.summaryNum,.weatherMain{font-size:42px!important;color:#fff!important;}
+.dashLabel,.summaryLabel{text-transform:uppercase;letter-spacing:.07em;font-size:11px!important;}
+.statusBadge{background:rgba(255,255,255,.04)!important;border-width:1px!important;border-radius:999px!important;}
+.statusDot,.statusDotMini{width:11px;height:11px;border-radius:999px;display:inline-block;box-shadow:0 0 18px currentColor;}
+.statusDotMini.statusNotReady{background:#94a3b8;color:#94a3b8}.statusDotMini.statusCalled,.statusDotMini.statusPartial{background:#ffb020;color:#ffb020}.statusDotMini.statusFinal{background:#ffb020;color:#ffb020}.statusDotMini.statusHalo{background:#4f7cff;color:#4f7cff}.statusDotMini.statusPassed{background:#4ade80;color:#4ade80}.statusDotMini.statusFailed{background:#ef4444;color:#ef4444}.statusDotMini.statusNeeded{background:#94a3b8;color:#94a3b8}
+.folderGrid{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;}
+.folderCard.mockListCard{
+  display:grid;
+  grid-template-columns:58px 1fr 34px;
+  gap:12px;
+  align-items:center;
+  min-height:104px;
+  border-radius:13px!important;
+  padding:14px!important;
+  margin-top:12px!important;
+}
+.folderCard.mockListCard .driveFolderBtns{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
+.folderCard.mockListCard .driveFolderBtns .mini{margin:0!important;}
+.mockEllipsis{font-size:26px;line-height:1;color:#fff;text-align:center;opacity:.9;align-self:start;}
+.driveFolderIcon{display:grid!important;place-items:center;width:52px;height:48px;}
+.driveFolderIcon svg{width:50px;height:38px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.38));}
+.driveFolderName,.ticketTitle,.folderName{font-size:20px!important;font-weight:900!important;letter-spacing:-.4px!important;color:#fff!important;}
+.mockFolderMeta{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:14px;color:var(--neu-muted);}
+.mockUpdated{font-size:13px;color:var(--neu-muted);margin-top:3px;}
+.folderPathBar{
+  padding:16px 14px;
+  margin:0 0 12px;
+  border-radius:15px;
+  background:rgba(5,10,16,.58);
+  border:1px solid rgba(148,163,184,.12);
+}
+.folderPathLabel{font-size:12px;color:#b8c3d4;margin-bottom:9px;}
+.folderPathText{font-size:17px;color:#82a2ff;font-weight:700;}
+.folderToolbar{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin:10px 0 14px;}
+.folderToolbar .mini{height:42px;margin:0!important;}
+.inspectionCardMock{padding:0!important;overflow:hidden;border-radius:15px!important;}
+.inspectionCardHeader{padding:16px;border-bottom:1px solid var(--neu-line);}
+.inspectionKicker{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#cbd5e1;font-weight:900;margin-bottom:12px;}
+.currentStatusRow{display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center;}
+.currentStatusMain{font-size:18px;font-weight:900;color:#ffb020;}
+.currentStatusSub{font-size:13px;color:#c7d0df;margin-top:4px;}
+.inspectionBody{padding:16px;}
+.inspectionOptionsGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px;}
+@media(min-width:470px){.inspectionOptionsGrid{grid-template-columns:repeat(3,minmax(0,1fr));}.inspectionOptionsGrid .wide{grid-column:span 1;}}
+.inspectActionBtn{
+  width:100%!important;
+  min-height:86px!important;
+  margin:0!important;
+  border-radius:10px!important;
+  display:grid!important;
+  place-items:center!important;
+  gap:5px!important;
+  padding:10px!important;
+  white-space:normal!important;
+  text-align:center!important;
+  font-size:15px!important;
+  line-height:1.18!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 12px 26px rgba(0,0,0,.32)!important;
+}
+.inspectIcon{font-size:26px;line-height:1;display:block;}
+.inspectBtnPartial{background:linear-gradient(135deg,rgba(124,45,18,.88),rgba(67,20,7,.86))!important;border-color:rgba(251,146,60,.48)!important;color:#fff!important;}
+.inspectBtnFinal{background:linear-gradient(135deg,rgba(75,23,112,.88),rgba(22,9,45,.9))!important;border-color:#a855f7!important;color:#fff!important;box-shadow:0 0 0 1px rgba(168,85,247,.50),0 0 24px rgba(168,85,247,.28)!important;}
+.inspectBtnHalo{background:linear-gradient(135deg,rgba(113,63,18,.82),rgba(30,20,5,.9))!important;border-color:rgba(250,204,21,.48)!important;color:#fff!important;}
+.inspectBtnPassed{background:linear-gradient(135deg,rgba(20,83,45,.88),rgba(5,46,22,.9))!important;border-color:rgba(74,222,128,.50)!important;color:#fff!important;}
+.inspectBtnFailed{background:linear-gradient(135deg,rgba(127,29,29,.88),rgba(69,10,10,.92))!important;border-color:rgba(239,68,68,.55)!important;color:#fff!important;}
+.inspectBtnNotReady,.inspectBtnNeeded{background:linear-gradient(135deg,rgba(30,41,59,.86),rgba(15,23,42,.92))!important;border-color:rgba(148,163,184,.30)!important;color:#fff!important;}
+.inspectBtnCalled{background:linear-gradient(135deg,rgba(154,52,18,.9),rgba(67,20,7,.92))!important;border-color:rgba(249,115,22,.55)!important;color:#fff!important;}
+.checklistMock{margin-top:14px;border-radius:12px;overflow:hidden;border:1px solid var(--neu-line);background:rgba(2,6,12,.28);}
+.checklistHead{display:flex;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--neu-line);color:#c084fc;text-transform:uppercase;font-size:13px;font-weight:900;letter-spacing:.05em;}
+.checkRow{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid rgba(148,163,184,.12);font-size:14px;}
+.checkRow:last-child{border-bottom:0;}
+.checkBoxMock{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;border:1px solid rgba(203,213,225,.7);color:transparent;}
+.checkBoxMock.done{background:#45c777;border-color:#45c777;color:#052e16;font-weight:900;}
+.moveOverlay{background:rgba(0,0,0,.72)!important;backdrop-filter:blur(14px);}
+.lowStock{background:linear-gradient(135deg,rgba(69,10,10,.92),rgba(15,23,42,.90))!important;border-color:rgba(239,68,68,.70)!important;}
+.lowStockText{background:rgba(239,68,68,.12)!important;color:#fecaca!important;border:1px solid rgba(239,68,68,.45)!important;}
+hr{border-color:var(--neu-line)!important;}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -290,7 +718,11 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
   <div class="splashTitle">NEU Tickets</div>
 </div>
 
-<header><div class="logoRow"><img class="logo" src="neu-logo.PNG"><div><h1>NEU Tickets</h1></div></div></header>
+<header class="mockHeader">
+  <button class="appChromeBtn appMenuBtn" type="button" onclick="showPage('foldersPage')" aria-label="Folders">â°</button>
+  <div class="appTitle" id="appHeaderTitle">NEU Tickets</div>
+  <button class="appChromeBtn appAddBtn" type="button" onclick="showPage('createTicketPage')" aria-label="Create Ticket">+</button>
+</header>
 <div id="errorBox" class="bad hidden"></div><div id="noticeBox" class="notice hidden"></div>
 
 <section id="setupPage" class="card hidden"><h2>Supabase Setup</h2><label>Supabase Project URL</label><input id="setupUrl" placeholder="https://xxxxx.supabase.co"><label>Supabase Publishable Key</label><textarea id="setupKey" placeholder="sb_publishable_..."></textarea><button id="saveSetupBtn" class="green">Save Setup</button></section>
@@ -329,11 +761,11 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 </section>
 
 
-<section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder Builder</label><select id="newFolderBuilder"></select><label>Job</label><select id="newFolderJob"></select><label>Inspection Status</label><select id="newInspection"></select><label>Man Hrs</label>
+<section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><select id="newBuilder"></select><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder Builder</label><select id="newFolderBuilder"></select><label>Job</label><select id="newFolderJob"></select><label>Inspection Status</label><select id="newInspection"></select><label>Man Hrs</label>
 <div id="newManHoursList"></div>
 <button type="button" id="addNewManHourBtn" class="gray" onclick="addNewManHourLine()">Add Man</button><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
 <section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">&larr; Tickets</button><div id="ticketDetail"></div></div></div>
-<div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder Builder</label><select id="editFolderBuilder"></select><label>Job</label><select id="editFolderJob"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label>
+<div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><select id="editBuilder"></select><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder Builder</label><select id="editFolderBuilder"></select><label>Job</label><select id="editFolderJob"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label>
 <div id="editManHoursList"></div>
 <button type="button" id="addEditManHourBtn" class="gray" onclick="addEditManHourLine()">Add Man</button><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
 <hr style="border:0;border-top:1px solid #e5e7eb;margin:16px 0">
@@ -398,7 +830,7 @@ F-no work 1 PTO day"></textarea>
 <textarea id="driveScriptUrl" placeholder="Paste your Google Apps Script web app URL here"></textarea>
 <button id="saveDriveScriptBtn" class="gray">Save Drive Auto-Folder URL</button><button id="importDriveFoldersBtn" class="green" type="button" onclick="importDriveFoldersFromDrive()">Import Drive Folders</button>
 <p class="small">When this is saved, new app folders create matching Google Drive folders inside your selected Drive parent folder.</p>
-</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.6 Rolled Back Clean</div></div></section>
+</div><button id="shareBtn" class="gray">Share App Link</button><button id="signOutBtn" class="red">Sign Out</button><div class="versionBadge">NEU Tickets v3.2.8 Mockup UI</div></div></section>
 </div>
 
 
@@ -1893,8 +2325,286 @@ if($("archiveList")){
  $("archiveList").innerHTML=archived.length?archived.map(t=>ticketCard(t,false)).join(""):'<p class="small">No completed tickets yet.</p>';
 }
 drawDashboard();
+renderTicketBuilderSelects();
 
 if(selectedTicket&&$("ticketDetailView")&&!$("ticketDetailView").classList.contains("hidden"))drawTicketDetail();if(selectedTicket&&$("ticketEditView")&&!$("ticketEditView").classList.contains("hidden"))refreshEditMaterials()}
+
+
+/* v3.2.8 mockup UI helpers + focused bug fixes */
+function escHtml(v){return String(v??"").replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function escAttr(v){return escHtml(v).replace(/'/g,"&#39;");}
+function escJs(v){return String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/\n/g," ").replace(/\r/g,"");}
+function appPageTitle(p){return ({dashboardPage:"NEU Tickets",createTicketPage:"Create Ticket",ticketsPage:"Tickets",inspectionsPage:"Inspections",foldersPage:"Folders",inventoryPage:"Inventory",hoursPage:"Hours",drivePage:"Photos",settingsPage:"Settings",archivePage:"Completed"})[p]||"NEU Tickets";}
+function showPage(p){
+ var page=$(p); if(!page)return;
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ page.classList.add("active");
+ document.querySelectorAll(".topNav button").forEach(b=>b.classList.remove("active"));
+ var nav=document.querySelector(`[data-page="${p}"]`); if(nav)nav.classList.add("active");
+ if($("appHeaderTitle"))$("appHeaderTitle").textContent=appPageTitle(p);
+ draw();
+}
+function renderFixedBuilderSelect(id,val){
+ var el=$(id); if(!el||el.tagName!=="SELECT")return;
+ var current=val!==undefined?val:el.value;
+ el.innerHTML='<option value="">Pick builder</option>'+FIXED_BUILDERS.map(function(b){return `<option value="${escAttr(b)}">${escHtml(cleanFolderNameText(b))}</option>`;}).join("");
+ if(current&&FIXED_BUILDERS.some(function(b){return normBuilderName(b)===normBuilderName(current);})){var match=FIXED_BUILDERS.find(function(b){return normBuilderName(b)===normBuilderName(current);});el.value=match;}
+}
+function builderList(){return FIXED_BUILDERS.slice();}
+function renderBuilderSelect(){renderFixedBuilderSelect("folderBuilderSelect"); if($("addBuilderBtn"))$("addBuilderBtn").classList.add("hidden");}
+function renderTicketBuilderSelects(){
+ renderFixedBuilderSelect("newBuilder");
+ if($("newBuilder")&&$("newFolderBuilder")&&!$("newBuilder").value&&$("newFolderBuilder").value)$("newBuilder").value=$("newFolderBuilder").value;
+ if(selectedTicket)renderFixedBuilderSelect("editBuilder",selectedTicket.builder||"");
+}
+function getFolderTicketCount(id){return (data.tickets||[]).filter(t=>String(t.folder_id||"")===String(id)).length;}
+function isOrgFolderName(name){let n=normBuilderName(name);return ["pools","pool","jobs","job","builders","builder","completed","complete","archive","archives","photos","pictures","inspections","inspection"].includes(n);}
+function isBuilderFolder(f){
+ if(!f)return false;
+ let name=cleanFolderNameText(f.name);
+ let builder=cleanFolderNameText(f.builder_name);
+ let hasTickets=getFolderTicketCount(f.id)>0;
+ let hasDrive=!!f.drive_url;
+ return !hasTickets&&!hasDrive&&!f.parent_id&&(isKnownBuilderName(name)||(builder&&normBuilderName(builder)===normBuilderName(name))||isOrgFolderName(name));
+}
+function isJobFolder(f){
+ if(!f||isBuilderFolder(f))return false;
+ let name=cleanFolderNameText(f.name);
+ if(!name||isKnownBuilderName(name)||isOrgFolderName(name))return false;
+ let hasTickets=getFolderTicketCount(f.id)>0;
+ let builder=browserBuilderName(f)||f.builder_name||"";
+ return !!(f.drive_url||hasTickets||f.parent_id||builder);
+}
+function jobsForBuilder(builder){
+ let b=normBuilderName(builder);
+ return (data.folders||[]).filter(f=>isJobFolder(f)).filter(f=>!b||normBuilderName(browserBuilderName(f)||f.builder_name)===b).sort((a,b)=>cleanFolderNameText(a.name).localeCompare(cleanFolderNameText(b.name)));
+}
+function renderJobPicker(builderSelectId,jobSelectId,selectedBuilder,selectedJobId,allowGeneral){
+ let builderEl=$(builderSelectId),jobEl=$(jobSelectId);if(!builderEl||!jobEl)return;
+ let currentBuilder=selectedBuilder!==undefined?selectedBuilder:builderEl.value;
+ builderEl.innerHTML='<option value="">Pick builder</option>'+builderList().map(b=>`<option value="${escAttr(b)}">${escHtml(cleanFolderNameText(b))}</option>`).join("");
+ if(currentBuilder){let match=builderList().find(b=>normBuilderName(b)===normBuilderName(currentBuilder)); if(match)builderEl.value=match;}
+ let jobs=jobsForBuilder(builderEl.value);
+ jobEl.innerHTML=(allowGeneral?'<option value="">General / No Job</option>':'<option value="">Pick job</option>')+jobs.map(f=>`<option value="${escAttr(f.id)}">${escHtml(cleanFolderNameText(f.name)||"Job")}</option>`).join("");
+ if(selectedJobId)jobEl.value=selectedJobId;
+}
+function collectManHourLines(prefix){
+ let box=$(prefix+"ManHoursList"), lines=[];
+ if(!box)return lines;
+ box.querySelectorAll(".manHoursGrid").forEach(function(row,idx){
+  let nameInput=row.querySelector('input[id^="'+prefix+'ManName"]');
+  let hourInput=row.querySelector('input[id^="'+prefix+'ManHours"]');
+  let name=(nameInput&&nameInput.value||"").trim();
+  let hrs=Number((hourInput&&hourInput.value)||0);
+  if(name||hrs)lines.push({name:name||("Man "+(idx+1)),hours:hrs});
+ });
+ return lines;
+}
+function addNewManHourLine(){let vals=collectManHourLines("new");newManHourLineCount=Math.max(newManHourLineCount,vals.length)+1;renderManHourLines("new",newManHourLineCount,vals);setTimeout(()=>{$("newManName"+newManHourLineCount)?.focus();},0);}
+function addEditManHourLine(){let vals=collectManHourLines("edit");editManHourLineCount=Math.max(editManHourLineCount,vals.length)+1;renderManHourLines("edit",editManHourLineCount,vals);setTimeout(()=>{$("editManName"+editManHourLineCount)?.focus();},0);}
+function folderStatusClass(f){return statusBadgeClass(inspectionStatus(f));}
+function statusShortText(status){
+ status=String(status||"Not Ready");
+ if(status==="Ready for Final Inspection")return"Ready for Final Inspection";
+ if(status==="Ready for Halo Inspection")return"Ready for Halo Inspection";
+ if(status==="Ready for Partial Inspection")return"Ready for Partial Inspection";
+ if(status.includes("Called In"))return status;
+ return status;
+}
+function folderUpdatedText(f){let d=String(f.inspection_updated_at||f.updated_at||f.created_at||"").slice(0,10);return d?displayDate(d):"";}
+function folderBrowserJobCard(f){
+ let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id)&&!isCompleted(t)).length;
+ let status=inspectionStatus(f);
+ let upd=folderUpdatedText(f);
+ return `<div class="folderCard mockListCard" onclick="if(event.target.closest('button'))return;openJobFolder('${escJs(f.id)}')">
+  ${driveFolderIconSvg()}
+  <div class="mockFolderText"><div class="driveFolderName">${escHtml(cleanFolderNameText(f.name)||"Job")}</div><div class="mockFolderMeta"><span class="statusDotMini ${folderStatusClass(f)}"></span><span>${escHtml(statusShortText(status))}</span></div><div class="mockUpdated">${upd?"Updated: "+escHtml(upd):escHtml(browserBuilderName(f)||"No builder")} Â· ${activeCount} active ticket(s)</div></div>
+  <div class="mockEllipsis">â¢â¢â¢</div>
+  <div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openJobFolder('${escJs(f.id)}')">Open</button>${f.drive_url?`<button class="mini gray" onclick="event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>`:""}<button class="mini gray" onclick="event.stopPropagation();moveFolder('${escJs(f.id)}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteFolder('${escJs(f.id)}')">Delete</button></div>
+ </div>`;
+}
+function renderFolderBrowser(){
+ if(!$('foldersGrid'))return;
+ let showBack=!!(currentFolderBuilder||currentFolder);
+ $('folderBackBtn').classList.toggle('hidden',!showBack);
+ if($('folderBuilderSelect')&&currentFolderBuilder){$('folderBuilderSelect').value=currentFolderBuilder;}
+ let pathLabel='NEU Tickets';
+ if(currentFolderBuilder)pathLabel+=' / '+currentFolderBuilder;
+ if(currentFolder){let job=(data.folders||[]).find(f=>String(f.id)===String(currentFolder)); if(job)pathLabel+=' / '+cleanFolderNameText(job.name);}
+ let toolbar=`<div class="folderPathBar"><div class="folderPathLabel">Current Folder Path</div><div class="folderPathText">${escHtml(pathLabel)}</div></div>`;
+ if(!currentFolderBuilder){
+  let builders=folderBrowserBuilders();
+  $('folderTitle').textContent='Folders';
+  hide($('folderTicketsCard'));
+  $('foldersGrid').innerHTML=toolbar+(builders.length?builders.map(b=>{let count=folderBrowserJobs(b).length;return `<div class="folderCard mockListCard" onclick="openBuilderFolder('${escJs(b)}')">${driveFolderIconSvg()}<div class="mockFolderText"><div class="driveFolderName">${escHtml(b)}</div><div class="mockFolderMeta"><span class="statusDotMini statusHalo"></span><span>${count} job folder(s)</span></div><div class="mockUpdated">Tap to view jobs</div></div><div class="mockEllipsis">â¢â¢â¢</div><div class="driveFolderBtns"><button class="mini green" onclick="event.stopPropagation();openBuilderFolder('${escJs(b)}')">Open</button><button class="mini gray" onclick="event.stopPropagation();moveBuilderJobs('${escJs(b)}')">Move</button><button class="mini red" onclick="event.stopPropagation();deleteBuilderFolder('${escJs(b)}')">Delete</button></div></div>`;}).join(''):'<p class="small">No builders found.</p>');
+  return;
+ }
+ if(currentFolderBuilder&&!currentFolder){
+  let jobs=folderBrowserJobs(currentFolderBuilder);
+  $('folderTitle').textContent=currentFolderBuilder;
+  hide($('folderTicketsCard'));
+  $('foldersGrid').innerHTML=toolbar+`<div class="folderToolbar"><div class="small">${jobs.length} folder(s)</div><button class="mini green" onclick="document.getElementById('folderName').focus()">+ New Job Folder</button></div>`+(jobs.length?jobs.map(folderBrowserJobCard).join(''):'<p class="small">No job folders under this builder yet.</p>');
+  return;
+ }
+ let job=(data.folders||[]).find(f=>String(f.id)===String(currentFolder));
+ $('folderTitle').textContent=job?cleanFolderNameText(job.name):'Job';
+ $('foldersGrid').innerHTML=toolbar+(job?folderBrowserJobCard(job):'<p class="small">Job not found.</p>');
+ if($('folderTicketsCard')&&$('folderTickets')){
+  show($('folderTicketsCard'));
+  let ft=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(currentFolder||"")&&!isCompleted(t));
+  $('folderTickets').innerHTML=ft.length?ft.map(t=>ticketCard(t,true)).join(''):'<p class="small">No tickets in this job yet.</p>';
+ }
+}
+function inspectionIcon(status){
+ if(status==="Ready for Final Inspection")return"â";
+ if(status==="Ready for Halo Inspection")return"â§";
+ if(status==="Ready for Partial Inspection")return"â";
+ if(status==="Passed")return"â";
+ if(status==="Failed")return"Ã";
+ if(status==="Not Needed")return"â";
+ if(String(status).includes("Called In"))return"â";
+ return"â";
+}
+function inspectionButtons(f){
+ let options=[
+  ["Not Ready","Not Ready"],["Inspection Called In","Called In"],["Ready for Partial Inspection","Partial Inspection"],["Ready for Final Inspection","Final Inspection"],["Ready for Halo Inspection","Halo Inspection"],["Passed","Passed"],["Failed","Failed"],["Not Needed","Not Needed"]
+ ];
+ return `<div class="inspectionOptionsGrid">${options.map(o=>`<button type="button" class="inspectActionBtn ${inspectButtonClass(o[0])}" onclick="event.preventDefault();event.stopPropagation();handleInspectionTap('${escJs(f.id)}','${escJs(o[0])}')"><span class="inspectIcon">${inspectionIcon(o[0])}</span><span>${escHtml(o[1])}</span></button>`).join("")}</div><div class="small" style="margin-top:10px">Double tap Partial, Final, or Halo to mark as Called In.</div>`;
+}
+function currentInspectionLabel(status){
+ status=String(status||"Not Ready"); if(status==="Ready for Inspection")status="Not Ready";
+ return `<div class="currentStatusRow"><span class="statusDotMini ${statusBadgeClass(status)}"></span><div><div class="currentStatusMain">${escHtml(status)}</div><div class="currentStatusSub">Updated automatically when you change status</div></div><button class="mini gray" type="button" onclick="event.preventDefault();event.stopPropagation();this.closest('.ticketCard').querySelector('.inspectionOptionsGrid')?.scrollIntoView({behavior:'smooth',block:'center'});">Change Status</button></div>`;
+}
+function checklistForStatus(status){
+ let rows=["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran","GFCI protection installed","Breakers labeled","Panel schedule installed"];
+ let done=status==="Passed"?8:(status==="Ready for Final Inspection"?7:(status==="Ready for Halo Inspection"?5:(status==="Ready for Partial Inspection"?3:0)));
+ return `<div class="checklistMock"><div class="checklistHead"><span>Final Inspection Checklist</span><span>${done} / ${rows.length}</span></div>${rows.map((r,i)=>`<div class="checkRow"><span>${escHtml(r)}</span><span class="checkBoxMock ${i<done?'done':''}">${i<done?'â':''}</span></div>`).join("")}</div>`;
+}
+function inspectionJobCard(f){
+ let activeCount=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id)&&!isCompleted(t)).length;
+ let status=inspectionStatus(f)==="Ready for Inspection"?"Not Ready":inspectionStatus(f);
+ let upd=folderUpdatedText(f);
+ return `<div class="ticketCard inspectionCardMock"><div class="inspectionCardHeader"><div class="inspectionKicker">Inspection Progress</div>${currentInspectionLabel(status)}<div class="small" style="margin-top:10px">${escHtml(cleanFolderNameText(f.name)||"Job")} Â· ${escHtml(f.builder_name||browserBuilderName(f)||"No builder")} Â· ${activeCount} active ticket(s)${upd?" Â· Updated "+escHtml(upd):""}</div></div><div class="inspectionBody"><label>Inspection Type</label><select onchange="handleInspectionTap('${escJs(f.id)}',this.value)"><option value="Ready for Final Inspection" ${status==="Ready for Final Inspection"?"selected":""}>Final Inspection</option><option value="Ready for Partial Inspection" ${status==="Ready for Partial Inspection"?"selected":""}>Partial Inspection</option><option value="Ready for Halo Inspection" ${status==="Ready for Halo Inspection"?"selected":""}>Halo Inspection</option><option value="Not Ready" ${status==="Not Ready"?"selected":""}>Not Ready</option></select>${inspectionButtons(f)}${checklistForStatus(status)}<label>Notes</label><textarea placeholder="Add notes about this inspection..."></textarea><button class="green" style="margin-top:14px" onclick="event.preventDefault();notice('Progress saved automatically.')">ð¾ Save Progress</button><div class="small" style="text-align:center;margin-top:10px;color:#86efac!important">â Progress saved automatically</div><div style="margin-top:10px"><button class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteInspectionJob('${escJs(f.id)}')">Delete</button>${f.drive_url?`<button class="mini gray" onclick="event.preventDefault();event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>`:""}</div></div></div>`;
+}
+function inspectionVisibleJobs(){return (data.folders||[]).slice().filter(f=>isJobFolder(f));}
+function renderInspections(){
+ if(!$("inspectionsList"))return;
+ let q=($("inspectionSearch")?$("inspectionSearch").value:"").toLowerCase();
+ let jobs=inspectionVisibleJobs().filter(f=>!q||(cleanFolderNameText(f.name)||"").toLowerCase().includes(q)||(f.builder_name||"").toLowerCase().includes(q)||(browserBuilderName(f)||"").toLowerCase().includes(q));
+ jobs.sort((a,b)=>String(b.inspection_updated_at||b.created_at||"").localeCompare(String(a.inspection_updated_at||a.created_at||"")));
+ let ready=jobs.filter(f=>["Ready for Partial Inspection","Ready for Final Inspection","Ready for Halo Inspection"].includes(inspectionStatus(f))).length;
+ let passed=jobs.filter(f=>inspectionStatus(f)==="Passed").length;
+ if($("inspReadyCount"))$("inspReadyCount").textContent=ready;
+ if($("inspPassedCount"))$("inspPassedCount").textContent=passed;
+ $("inspectionsList").innerHTML=jobs.length?jobs.map(inspectionJobCard).join(""):'<p class="small">No jobs found.</p>';
+ if($("inspectionRecentList")){
+  let recent=jobs.filter(f=>f.inspection_updated_at).slice(0,8);
+  $("inspectionRecentList").innerHTML=recent.length?recent.map(f=>`<div class="ticketCard"><b>${escHtml(cleanFolderNameText(f.name)||"Job")}</b><br><span class="small">Builder: ${escHtml(f.builder_name||browserBuilderName(f)||"")}</span><br>${statusBadge(inspectionStatus(f))}<div class="small">Updated by ${escHtml(f.inspection_updated_by||"Team")}</div></div>`).join(""):'<p class="small">No inspection updates yet.</p>';
+ }
+}
+function matchingJobsForDashboard(type){
+ let folders=inspectionVisibleJobs();
+ if(type==="open")return folders.filter(f=>{
+  let folderTickets=(data.tickets||[]).filter(t=>String(t.folder_id||"")===String(f.id));
+  return folderTickets.some(t=>!isCompleted(t))||!["Passed","Not Needed","Ready for Final Inspection"].includes(inspectionStatus(f));
+ });
+ if(type==="halo")return folders.filter(f=>inspectionStatus(f)==="Ready for Halo Inspection"||(data.tickets||[]).some(t=>String(t.folder_id||"")===String(f.id)&&t.inspection_status==="Ready for Halo Inspection"&&!isCompleted(t)));
+ if(type==="final")return folders.filter(f=>inspectionStatus(f)==="Ready for Final Inspection"||(data.tickets||[]).some(t=>String(t.folder_id||"")===String(f.id)&&t.inspection_status==="Ready for Final Inspection"));
+ return [];
+}
+function drawDashboard(){
+ if(!$("dashOpen"))return;
+ let low=lowStockItems();
+ let openJobs=matchingJobsForDashboard("open");
+ let haloJobs=matchingJobsForDashboard("halo");
+ let finalJobs=matchingJobsForDashboard("final");
+ $("dashOpen").textContent=openJobs.length;
+ $("dashLow").textContent=low.length;
+ $("dashHalo").textContent=haloJobs.length;
+ $("dashFinal").textContent=finalJobs.length;
+ renderRecentJobs((data.tickets||[]).filter(t=>!isCompleted(t)));
+}
+function showDashboardJobs(type){
+ if(!$("dashDrillCard"))return;
+ if(type==="low"){
+  $("dashDrillTitle").textContent="Low Stock";
+  let low=lowStockItems();
+  $("dashDrillList").innerHTML=low.length?low.map(i=>`<div class="ticketCard lowStock"><b>${escHtml(i.name)}</b><br>${escHtml(i.quantity)} ${escHtml(i.unit||"")}<div class="lowStockText">Alert at ${escHtml(i.low_alert_qty)}</div><button class="mini green" onclick="showPage('inventoryPage')">Restock</button></div>`).join(""):'<p class="small">No low stock.</p>';
+ }else{
+  let title=type==="halo"?"Ready for Halo":(type==="final"?"Ready for Final":"Open Tickets");
+  let folders=matchingJobsForDashboard(type);
+  let noFolder=(data.tickets||[]).filter(t=>!t.folder_id&&(type==="open"?!isCompleted(t):type==="halo"?t.inspection_status==="Ready for Halo Inspection":t.inspection_status==="Ready for Final Inspection"));
+  $("dashDrillTitle").textContent=title;
+  $("dashDrillList").innerHTML=(folders.length?folders.map(f=>dashboardJobCard(f,type)).join(""):"")+(noFolder.length?`<h3>No Job Folder</h3>`+noFolder.map(dashboardTicketCard).join(""):"")||'<p class="small">Nothing here.</p>';
+ }
+ $("dashDrillCard").classList.remove("hidden");
+ $("dashDrillCard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function dashboardJobCard(f,type){
+ let matching=(data.tickets||[]).filter(t=>String(t.folder_id)===String(f.id));
+ if(type==="open")matching=matching.filter(t=>!isCompleted(t));
+ if(type==="halo")matching=matching.filter(t=>t.inspection_status==="Ready for Halo Inspection"&&!isCompleted(t));
+ if(type==="final")matching=matching.filter(t=>t.inspection_status==="Ready for Final Inspection");
+ return `<div class="ticketCard" onclick="openJobFolder('${escJs(f.id)}')"><div class="ticketTitle">${escHtml(cleanFolderNameText(f.name)||"Job")}</div><div class="small">Builder: ${escHtml(f.builder_name||browserBuilderName(f)||"No builder")}<br>${matching.length} matching ticket(s)</div>${statusBadge(inspectionStatus(f))}<br>${f.drive_url?`<button class="mini gray" onclick="event.stopPropagation();openDriveFolder('${escJs(f.drive_url)}')">Open Photos</button>`:""}<button class="mini green" onclick="event.stopPropagation();openJobFolder('${escJs(f.id)}')">Open Job</button></div>`;
+}
+function renderMoveFolderParentPicker(selectedBuilder,selectedParentId){
+ let bEl=$("moveFolderBuilderSelect"), pEl=$("moveFolderParentSelect"); if(!bEl||!pEl)return;
+ renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",selectedBuilder,"",true);
+ let jobs=jobsForBuilder(bEl.value).filter(f=>!selectedMoveFolder||String(f.id)!==String(selectedMoveFolder.id)&&!isFolderDescendant(selectedMoveFolder.id,f.id));
+ pEl.innerHTML='<option value="">Builder root / No parent</option>'+jobs.map(f=>`<option value="${escAttr(f.id)}">${escHtml(cleanFolderNameText(f.name)||"Job")}</option>`).join("");
+ if(selectedParentId)pEl.value=selectedParentId;
+}
+function moveFolder(id){
+ selectedMoveFolder=(data.folders||[]).find(f=>String(f.id)===String(id));
+ if(!selectedMoveFolder)return error("Folder not found.");
+ if($("moveFolderName"))$("moveFolderName").textContent=plainFolderPath(id)||cleanFolderNameText(selectedMoveFolder.name)||"Folder";
+ let parent=data.folders.find(f=>String(f.id)===String(selectedMoveFolder.parent_id||""));
+ renderMoveFolderParentPicker(parent?browserBuilderName(parent):(selectedMoveFolder.builder_name||browserBuilderName(selectedMoveFolder)||""),selectedMoveFolder.parent_id||"");
+ show($("moveFolderOverlay"));
+}
+function editTicket(id){
+ selectedTicket=ticket(id);
+ if(!selectedTicket)return error("Could not edit ticket.");
+ if(!$("ticketEditView"))return error("Edit page is missing.");
+ hide($("ticketListView"));
+ hide($("ticketDetailView"));
+ show($("ticketEditView"));
+ renderFixedBuilderSelect("editBuilder",selectedTicket.builder||"");
+ if($("editJobAddress"))$("editJobAddress").value=selectedTicket.job_address||"";
+ if($("editDate"))$("editDate").value=selectedTicket.ticket_date||today();
+ let editFolder=data.folders.find(f=>String(f.id)===String(selectedTicket.folder_id||""));
+ renderJobPicker("editFolderBuilder","editFolderJob",editFolder?browserBuilderName(editFolder)||editFolder.builder_name:"",selectedTicket.folder_id||"",true);
+ if($("editInspection"))setStatusSelect("editInspection",selectedTicket.inspection_status||"Not Ready");
+ let editLines=parseManHoursDetails(selectedTicket.man_hours_details);
+ if(!editLines.length&&selectedTicket.man_hours)editLines=[{name:"Total",hours:Number(selectedTicket.man_hours||0)}];
+ editManHourLineCount=Math.max(1,editLines.length);
+ renderManHourLines("edit",editManHourLineCount,editLines);
+ if($("editNotes"))$("editNotes").value=selectedTicket.notes||"";
+ if($("editNeed"))$("editNeed").value=selectedTicket.need_to_complete||"";
+ refreshEditMaterials();
+ window.scrollTo(0,0);
+}
+
+async function saveEdit(){
+ if(!selectedTicket)return error("No ticket selected.");
+ let editManLines=getManHourLines("edit",editManHourLineCount);
+ let upd={builder:$("editBuilder").value.trim(),job_address:$("editJobAddress").value.trim(),ticket_date:$("editDate").value||today(),folder_id:$("editFolderJob").value||null,inspection_status:$("editInspection").value,man_hours:totalManHours(editManLines),man_hours_details:JSON.stringify(editManLines),notes:$("editNotes").value,need_to_complete:$("editNeed").value};
+ let id=selectedTicket.id;
+ let r=await supabaseClient.from("tickets").update(upd).eq("id",id);
+ if(r.error&&(String(r.error.message||"").includes("man_hours_details")||String(r.error.message||"").includes("schema cache"))){delete upd.man_hours_details;r=await supabaseClient.from("tickets").update(upd).eq("id",id);}
+ if(r.error&&(String(r.error.message||"").includes("man_hours")||String(r.error.message||"").includes("schema cache"))){delete upd.man_hours;delete upd.man_hours_details;r=await supabaseClient.from("tickets").update(upd).eq("id",id);}
+ if(r.error)return error("Ticket edit did not save: "+r.error.message);
+ selectedTicket=null;
+ hide($("ticketEditView")); hide($("ticketDetailView")); show($("ticketListView"));
+ notice("Ticket updated.");
+ await loadAll();
+ showPage("ticketsPage");
+ window.scrollTo(0,0);
+}
+function originalDrawAfterMock(){
+ renderTicketBuilderSelects();
+}
+
 if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSetting;$("saveSetupBtn").onclick=()=>{saveCfg($("setupUrl").value.trim(),$("setupKey").value.trim());location.reload()};$("clearSetupBtn").onclick=()=>{localStorage.removeItem("neu_pin_supabase");location.reload()};$("pinLoginBtn").onclick=pinLogin;$("pinInput").addEventListener("keyup",e=>{if(e.key==="Enter"||$("pinInput").value.length===4)pinLogin()});$("signOutBtn").onclick=()=>{localStorage.removeItem("neu_current_employee");location.reload()};$("shareBtn").onclick=()=>{if(navigator.share)navigator.share({title:"NEU TICKETS",url:location.href});else prompt("Copy app link:",location.href)};document.body.addEventListener("click",e=>{
  let btn=e.target.closest("button");
  if(btn){
@@ -1915,7 +2625,4 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
    return showPage(p);
   }
  }
-});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
-</script>
-</body>
-</html>
+});if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>{renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("newBuilder")&&!$("newBuilder").value)$("newBuilder").value=$("newFolderBuilder").value;};if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolder
