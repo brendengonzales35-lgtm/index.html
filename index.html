@@ -1248,6 +1248,195 @@ input,select,textarea{
   content:" â¢ v4.5 Job Checklist";
 }
 
+
+
+/* ============================================================
+   NEU Tickets v4.6 â Two Column Job Overview
+   Opened job now shows inspection status + side-by-side
+   inspection/progress checklist.
+   ============================================================ */
+
+#jobProgressTitle{
+  font-size:22px!important;
+  margin-bottom:10px!important;
+}
+
+.neu46-overview{
+  display:grid;
+  gap:12px;
+}
+
+.neu46-status-bar{
+  border:1px solid rgba(148,163,184,.16);
+  border-radius:18px;
+  padding:13px;
+  background:linear-gradient(135deg,rgba(15,23,36,.92),rgba(5,9,18,.96));
+}
+
+.neu46-status-top{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+}
+
+.neu46-kicker{
+  color:#9aa8bb;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+
+.neu46-status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:950;
+  color:#fff;
+  border:1px solid rgba(148,163,184,.20);
+  background:rgba(15,23,36,.95);
+  white-space:nowrap;
+}
+
+.neu46-status-dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  display:inline-block;
+  background:#94a3b8;
+  box-shadow:0 0 16px currentColor;
+  color:#94a3b8;
+}
+
+.neu46-status-dot.green{background:#4ade80;color:#4ade80}
+.neu46-status-dot.yellow{background:#fbbf24;color:#fbbf24}
+.neu46-status-dot.blue{background:#4f73ff;color:#4f73ff}
+.neu46-status-dot.red{background:#ef4444;color:#ef4444}
+
+.neu46-status-bar select{
+  margin-top:10px!important;
+  min-height:42px!important;
+  border-radius:14px!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+
+.neu46-board{
+  border:1px solid rgba(148,163,184,.16);
+  border-radius:18px;
+  overflow:hidden;
+  background:rgba(3,7,12,.26);
+}
+
+.neu46-board-head{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  background:rgba(15,23,36,.72);
+  border-bottom:1px solid rgba(148,163,184,.14);
+}
+
+.neu46-board-head div{
+  padding:11px 10px;
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.neu46-board-head div:first-child{
+  border-right:1px solid rgba(148,163,184,.12);
+}
+
+.neu46-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  border-bottom:1px solid rgba(148,163,184,.12);
+}
+
+.neu46-row:last-child{
+  border-bottom:0;
+}
+
+.neu46-cell{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 26px!important;
+  gap:8px!important;
+  align-items:center!important;
+  min-height:56px!important;
+  padding:11px 10px!important;
+  margin:0!important;
+  color:#f8fafc!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  line-height:1.2!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+
+.neu46-cell:first-child{
+  border-right:1px solid rgba(148,163,184,.12)!important;
+}
+
+.neu46-cell span{
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.neu46-cell input{
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  accent-color:#4ade80!important;
+}
+
+.neu46-complete{
+  color:#aab4c3;
+  font-size:12px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+.neu46-notes{
+  margin-top:0;
+}
+
+.neu46-notes label{
+  color:#dbe4f0!important;
+  text-transform:uppercase!important;
+  letter-spacing:.065em!important;
+  font-size:12px!important;
+  font-weight:900!important;
+}
+
+.neu46-notes textarea{
+  min-height:74px!important;
+  border-radius:15px!important;
+}
+
+.neu46-save{
+  margin-top:10px!important;
+  min-height:44px!important;
+}
+
+/* This layout replaces the old checklist rows inside opened jobs */
+#jobProgressCard .progressChecklist,
+#jobProgressCard .progressCheckRow{
+  all:unset;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.6 Job Overview";
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -3557,4 +3746,69 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 })();
 </script>
 
-</body>
+
+<script id="neu-v4-6-two-column-job-overview">
+(function(){
+  function byId(id){return document.getElementById(id);}
+  function esc(v){
+    return String(v == null ? "" : v)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#39;");
+  }
+  function escJs(v){
+    return String(v == null ? "" : v).replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+  }
+  function cleanJobName(v){
+    try{return cleanFolderNameText(v || "");}
+    catch(e){return String(v || "").replace(/^ð\s*/,"").trim();}
+  }
+  function statusColor(status){
+    status = String(status || "");
+    if(status.indexOf("Final") >= 0 || status.indexOf("Partial") >= 0 || status.indexOf("Called") >= 0) return "yellow";
+    if(status.indexOf("Halo") >= 0) return "blue";
+    if(status === "Passed") return "green";
+    if(status === "Failed" || status === "Not Ready") return "red";
+    return "";
+  }
+  function displayStatus(status){
+    status = String(status || "Not Ready");
+    return status === "Ready for Inspection" ? "Not Ready" : status;
+  }
+  function statusOptions(current){
+    var list = [];
+    try{list = Array.isArray(statuses) ? statuses.slice() : [];}catch(e){}
+    if(!list.length){
+      list = [
+        "Not Ready",
+        "Inspection Called In",
+        "Ready for Partial Inspection",
+        "Ready for Final Inspection",
+        "Ready for Halo Inspection",
+        "Passed",
+        "Failed",
+        "Not Needed"
+      ];
+    }
+    if(current && list.indexOf(current) < 0) list.unshift(current);
+    return list;
+  }
+  function currentJob(){
+    try{
+      return (data.folders || []).find(function(x){return String(x.id) === String(currentFolder);});
+    }catch(e){
+      return null;
+    }
+  }
+  function renderCheckCell(item, checks){
+    return `<label class="neu46-cell"><span>${esc(item)}</span><input type="checkbox" ${checks[item] ? "checked" : ""} onchange="toggleJobProgressCheck('${escJs(item)}')"></label>`;
+  }
+
+  function renderTwoColumnJobOverview(){
+    var card = byId("jobProgressCard");
+    var body = byId("jobProgressBody");
+
+    if(!card || !body || !currentFolder){
+      if(card) h
