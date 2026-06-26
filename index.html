@@ -900,6 +900,71 @@ input,select,textarea{
 
 .versionBadge:after{content:" â¢ v4 Folders Preview"}
 
+
+
+/* ============================================================
+   NEU Tickets v4.1 â Folder Search Tab
+   Adds Browse/Search tabs inside the Folders screen only.
+   ============================================================ */
+
+.neu4-folder-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:4px 0 12px;
+}
+
+.neu4-folder-tabs button{
+  margin:0!important;
+  min-height:42px!important;
+  border-radius:14px!important;
+  padding:9px 10px!important;
+  font-size:13px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+  background:rgba(15,23,36,.90)!important;
+  color:#dbe7ff!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+}
+
+.neu4-folder-tabs button.active{
+  background:linear-gradient(180deg,#4f73ff,#3154e6)!important;
+  color:#fff!important;
+  border-color:rgba(79,115,255,.75)!important;
+}
+
+.neu4-folder-search-box{
+  display:none;
+  margin:0 0 12px;
+}
+
+.neu4-folder-search-box.active{
+  display:block;
+}
+
+.neu4-folder-search-box input{
+  margin-top:0!important;
+  min-height:46px!important;
+  border-radius:15px!important;
+  font-size:15px!important;
+  font-weight:750!important;
+}
+
+.neu4-search-count{
+  color:#aab4c3;
+  font-size:12px;
+  font-weight:850;
+  margin:2px 2px 10px;
+}
+
+.neu4-search-note{
+  color:#aab4c3;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.4;
+  padding:10px 2px 2px;
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -2782,3 +2847,216 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   }
 
   install();
+
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      install();
+      try{ if(typeof draw === "function") draw(); }catch(e){}
+    }, 250);
+  });
+})();
+</script>
+
+
+<script id="neu-v4-1-folder-search-tab">
+(function(){
+  var mode = "browse";
+  var searchValue = "";
+  var baseRender = null;
+
+  function byId(id){return document.getElementById(id);}
+  function esc(v){
+    return String(v == null ? "" : v)
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#39;");
+  }
+
+  function installControls(){
+    var page = byId("foldersPage");
+    var title = byId("folderTitle");
+    if(!page || !title) return;
+
+    if(!byId("neu4FolderTabs")){
+      var tabs = document.createElement("div");
+      tabs.id = "neu4FolderTabs";
+      tabs.className = "neu4-folder-tabs";
+      tabs.innerHTML =
+        '<button type="button" id="neu4BrowseFoldersBtn" class="active">Browse</button>' +
+        '<button type="button" id="neu4SearchFoldersBtn">Search Folders</button>';
+      title.insertAdjacentElement("afterend", tabs);
+
+      var search = document.createElement("div");
+      search.id = "neu4FolderSearchBox";
+      search.className = "neu4-folder-search-box";
+      search.innerHTML = '<input id="neu4FolderSearchInput" placeholder="Search builder or job name">';
+      tabs.insertAdjacentElement("afterend", search);
+
+      byId("neu4BrowseFoldersBtn").addEventListener("click", function(){
+        mode = "browse";
+        renderFolderBrowser();
+      });
+
+      byId("neu4SearchFoldersBtn").addEventListener("click", function(){
+        mode = "search";
+        try{ currentFolder = null; currentFolderBuilder = null; }catch(e){}
+        renderFolderBrowser();
+        setTimeout(function(){
+          var input = byId("neu4FolderSearchInput");
+          if(input) input.focus();
+        }, 60);
+      });
+
+      byId("neu4FolderSearchInput").addEventListener("input", function(){
+        searchValue = this.value || "";
+        renderFolderBrowser();
+      });
+    }
+
+    var browse = byId("neu4BrowseFoldersBtn");
+    var searchBtn = byId("neu4SearchFoldersBtn");
+    var searchBox = byId("neu4FolderSearchBox");
+    var input = byId("neu4FolderSearchInput");
+
+    if(browse) browse.classList.toggle("active", mode === "browse");
+    if(searchBtn) searchBtn.classList.toggle("active", mode === "search");
+    if(searchBox) searchBox.classList.toggle("active", mode === "search");
+    if(input && input.value !== searchValue) input.value = searchValue;
+  }
+
+  function builderName(f){
+    try{return browserBuilderName(f) || f.builder_name || "";}catch(e){return (f && f.builder_name) || "";}
+  }
+
+  function folderName(f){
+    try{return cleanFolderNameText(f.name || "");}catch(e){return String((f && f.name) || "").replace(/^ð\s*/,"").trim();}
+  }
+
+  function allSearchableFolders(){
+    var found = [];
+    var seen = {};
+
+    try{
+      var builders = folderBrowserBuilders() || [];
+      builders.forEach(function(b){
+        try{
+          (folderBrowserJobs(b) || []).forEach(function(f){
+            if(!f || seen[String(f.id)]) return;
+            seen[String(f.id)] = true;
+            found.push(f);
+          });
+        }catch(e){}
+      });
+    }catch(e){}
+
+    if(!found.length){
+      try{
+        (data.folders || []).forEach(function(f){
+          if(!f || seen[String(f.id)]) return;
+          seen[String(f.id)] = true;
+          found.push(f);
+        });
+      }catch(e){}
+    }
+
+    return found;
+  }
+
+  function searchPath(){
+    return '<div class="neu4-path-card">' +
+      '<div class="neu4-path-kicker">Folder Search</div>' +
+      '<div class="neu4-path-main">NEU Tickets <span>/</span> Search Folders</div>' +
+    '</div>';
+  }
+
+  function renderSearch(){
+    installControls();
+
+    var grid = byId("foldersGrid");
+    if(!grid) return;
+
+    grid.className = "folderGrid neu4-folder-list";
+
+    if(byId("folderTitle")) byId("folderTitle").textContent = "Search Folders";
+    if(byId("folderBackBtn")) byId("folderBackBtn").classList.add("hidden");
+    if(byId("folderTicketsCard")) hide(byId("folderTicketsCard"));
+    if(byId("jobProgressCard")) hide(byId("jobProgressCard"));
+
+    var q = String(searchValue || "").trim().toLowerCase();
+    var folders = allSearchableFolders();
+
+    if(q){
+      folders = folders.filter(function(f){
+        var hay = [
+          folderName(f),
+          builderName(f),
+          f.job_address || "",
+          f.drive_url || ""
+        ].join(" ").toLowerCase();
+        return hay.indexOf(q) >= 0;
+      });
+    }
+
+    folders.sort(function(a,b){
+      var ab = builderName(a).localeCompare(builderName(b));
+      if(ab) return ab;
+      return folderName(a).localeCompare(folderName(b));
+    });
+
+    var cards = "";
+    if(folders.length){
+      cards = '<div class="neu4-search-count">' + folders.length + ' folder result(s)</div>' +
+        folders.map(function(f){
+          try{return folderBrowserJobCard(f);}
+          catch(e){return '<div class="neu4-empty">' + esc(folderName(f)) + '</div>';}
+        }).join("");
+    }else{
+      cards = '<div class="neu4-empty">No folders match that search.</div>';
+    }
+
+    if(!q){
+      cards = '<div class="neu4-search-note">Start typing to filter folders by builder or job name. Showing all folders for now.</div>' + cards;
+    }
+
+    grid.innerHTML = searchPath() + cards;
+  }
+
+  function patch(){
+    if(typeof window.renderFolderBrowser !== "function") return false;
+    if(window.renderFolderBrowser.__neu41SearchPatched) return true;
+
+    baseRender = window.renderFolderBrowser;
+
+    window.renderFolderBrowser = function(){
+      installControls();
+      if(mode === "search"){
+        renderSearch();
+      }else{
+        baseRender();
+        installControls();
+      }
+    };
+
+    window.renderFolderBrowser.__neu41SearchPatched = true;
+    return true;
+  }
+
+  function boot(){
+    installControls();
+    if(patch()){
+      try{ if(typeof draw === "function") draw(); }catch(e){}
+    }
+  }
+
+  window.addEventListener("load", function(){
+    setTimeout(boot, 350);
+    setTimeout(boot, 900);
+  });
+
+  setTimeout(boot, 100);
+})();
+</script>
+
+</body>
