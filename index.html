@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.15 â Inline Job Tickets
+   NEU Tickets v4.17 â Hide Search Inside Folders
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.15 Inline Job Tickets"}
+.versionBadge:after{content:" â¢ v4.17 Hide Search Inside Folders"}
 
 
 
@@ -1102,13 +1102,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.15 Job Tickets";
+  content:" â¢ v4.17 Hide Search Inside Folders";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.15 â Inline Job Tickets
+   NEU Tickets v4.17 â Hide Search Inside Folders
    - View Job Tickets stays inside the opened job.
    - Empty jobs show "No job tickets yet."
    - Header/tabs are no longer sticky; they scroll away.
@@ -1172,7 +1172,45 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.15 Job Tickets";
+  content:" â¢ v4.17 Hide Search Inside Folders";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.16 â Remove Top Inspection Status
+   The left-side inspection dropdowns replace the big top status box.
+   ============================================================ */
+
+.neu511-status-card{
+  display:none!important;
+}
+
+.neu511-overview{
+  gap:12px!important;
+}
+
+.neu511-board{
+  margin-top:0!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.17 Hide Search Inside Folders";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.17 â Hide Search Inside Folders
+   Folder search only shows on the main Folders screen.
+   ============================================================ */
+
+#foldersPage.neu517-inside-folder #neu511SearchBox{
+  display:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.17 Hide Search Inside Folders";
 }
 
 </style>
@@ -3310,125 +3348,4 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   function actionClick(action){
     var a = action.getAttribute("data-action");
     if(a === "open-builder") openBuilderStable(action.getAttribute("data-builder"));
-    if(a === "move-builder") moveBuilderJobs(action.getAttribute("data-builder"));
-    if(a === "delete-builder") deleteBuilderFolder(action.getAttribute("data-builder"));
-    if(a === "open-job") openJobStable(action.getAttribute("data-job"));
-    if(a === "move-job") moveFolder(action.getAttribute("data-job"));
-    if(a === "delete-job") deleteFolder(action.getAttribute("data-job"));
-    if(a === "photos") openDriveFolder(action.getAttribute("data-url"));
-  }
-  function wireCards(){
-    document.querySelectorAll(".neu511-card").forEach(function(card){
-      if(card.__neu511Wired) return;
-      card.__neu511Wired = true;
-      card.addEventListener("click",function(e){
-        var more = e.target.closest(".neu511-more");
-        if(more){
-          e.stopPropagation();
-          card.classList.toggle("actions-open");
-          return;
-        }
-        var action = e.target.closest("[data-action]");
-        if(action){
-          e.stopPropagation();
-          actionClick(action);
-          return;
-        }
-        if(e.target.closest("button") || e.target.closest(".neu511-actions")) return;
-
-        var type = card.getAttribute("data-open-type");
-        var value = card.getAttribute("data-open-value");
-        if(type === "builder") openBuilderStable(value);
-        if(type === "job") openJobStable(value);
-      });
-    });
-  }
-  function renderFoldersV411(){
-    ensureFolderUi();
-
-    var grid = byId("foldersGrid");
-    if(!grid) return;
-    grid.className = "folderGrid neu511-list";
-
-    var input = byId("neu511SearchInput");
-    if(input && input.value !== searchText) input.value = searchText;
-
-    var q = String(searchText || "").trim().toLowerCase();
-
-    var back = byId("folderBackBtn");
-    if(back) back.classList.toggle("hidden", true);
-
-    if(currentFolder){
-      var job = null;
-      try{job = (data.folders || []).find(function(f){return String(f.id) === String(currentFolder);});}catch(e){}
-      if(byId("folderTitle")) byId("folderTitle").textContent = job ? cleanName(job.name) : "Job";
-      var builder = job ? builderFor(job) : (currentFolderBuilder || "Job");
-      grid.innerHTML = '<div class="neu511-back-row"><button type="button" class="gray" id="neu511BackBtn">Back</button><div class="neu511-subtitle">' + esc(builder) + '</div></div>' +
-        (job ? jobCard(job,true) : '<div class="neu511-empty">Job not found.</div>');
-      var bb = byId("neu511BackBtn");
-      if(bb) bb.onclick = backStable;
-      wireCards();
-      if(byId("folderTicketsCard")) hide(byId("folderTicketsCard"));
-      renderJobOverviewV411();
-      return;
-    }
-
-    if(currentFolderBuilder){
-      if(byId("folderTitle")) byId("folderTitle").textContent = currentFolderBuilder;
-      if(byId("folderBuilderSelect")) byId("folderBuilderSelect").value = currentFolderBuilder;
-      if(byId("folderTicketsCard")) hide(byId("folderTicketsCard"));
-      if(byId("jobProgressCard")) hide(byId("jobProgressCard"));
-      var jobs = jobsForBuilder(currentFolderBuilder);
-      grid.innerHTML = '<div class="neu511-back-row"><button type="button" class="gray" id="neu511BackBtn">Back</button><div class="neu511-subtitle">' + esc(currentFolderBuilder) + '</div></div>' +
-        (jobs.length ? jobs.map(function(f){return jobCard(f,false);}).join("") : '<div class="neu511-empty">No job folders under this builder yet.</div>');
-      var bbb = byId("neu511BackBtn");
-      if(bbb) bbb.onclick = backStable;
-      wireCards();
-      return;
-    }
-
-    if(byId("folderTitle")) byId("folderTitle").textContent = "Folders";
-    if(byId("folderTicketsCard")) hide(byId("folderTicketsCard"));
-    if(byId("jobProgressCard")) hide(byId("jobProgressCard"));
-
-    if(q){
-      var results = allJobs().filter(function(f){return searchHaystack(f).indexOf(q) >= 0;});
-      grid.innerHTML = '<div class="neu511-note">Searching job names and addresses only.</div><div class="neu511-count">' + results.length + ' job result(s)</div>' +
-        (results.length ? results.map(function(f){return jobCard(f,false);}).join("") : '<div class="neu511-empty">No jobs match that search.</div>');
-      wireCards();
-      return;
-    }
-
-    var builders = builderList();
-    grid.innerHTML = builders.length ? builders.map(builderCard).join("") : '<div class="neu511-empty">No builders found.</div>';
-    wireCards();
-  }
-
-  window.renderFolderBrowser = renderFoldersV411;
-  window.renderJobProgress = renderJobOverviewV411;
-  window.openBuilderFolder = openBuilderStable;
-  window.openJobFolder = openJobStable;
-  window.backFolderBrowser = backStable;
-
-  function boot(){
-    ensureFolderUi();
-    if(document.querySelector("#foldersPage.active")){
-      renderFoldersV411();
-    }
-  }
-
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded",boot);
-  }else{
-    boot();
-  }
-
-  window.addEventListener("load",function(){
-    setTimeout(boot,150);
-    setTimeout(boot,600);
-  });
-})();
-</script>
-
-</body>
-</html>
+    if(a === "move-builder") moveBuilderJobs(a
