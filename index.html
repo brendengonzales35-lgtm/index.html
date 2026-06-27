@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.27 Man Hours Display"}
+.versionBadge:after{content:" â¢ v4.28 Man Hours Separator Fix"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours Display";
+  content:" â¢ v4.28 Man Hours Separator Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours Display";
+  content:" â¢ v4.28 Man Hours Separator Fix";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours Display";
+  content:" â¢ v4.28 Man Hours Separator Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours Display";
+  content:" â¢ v4.28 Man Hours Separator Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours Display";
+  content:" â¢ v4.28 Man Hours Separator Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,13 +1233,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours Display";
+  content:" â¢ v4.28 Man Hours Separator Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    Fixes white text on white/light ticket pills.
    ============================================================ */
 
@@ -1304,13 +1304,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours";
+  content:" â¢ v4.28 Man Hours Separator";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.27 â Man Hours Display
+   NEU Tickets v4.28 â Man Hours Separator Fix
    Ticket cards show man-hour entries separately instead of one summed total.
    ============================================================ */
 
@@ -1323,7 +1323,23 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.27 Man Hours";
+  content:" â¢ v4.28 Man Hours Separator";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.28 â Man Hours Separator Fix
+   Removes the encoded bullet symbol between man-hour entries.
+   ============================================================ */
+
+#ticketsPage .ticketCard .neu427-man-hours{
+  white-space:normal!important;
+  word-break:normal!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.28 Man Hours Separator";
 }
 
 </style>
@@ -1658,7 +1674,7 @@ function manHoursText(lines){
 function manHoursInlineText(t){
  let lines=parseManHoursDetails(t&&t.man_hours_details);
  if(lines&&lines.length){
-  return lines.map(x=>`${x.name||"Man"} ${formatHourNumber(x.hours)} hr(s)`).join(" â¢ ");
+  return lines.map(x=>`${x.name||"Man"} ${formatHourNumber(x.hours)} hr(s)`).join(" / ");
  }
  let total=Number((t&&t.man_hours)||0);
  return total?`${formatHourNumber(total)} hr(s)`:"0 man hr(s)";
