@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.20 â Dropdowns No Top Status
+   NEU Tickets v4.21 â Passed Status + Non Sticky Tabs
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.20 Dropdowns No Top Status"}
+.versionBadge:after{content:" â¢ v4.21 Passed Status + Non Sticky Tabs"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.20 Dropdowns No Top Status";
+  content:" â¢ v4.21 Passed Status + Non Sticky Tabs";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.20 â Dropdowns No Top Status
+   NEU Tickets v4.21 â Passed Status + Non Sticky Tabs
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.20 Dropdowns No Top Status";
+  content:" â¢ v4.21 Passed Status + Non Sticky Tabs";
 }
 
 
@@ -1129,7 +1129,35 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.20 No Top Status";
+  content:" â¢ v4.21 Passed Status";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.21 â Passed Status + Non Sticky Tabs
+   - Folder card status now follows the inspection dropdowns.
+   - Top tabs are no longer sticky; they scroll away normally.
+   ============================================================ */
+
+.topNav,
+#appPage .topNav{
+  position:static!important;
+  top:auto!important;
+  z-index:auto!important;
+  transform:none!important;
+}
+
+header,
+#appPage header{
+  position:static!important;
+  top:auto!important;
+  z-index:auto!important;
+  transform:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.21 Passed Status";
 }
 
 </style>
@@ -2894,7 +2922,27 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     if(s === "Not Ready") return "In Progress";
     return s;
   }
+  function getProgressDrivenStatus(f){
+    var progress = {};
+    try{progress = readJobProgress(f && f.id) || {};}catch(e){return "";}
+    var steps = progress.inspectionSteps || {};
+    var checks = progress.checks || {};
+    var left = ["Water bond inspection","Ditch inspection","Halo inspection","Bonding inspection","Final inspection"];
+    var right = ["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran"];
+
+    var hasStep = left.some(function(x){return steps[x] && steps[x] !== "Not Ready";});
+    var hasCheck = right.some(function(x){return !!checks[x];});
+    var anyFailed = left.some(function(x){return steps[x] === "Failed";});
+    var allPassed = left.every(function(x){return steps[x] === "Passed";});
+
+    if(anyFailed) return "Failed";
+    if(allPassed) return "Passed";
+    if(hasStep || hasCheck) return "Not Ready";
+    return "";
+  }
   function getStatus(f){
+    var progressStatus = getProgressDrivenStatus(f);
+    if(progressStatus) return displayStatus(progressStatus);
     try{return displayStatus(inspectionStatus(f) || "Not Ready");}
     catch(e){return displayStatus((f && f.inspection_status) || "Not Ready");}
   }
@@ -3065,7 +3113,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     }catch(e){
       try{localStorage.setItem("neu_job_progress_" + currentFolder, JSON.stringify(progress));}catch(e2){}
     }
-    renderJobOverviewV411();
+    try{renderFoldersV411();}catch(e){renderJobOverviewV411();}
   }
   window.setInspectionStepStatus = setInspectionStepStatusLocal;
   function inspectionDropdownCell(item, stepStatuses){
@@ -3340,6 +3388,3 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   });
 })();
 </script>
-
-</body>
-</html>
