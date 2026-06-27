@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.14 â Tested Inspection Dropdowns
+   NEU Tickets v4.15 â Inline Job Tickets
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.14 Tested Dropdowns"}
+.versionBadge:after{content:" â¢ v4.15 Inline Job Tickets"}
 
 
 
@@ -1102,7 +1102,77 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.14 Left Dropdowns";
+  content:" â¢ v4.15 Job Tickets";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.15 â Inline Job Tickets
+   - View Job Tickets stays inside the opened job.
+   - Empty jobs show "No job tickets yet."
+   - Header/tabs are no longer sticky; they scroll away.
+   ============================================================ */
+
+header,
+.appHeader,
+.topHeader,
+.topNav,
+#appPage header{
+  position:static!important;
+  top:auto!important;
+  z-index:auto!important;
+}
+
+.topNav{
+  position:static!important;
+}
+
+.neu515-job-tickets-panel{
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:18px;
+  background:rgba(3,7,12,.28);
+  padding:12px;
+  margin-top:0;
+}
+
+.neu515-job-tickets-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.neu515-job-tickets-title{
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+
+.neu515-job-tickets-count{
+  color:#aab4c3;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.neu515-empty{
+  color:#aab4c3;
+  font-size:14px;
+  font-weight:850;
+  line-height:1.35;
+  padding:10px 4px;
+}
+
+.neu515-job-tickets-panel .ticketCard{
+  margin:8px 0!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.15 Job Tickets";
 }
 
 </style>
@@ -2825,10 +2895,11 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 });if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 
-<script id="neu-v4-14-tested-dropdowns">
+<script id="neu-v4-15-inline-job-tickets-main">
 (function(){
   var searchText = "";
   var showCreatePanel = false;
+  var inlineJobTicketsOpen = false;
 
   function byId(id){return document.getElementById(id);}
   function esc(v){
@@ -2943,6 +3014,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     if(input) input.value = "";
   }
   function openBuilderStable(builder){
+    inlineJobTicketsOpen = false;
     clearSearch();
     currentFolderBuilder = builder || "";
     currentFolder = null;
@@ -2950,6 +3022,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     renderFoldersV411();
   }
   function openJobStable(id){
+    inlineJobTicketsOpen = false;
     clearSearch();
     currentFolder = String(id || "");
     var f = null;
@@ -2960,6 +3033,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     setTimeout(renderJobOverviewV411,0);
   }
   function backStable(){
+    inlineJobTicketsOpen = false;
     clearSearch();
     if(currentFolder){
       currentFolder = null;
@@ -3106,11 +3180,53 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
           '<button class="progressSave neu511-save" onclick="saveJobProgressNotes()">Save Overview</button>' +
         '</div>' +
         '<div class="neu511-mini-actions">' +
-          '<button type="button" class="gray" onclick="showPage(&quot;ticketsPage&quot;)">View Tickets</button>' +
+          '<button type="button" class="gray" onclick="toggleInlineJobTickets()">View Job Tickets</button>' +
           '<button type="button" class="gray" onclick="openCurrentJobPhotos()">Photos</button>' +
         '</div>' +
+        '<div id="neu515JobTicketsPanel" class="neu515-job-tickets-panel hidden"><div class="neu515-job-tickets-head"><div class="neu515-job-tickets-title">Job Tickets</div><div id="neu515JobTicketsCount" class="neu515-job-tickets-count">0 ticket(s)</div></div><div id="neu515JobTicketsBox"></div></div>' +
       '</div>';
   }
+
+  function ticketsForCurrentJob(){
+    try{
+      return (data.tickets || []).filter(function(t){
+        var fid = t.folder_id || t.folderId || t.job_folder_id || "";
+        return String(fid) === String(currentFolder || "") && !(typeof isCompleted === "function" && isCompleted(t));
+      });
+    }catch(e){
+      return [];
+    }
+  }
+  function renderInlineJobTickets(){
+    var panel = byId("neu515JobTicketsPanel");
+    var box = byId("neu515JobTicketsBox");
+    var count = byId("neu515JobTicketsCount");
+    if(!panel || !box) return;
+
+    panel.classList.toggle("hidden", !inlineJobTicketsOpen);
+    if(!inlineJobTicketsOpen) return;
+
+    var tickets = ticketsForCurrentJob();
+    if(count) count.textContent = tickets.length + " ticket(s)";
+
+    if(!tickets.length){
+      box.innerHTML = '<div class="neu515-empty">No job tickets yet.</div>';
+      return;
+    }
+
+    try{
+      box.innerHTML = tickets.map(function(t){return ticketCard(t, true);}).join("");
+    }catch(e){
+      box.innerHTML = tickets.map(function(t){
+        return '<div class="ticketCard"><b>' + esc(t.ticket_number || t.id || "Ticket") + '</b><p class="small">' + esc(t.job_address || t.description || "") + '</p></div>';
+      }).join("");
+    }
+  }
+  window.toggleInlineJobTickets = function(){
+    inlineJobTicketsOpen = !inlineJobTicketsOpen;
+    renderInlineJobTickets();
+  };
+
   function hideOriginalFolderInputs(){
     var mainCard = document.querySelector("#foldersPage > .card:first-child");
     if(!mainCard) return;
