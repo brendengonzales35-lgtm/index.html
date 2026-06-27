@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.21 â Passed Status + Non Sticky Tabs
+   NEU Tickets v4.23 â Checklist Focus View
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.21 Passed Status + Non Sticky Tabs"}
+.versionBadge:after{content:" â¢ v4.23 Checklist Focus View"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.21 Passed Status + Non Sticky Tabs";
+  content:" â¢ v4.23 Checklist Focus View";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.21 â Passed Status + Non Sticky Tabs
+   NEU Tickets v4.23 â Checklist Focus View
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.21 Passed Status + Non Sticky Tabs";
+  content:" â¢ v4.23 Checklist Focus View";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.21 Passed Status";
+  content:" â¢ v4.22 Cleaner Open Folder";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.21 â Passed Status + Non Sticky Tabs
+   NEU Tickets v4.23 â Checklist Focus View
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,7 +1157,61 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.21 Passed Status";
+  content:" â¢ v4.22 Cleaner Open Folder";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.23 â Checklist Focus View
+   - Search/Add/Refresh show only on the main Folders screen.
+   - Duplicate lower job address above checklist is hidden.
+   ============================================================ */
+
+#foldersPage.neu522-inside-folder #neu511SearchBox,
+#foldersPage.neu522-inside-folder #neu511Tools,
+#foldersPage.neu522-inside-folder #neu511CreatePanel{
+  display:none!important;
+}
+
+#foldersPage.neu522-inside-job #jobProgressTitle{
+  display:none!important;
+}
+
+#foldersPage.neu522-inside-job #jobProgressCard{
+  margin-top:12px!important;
+}
+
+#foldersPage.neu522-inside-job #jobProgressBody{
+  margin-top:0!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.23 Checklist Focus";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.23 â Hide Selected Job Card
+   Inside an opened job, keep only the small Back / Builder row
+   above the checklist. Hide the repeated selected job card.
+   ============================================================ */
+
+#foldersPage.neu522-inside-job #foldersGrid .neu511-current-job{
+  display:none!important;
+}
+
+#foldersPage.neu522-inside-job #foldersGrid{
+  margin-bottom:0!important;
+}
+
+#foldersPage.neu522-inside-job #jobProgressCard{
+  margin-top:8px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.23 Checklist Focus";
 }
 
 </style>
@@ -3388,3 +3442,68 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   });
 })();
 </script>
+
+
+<script id="neu-v4-22-cleaner-open-folder-view">
+(function(){
+  function updateCleanFolderState(){
+    var page = document.getElementById("foldersPage");
+    if(!page) return;
+
+    var insideFolder = false;
+    var insideJob = false;
+
+    try{
+      insideFolder = !!(currentFolderBuilder || currentFolder);
+      insideJob = !!currentFolder;
+    }catch(e){}
+
+    page.classList.toggle("neu522-inside-folder", insideFolder);
+    page.classList.toggle("neu522-inside-job", insideJob);
+  }
+
+  function patchRender(){
+    if(typeof window.renderFolderBrowser === "function" && !window.renderFolderBrowser.__neu522Patch){
+      var oldRender = window.renderFolderBrowser;
+      window.renderFolderBrowser = function(){
+        oldRender();
+        updateCleanFolderState();
+      };
+      window.renderFolderBrowser.__neu522Patch = true;
+    }
+
+    if(typeof window.renderJobProgress === "function" && !window.renderJobProgress.__neu522Patch){
+      var oldJob = window.renderJobProgress;
+      window.renderJobProgress = function(){
+        oldJob();
+        updateCleanFolderState();
+      };
+      window.renderJobProgress.__neu522Patch = true;
+    }
+  }
+
+  function boot(){
+    patchRender();
+    updateCleanFolderState();
+    try{
+      if(document.querySelector("#foldersPage.active") && typeof renderFolderBrowser === "function"){
+        renderFolderBrowser();
+      }
+    }catch(e){}
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", boot);
+  }else{
+    boot();
+  }
+
+  window.addEventListener("load", function(){
+    setTimeout(boot, 150);
+    setTimeout(updateCleanFolderState, 600);
+  });
+})();
+</script>
+
+</body>
+</html>
