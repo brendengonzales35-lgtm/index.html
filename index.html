@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.32 Cleaner Create"}
+.versionBadge:after{content:" â¢ v4.34 Create Contrast"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,13 +1233,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Fixes white text on white/light ticket pills.
    ============================================================ */
 
@@ -1304,13 +1304,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Ticket cards show man-hour entries separately instead of one summed total.
    ============================================================ */
 
@@ -1323,13 +1323,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Removes the encoded bullet symbol between man-hour entries.
    ============================================================ */
 
@@ -1339,13 +1339,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    - Fixes white/light modal text contrast.
    - Keeps v4.28 man-hour separator fix.
    ============================================================ */
@@ -1474,7 +1474,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Cleaner ticket cards + simple phone-friendly filters.
    ============================================================ */
 
@@ -1588,13 +1588,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
+   NEU Tickets v4.34 â Create Contrast Fix
    Filters changed to: Not Complete, Most Recent, Needs Folder, All, Finished.
    ============================================================ */
 
@@ -1608,121 +1608,95 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.32 â Cleaner Create Screen
-   First Create tab pass: cleaner sections, better spacing, no save logic changes.
+   NEU Tickets v4.34 â Create Contrast Fix
+   Rolled back the v4.32 Create screen layout changes.
+   Folders and Tickets remain from v4.31.
    ============================================================ */
 
-#createPage .card{
-  padding:14px!important;
-  border-radius:22px!important;
+.versionBadge:after{
+  content:" â¢ v4.34 Create Contrast";
 }
 
-#createPage h2{
-  font-size:24px!important;
-  letter-spacing:-.55px!important;
-  margin-bottom:12px!important;
+
+
+/* ============================================================
+   NEU Tickets v4.34 â Create Contrast Fix
+   Keeps Create layout the same; fixes the white material cards.
+   ============================================================ */
+
+/* Create Ticket material rows */
+#createTicketPage .materialGrid,
+#ticketEditView .materialGrid{
+  background:rgba(15,23,42,.88)!important;
+  border:1px solid rgba(96,165,250,.26)!important;
+  border-radius:18px!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.18)!important;
 }
 
-#createPage h3{
-  margin:16px 0 8px!important;
-  color:#dbeafe!important;
-  font-size:13px!important;
-  font-weight:950!important;
-  letter-spacing:.06em!important;
-  text-transform:uppercase!important;
-}
-
-#createPage label{
-  display:block!important;
-  color:#dbe4f0!important;
-  font-size:12px!important;
-  font-weight:950!important;
-  letter-spacing:.065em!important;
-  text-transform:uppercase!important;
-  margin:10px 0 6px!important;
-  max-height:none!important;
+#createTicketPage .materialNumber,
+#ticketEditView .materialNumber{
+  color:#eaf2ff!important;
   opacity:1!important;
-  visibility:visible!important;
+  text-shadow:none!important;
+  font-weight:950!important;
 }
 
-#createPage input,
-#createPage select,
-#createPage textarea{
-  margin:0 0 8px!important;
-  min-height:44px!important;
-  border-radius:14px!important;
-  font-size:15px!important;
-  font-weight:750!important;
-}
-
-#createPage textarea{
-  min-height:82px!important;
-}
-
-.neu432-create-section{
-  border:1px solid rgba(148,163,184,.16);
-  border-radius:18px;
-  background:rgba(3,7,12,.26);
-  padding:12px;
-  margin:12px 0;
-}
-
-.neu432-create-heading{
-  color:#dbeafe;
-  font-size:12px;
-  font-weight:1000;
-  letter-spacing:.07em;
-  text-transform:uppercase;
-  margin-bottom:6px;
-}
-
-.neu432-create-help{
-  color:#9aa8bb;
-  font-size:12px;
-  font-weight:750;
-  line-height:1.35;
-  margin:-2px 0 8px;
-}
-
-#createPage #newManHoursList,
-#createPage #createMaterialsList{
-  display:grid;
-  gap:8px;
-  margin:8px 0;
-}
-
-#createPage #newManHoursList > *,
-#createPage #createMaterialsList > *{
-  border:1px solid rgba(148,163,184,.14);
-  border-radius:14px;
-  background:rgba(15,23,42,.45);
-  padding:8px;
-}
-
-#createPage #addNewManHourBtn,
-#createPage #addCreateMaterialLineBtn{
-  margin:6px 0 10px!important;
-  min-height:38px!important;
-  border-radius:14px!important;
+#createTicketPage .materialGrid input,
+#ticketEditView .materialGrid input{
+  background:#050912!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.45)!important;
   box-shadow:none!important;
 }
 
-#createPage #createTicketBtn{
-  margin-top:14px!important;
-  min-height:50px!important;
-  border-radius:18px!important;
-  font-size:16px!important;
-  font-weight:1000!important;
+#createTicketPage .materialGrid input::placeholder,
+#ticketEditView .materialGrid input::placeholder{
+  color:#9aa8bb!important;
+  opacity:1!important;
+}
+
+/* Man-hour rows match the same dark contrast */
+#createTicketPage .manHoursGrid,
+#ticketEditView .manHoursGrid{
+  background:rgba(15,23,42,.64)!important;
+  border:1px solid rgba(96,165,250,.18)!important;
+  border-radius:16px!important;
+}
+
+#createTicketPage .manHoursGrid input,
+#ticketEditView .manHoursGrid input{
+  background:#050912!important;
+  color:#f8fafc!important;
+  border-color:rgba(148,163,184,.45)!important;
+}
+
+#createTicketPage .manHoursGrid input::placeholder,
+#ticketEditView .manHoursGrid input::placeholder{
+  color:#9aa8bb!important;
+  opacity:1!important;
+}
+
+/* Keep Create page labels readable without changing layout */
+#createTicketPage label,
+#ticketEditView label{
+  color:#f8fafc!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+#createTicketPage h3,
+#ticketEditView h3{
+  color:#f8fafc!important;
 }
 
 .versionBadge:after{
-  content:" â¢ v4.32 Cleaner Create";
+  content:" â¢ v4.34 Create Contrast";
 }
 
 </style>
@@ -4137,87 +4111,3 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     setTimeout(boot,600);
   });
 })();
-</script>
-
-
-<script id="neu-v4-32-cleaner-create-screen">
-(function(){
-  function byId(id){return document.getElementById(id);}
-  function makeSection(id, heading, help){
-    var section=document.createElement("div");
-    section.id=id;
-    section.className="neu432-create-section";
-    section.innerHTML='<div class="neu432-create-heading">'+heading+'</div>'+(help?'<div class="neu432-create-help">'+help+'</div>':'');
-    return section;
-  }
-  function moveRange(section, ids){
-    ids.forEach(function(id){
-      var el=byId(id);
-      if(!el) return;
-      var label=null;
-      var prev=el.previousElementSibling;
-      if(prev && prev.tagName==="LABEL"){
-        label=prev;
-      }
-      if(label) section.appendChild(label);
-      section.appendChild(el);
-    });
-  }
-  function moveButton(section,id){
-    var el=byId(id);
-    if(el) section.appendChild(el);
-  }
-  function cleanCreatePage(){
-    var page=byId("createPage");
-    if(!page || page.__neu432Cleaned) return;
-    var card=page.querySelector(".card");
-    if(!card) return;
-    page.__neu432Cleaned=true;
-
-    var h2=card.querySelector("h2");
-    var anchor=h2 || card.firstChild;
-
-    var job=makeSection("neu432JobSection","Job Info","Choose the builder/job folder first so the ticket lands in the right place.");
-    var work=makeSection("neu432WorkSection","Work Details","Set inspection status, man hours, notes, and what still needs to be done.");
-    var materials=makeSection("neu432MaterialsSection","Materials Used","Add all material lines before creating the ticket.");
-
-    if(anchor && anchor.insertAdjacentElement){
-      anchor.insertAdjacentElement("afterend", job);
-      job.insertAdjacentElement("afterend", work);
-      work.insertAdjacentElement("afterend", materials);
-    }else{
-      card.insertBefore(job, card.firstChild);
-      card.insertBefore(work, job.nextSibling);
-      card.insertBefore(materials, work.nextSibling);
-    }
-
-    moveRange(job,["newBuilder","newJobAddress","newDate","newFolderBuilder","newFolderJob"]);
-    moveRange(work,["newInspection","newManHoursList","newNotes","newNeed"]);
-    moveButton(work,"addNewManHourBtn");
-
-    var matHeading=Array.from(card.querySelectorAll("h3")).find(function(x){return /Materials/i.test(x.textContent||"");});
-    if(matHeading) materials.appendChild(matHeading);
-    moveButton(materials,"materialOptions");
-    moveButton(materials,"createMaterialsList");
-    moveButton(materials,"addCreateMaterialLineBtn");
-    moveButton(materials,"createTicketBtn");
-  }
-
-  function boot(){
-    cleanCreatePage();
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded", boot);
-  }else{
-    boot();
-  }
-
-  window.addEventListener("load",function(){
-    setTimeout(boot,150);
-    setTimeout(boot,600);
-  });
-})();
-</script>
-
-</body>
