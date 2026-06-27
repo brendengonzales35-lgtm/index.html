@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.25 â Inline Folder Tickets
+   NEU Tickets v4.27 â Man Hours Display
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.25 Inline Folder Tickets"}
+.versionBadge:after{content:" â¢ v4.27 Man Hours Display"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.25 Inline Folder Tickets";
+  content:" â¢ v4.27 Man Hours Display";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.25 â Inline Folder Tickets
+   NEU Tickets v4.27 â Man Hours Display
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.25 Inline Folder Tickets";
+  content:" â¢ v4.27 Man Hours Display";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.25 Inline Folder Tickets";
+  content:" â¢ v4.27 Man Hours Display";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.25 â Inline Folder Tickets
+   NEU Tickets v4.27 â Man Hours Display
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.25 Inline Folder Tickets";
+  content:" â¢ v4.27 Man Hours Display";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.25 â Inline Folder Tickets
+   NEU Tickets v4.27 â Man Hours Display
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.25 Inline Folder Tickets";
+  content:" â¢ v4.27 Man Hours Display";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.25 â Inline Folder Tickets
+   NEU Tickets v4.27 â Man Hours Display
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,7 +1233,97 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.25 Inline Tickets";
+  content:" â¢ v4.27 Man Hours Display";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.27 â Man Hours Display
+   Fixes white text on white/light ticket pills.
+   ============================================================ */
+
+#ticketsPage .ticketCard .pill,
+#ticketsPage .ticketCard .metaPill,
+#ticketsPage .ticketCard .chip,
+#ticketsPage .ticketCard .badge,
+#ticketsPage .ticketCard span[class*="pill"],
+#ticketsPage .ticketCard span[class*="Pill"],
+#ticketsPage .ticketCard span[class*="chip"],
+#ticketsPage .ticketCard span[class*="badge"]{
+  background:rgba(15,23,42,.95)!important;
+  color:#eaf2ff!important;
+  border:1px solid rgba(148,163,184,.32)!important;
+  text-shadow:none!important;
+}
+
+#ticketsPage .ticketCard .pill *,
+#ticketsPage .ticketCard .metaPill *,
+#ticketsPage .ticketCard .chip *,
+#ticketsPage .ticketCard .badge *,
+#ticketsPage .ticketCard span[class*="pill"] *,
+#ticketsPage .ticketCard span[class*="Pill"] *,
+#ticketsPage .ticketCard span[class*="chip"] *,
+#ticketsPage .ticketCard span[class*="badge"] *{
+  color:#eaf2ff!important;
+  text-shadow:none!important;
+}
+
+/* Keep status pills readable with their colors */
+#ticketsPage .ticketCard .statusPill,
+#ticketsPage .ticketCard .ticketStatus,
+#ticketsPage .ticketCard [class*="status"],
+#ticketsPage .ticketCard [class*="Status"]{
+  color:#fff!important;
+  text-shadow:none!important;
+}
+
+/* Direct fix for the count pills visible in the Tickets screenshot */
+#ticketsPage .ticketCard{
+  color:#f8fafc!important;
+}
+
+#ticketsPage .ticketCard small,
+#ticketsPage .ticketCard .small,
+#ticketsPage .ticketCard p{
+  color:#aeb9c8!important;
+}
+
+#ticketsPage .ticketCard button{
+  color:#f8fafc!important;
+}
+
+#ticketsPage .ticketCard button.green,
+#ticketsPage .ticketCard .green{
+  color:#03130a!important;
+}
+
+#ticketsPage .ticketCard button.red,
+#ticketsPage .ticketCard .red{
+  color:#fff!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.27 Man Hours";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.27 â Man Hours Display
+   Ticket cards show man-hour entries separately instead of one summed total.
+   ============================================================ */
+
+#ticketsPage .ticketCard .neu427-man-hours{
+  background:rgba(15,23,42,.95)!important;
+  color:#eaf2ff!important;
+  border:1px solid rgba(148,163,184,.32)!important;
+  white-space:normal!important;
+  line-height:1.25!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.27 Man Hours";
 }
 
 </style>
@@ -1558,8 +1648,20 @@ function getManHourLines(prefix,count){
 function totalManHours(lines){
  return (lines||[]).reduce((s,x)=>s+Number(x.hours||0),0);
 }
+function formatHourNumber(v){
+ let n=Number(v||0);
+ return Number.isInteger(n)?String(n):String(n).replace(/\.0+$/,"");
+}
 function manHoursText(lines){
- return (lines||[]).length?(lines||[]).map(x=>`${x.name}: ${x.hours} hr(s)`).join("<br>"):"0";
+ return (lines||[]).length?(lines||[]).map(x=>`${x.name||"Man"} ${formatHourNumber(x.hours)} hr(s)`).join("<br>"):"0";
+}
+function manHoursInlineText(t){
+ let lines=parseManHoursDetails(t&&t.man_hours_details);
+ if(lines&&lines.length){
+  return lines.map(x=>`${x.name||"Man"} ${formatHourNumber(x.hours)} hr(s)`).join(" â¢ ");
+ }
+ let total=Number((t&&t.man_hours)||0);
+ return total?`${formatHourNumber(total)} hr(s)`:"0 man hr(s)";
 }
 function parseManHoursDetails(v){
  try{return JSON.parse(v||"[]")||[]}catch(e){return []}
@@ -2739,7 +2841,7 @@ async function uploadTicketPhoto(){
 
 async function addDrive(){let r=await supabaseClient.from("drive_links").insert({ticket_id:$("driveTicket").value,label:$("driveLabel").value||"Drive Link",url:$("driveUrl").value});if(r.error)return error(r.error.message);$("driveLabel").value="";$("driveUrl").value="";notice("Drive link added.");loadAll()}
 async function addEmployee(){if(!currentEmployee.is_admin)return error("Admin only.");let name=$("empName").value.trim(),pin=$("empPin").value.trim();if(!name||pin.length!==4)return error("Enter name and 4 digit PIN.");let r=await supabaseClient.from("employees").insert({name,pin,active:true,is_admin:false});if(r.error)return error(r.error.message);$("empName").value="";$("empPin").value="";loadAll()}
-function emailTicket(id){let t=ticket(id),used=data.used.filter(u=>String(u.ticket_id)===String(id)),links=data.drive.filter(d=>String(d.ticket_id)===String(id));let body=`NEU ELECTRICAL SOLUTIONS\n\nBuilder: ${t.builder||""}\nCreated By: ${t.created_by_name||"Team"}\nAddress: ${t.job_address||""}\nDate: ${displayDate(t.ticket_date)}\nInspection: ${t.inspection_status||""}\nMan Hrs: ${Number(t.man_hours||0)}\n\nNotes:\n${t.notes||""}\n\nMaterials:\n`;used.forEach(u=>body+=`- ${u.material_name} - ${u.quantity} ${u.unit||""}\n`);body+=`\nNeed to Complete:\n${t.need_to_complete||""}\n\nDrive Links:\n`;links.forEach(l=>body+=`- ${l.label||"Drive"}: ${l.url}\n`);location.href="mailto:?subject="+encodeURIComponent(t.job_address||t.builder||"NEU Ticket")+"&body="+encodeURIComponent(body)}
+function emailTicket(id){let t=ticket(id),used=data.used.filter(u=>String(u.ticket_id)===String(id)),links=data.drive.filter(d=>String(d.ticket_id)===String(id));let body=`NEU ELECTRICAL SOLUTIONS\n\nBuilder: ${t.builder||""}\nCreated By: ${t.created_by_name||"Team"}\nAddress: ${t.job_address||""}\nDate: ${displayDate(t.ticket_date)}\nInspection: ${t.inspection_status||""}\nMan Hrs: ${manHoursText(parseManHoursDetails(t.man_hours_details))}\n\nNotes:\n${t.notes||""}\n\nMaterials:\n`;used.forEach(u=>body+=`- ${u.material_name} - ${u.quantity} ${u.unit||""}\n`);body+=`\nNeed to Complete:\n${t.need_to_complete||""}\n\nDrive Links:\n`;links.forEach(l=>body+=`- ${l.label||"Drive"}: ${l.url}\n`);location.href="mailto:?subject="+encodeURIComponent(t.job_address||t.builder||"NEU Ticket")+"&body="+encodeURIComponent(body)}
 
 
 function folderOpenTicket(id){
@@ -2892,7 +2994,7 @@ function generateTicketPDF(id){
  let t=ticket(id); if(!t)return error("Ticket not found.");
  let used=data.used.filter(u=>String(u.ticket_id)===String(id));
  let links=data.drive.filter(d=>String(d.ticket_id)===String(id));
- let report=`<!doctype html><html><head><title>NEU Ticket Report</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#06243b}.box{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}.label{font-weight:bold;color:#06243b}.backBtn{background:#06243b;color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin-bottom:16px}@media print{.noPrint{display:none}}</style></head><body><button class="backBtn noPrint" onclick="window.close();history.back()">Back</button><h1>NEU Tickets</h1><h2>Job Report</h2><div class="box"><div class="label">Builder</div>${t.builder||""}</div><div class="box"><div class="label">Address</div>${t.job_address||""}</div><div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div><div class="box"><div class="label">Status</div>${t.inspection_status||""}</div><div class="box"><div class="label">Man Hrs</div>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Materials</div>${used.length?used.map(u=>`${u.material_name} - ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials."}</div><div class="box"><div class="label">Photos / Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: ${l.url}</div>`).join(""):"No links."}</div></body></html>`;
+ let report=`<!doctype html><html><head><title>NEU Ticket Report</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#06243b}.box{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}.label{font-weight:bold;color:#06243b}.backBtn{background:#06243b;color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin-bottom:16px}@media print{.noPrint{display:none}}</style></head><body><button class="backBtn noPrint" onclick="window.close();history.back()">Back</button><h1>NEU Tickets</h1><h2>Job Report</h2><div class="box"><div class="label">Builder</div>${t.builder||""}</div><div class="box"><div class="label">Address</div>${t.job_address||""}</div><div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div><div class="box"><div class="label">Status</div>${t.inspection_status||""}</div><div class="box"><div class="label">Man Hrs</div>${manHoursText(parseManHoursDetails(t.man_hours_details))}</div><div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Materials</div>${used.length?used.map(u=>`${u.material_name} - ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials."}</div><div class="box"><div class="label">Photos / Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: ${l.url}</div>`).join(""):"No links."}</div></body></html>`;
  let w=window.open("","_blank");
  if(!w)return error("Popup blocked.");
  w.document.open(); w.document.write(report); w.document.close();
@@ -2909,7 +3011,7 @@ function ticketCard(t,folderMode){
   <div class="ticketTitle">${t.builder||"No Builder"}</div>
   <div class="small">${t.job_address||"No address"}<br>${displayDate(t.ticket_date)} - Created By: ${t.created_by_name||"Team"}</div>
   ${statusBadge(t.inspection_status)}
-  <span class="badge">${count} material line(s)</span><span class="badge">${Number(t.man_hours||0)} man hr(s)</span>
+  <span class="badge">${count} material line(s)</span><span class="badge neu427-man-hours">${manHoursInlineText(t)}</span>
   <span class="badge">${photoCount} photo/link(s)</span><br>
   <button type="button" class="mini green" onclick="event.preventDefault();event.stopPropagation();${openCall}">Open</button>
   <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();${editCall}">Edit</button>
@@ -2920,7 +3022,7 @@ function ticketCard(t,folderMode){
   ${done?`<button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();reopenTicket('${t.id}')">Reopen</button>`:""}
  </div>`;
 }
-function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br>${statusBadge(t.inspection_status)}</div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}<br><b>Total:</b> ${Number(t.man_hours||0)}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
+function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br>${statusBadge(t.inspection_status)}</div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
 function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';renderFolderBrowser();let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a class="drivePill" href="${d.url}" target="_blank">Open Drive Folder</a><button class="mini gray" onclick="navigator.clipboard.writeText(\`${d.url}\`);notice(\`Drive link copied.\`)">Copy Link</button>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
@@ -3546,4 +3648,4 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 </script>
 
 </body>
-</html> 
+</html>
