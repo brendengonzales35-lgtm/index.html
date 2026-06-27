@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.23 â Checklist Focus View
+   NEU Tickets v4.24 â Direct Clean Job View
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.23 Checklist Focus View"}
+.versionBadge:after{content:" â¢ v4.24 Direct Clean Job View"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.23 Checklist Focus View";
+  content:" â¢ v4.24 Direct Clean Job View";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.23 â Checklist Focus View
+   NEU Tickets v4.24 â Direct Clean Job View
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.23 Checklist Focus View";
+  content:" â¢ v4.24 Direct Clean Job View";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.22 Cleaner Open Folder";
+  content:" â¢ v4.24 Direct Clean Job View";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.23 â Checklist Focus View
+   NEU Tickets v4.24 â Direct Clean Job View
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,61 +1157,30 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.22 Cleaner Open Folder";
+  content:" â¢ v4.24 Direct Clean Job View";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.23 â Checklist Focus View
-   - Search/Add/Refresh show only on the main Folders screen.
-   - Duplicate lower job address above checklist is hidden.
+   NEU Tickets v4.24 â Direct Clean Job View
+   Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
-#foldersPage.neu522-inside-folder #neu511SearchBox,
-#foldersPage.neu522-inside-folder #neu511Tools,
-#foldersPage.neu522-inside-folder #neu511CreatePanel{
+.neu524-hidden{
   display:none!important;
 }
 
-#foldersPage.neu522-inside-job #jobProgressTitle{
+#foldersPage #jobProgressTitle.neu524-hidden-title{
   display:none!important;
 }
 
-#foldersPage.neu522-inside-job #jobProgressCard{
-  margin-top:12px!important;
-}
-
-#foldersPage.neu522-inside-job #jobProgressBody{
-  margin-top:0!important;
-}
-
-.versionBadge:after{
-  content:" â¢ v4.23 Checklist Focus";
-}
-
-
-
-/* ============================================================
-   NEU Tickets v4.23 â Hide Selected Job Card
-   Inside an opened job, keep only the small Back / Builder row
-   above the checklist. Hide the repeated selected job card.
-   ============================================================ */
-
-#foldersPage.neu522-inside-job #foldersGrid .neu511-current-job{
-  display:none!important;
-}
-
-#foldersPage.neu522-inside-job #foldersGrid{
-  margin-bottom:0!important;
-}
-
-#foldersPage.neu522-inside-job #jobProgressCard{
+#foldersPage #jobProgressCard{
   margin-top:8px!important;
 }
 
 .versionBadge:after{
-  content:" â¢ v4.23 Checklist Focus";
+  content:" â¢ v4.24 Direct Clean Job View";
 }
 
 </style>
@@ -2934,7 +2903,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 });if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 
-<script id="neu-v4-14-tested-dropdowns">
+<script id="neu-v4-24-direct-clean-job-view-main">
 (function(){
   var searchText = "";
   var showCreatePanel = false;
@@ -3195,7 +3164,10 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 
     show(card);
     var titleEl = byId("jobProgressTitle");
-    if(titleEl) titleEl.textContent = cleanName(f.name) || "Job Overview";
+    if(titleEl){
+      titleEl.textContent = "";
+      titleEl.classList.add("neu524-hidden-title");
+    }
 
     var status = getStatus(f);
     var progress = {};
@@ -3319,6 +3291,14 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
         try{importDriveFoldersFromDrive();}catch(e){}
       });
     }
+
+    var insideFolder = !!(currentFolderBuilder || currentFolder);
+    ["neu511SearchBox","neu511Tools","neu511CreatePanel"].forEach(function(id){
+      var el = byId(id);
+      if(el){
+        el.classList.toggle("neu524-hidden", insideFolder);
+      }
+    });
   }
   function actionClick(action){
     var a = action.getAttribute("data-action");
@@ -3377,7 +3357,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
       if(byId("folderTitle")) byId("folderTitle").textContent = job ? cleanName(job.name) : "Job";
       var builder = job ? builderFor(job) : (currentFolderBuilder || "Job");
       grid.innerHTML = '<div class="neu511-back-row"><button type="button" class="gray" id="neu511BackBtn">Back</button><div class="neu511-subtitle">' + esc(builder) + '</div></div>' +
-        (job ? jobCard(job,true) : '<div class="neu511-empty">Job not found.</div>');
+        (job ? '' : '<div class="neu511-empty">Job not found.</div>');
       var bb = byId("neu511BackBtn");
       if(bb) bb.onclick = backStable;
       wireCards();
@@ -3439,68 +3419,6 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
   window.addEventListener("load",function(){
     setTimeout(boot,150);
     setTimeout(boot,600);
-  });
-})();
-</script>
-
-
-<script id="neu-v4-22-cleaner-open-folder-view">
-(function(){
-  function updateCleanFolderState(){
-    var page = document.getElementById("foldersPage");
-    if(!page) return;
-
-    var insideFolder = false;
-    var insideJob = false;
-
-    try{
-      insideFolder = !!(currentFolderBuilder || currentFolder);
-      insideJob = !!currentFolder;
-    }catch(e){}
-
-    page.classList.toggle("neu522-inside-folder", insideFolder);
-    page.classList.toggle("neu522-inside-job", insideJob);
-  }
-
-  function patchRender(){
-    if(typeof window.renderFolderBrowser === "function" && !window.renderFolderBrowser.__neu522Patch){
-      var oldRender = window.renderFolderBrowser;
-      window.renderFolderBrowser = function(){
-        oldRender();
-        updateCleanFolderState();
-      };
-      window.renderFolderBrowser.__neu522Patch = true;
-    }
-
-    if(typeof window.renderJobProgress === "function" && !window.renderJobProgress.__neu522Patch){
-      var oldJob = window.renderJobProgress;
-      window.renderJobProgress = function(){
-        oldJob();
-        updateCleanFolderState();
-      };
-      window.renderJobProgress.__neu522Patch = true;
-    }
-  }
-
-  function boot(){
-    patchRender();
-    updateCleanFolderState();
-    try{
-      if(document.querySelector("#foldersPage.active") && typeof renderFolderBrowser === "function"){
-        renderFolderBrowser();
-      }
-    }catch(e){}
-  }
-
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", boot);
-  }else{
-    boot();
-  }
-
-  window.addEventListener("load", function(){
-    setTimeout(boot, 150);
-    setTimeout(updateCleanFolderState, 600);
   });
 })();
 </script>
