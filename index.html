@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.19 â Rollback Dropdowns
+   NEU Tickets v4.20 â Dropdowns No Top Status
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.19 Rollback Dropdowns"}
+.versionBadge:after{content:" â¢ v4.20 Dropdowns No Top Status"}
 
 
 
@@ -1102,18 +1102,34 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.19 Rollback Dropdowns";
+  content:" â¢ v4.20 Dropdowns No Top Status";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.19 â Rollback Dropdowns
+   NEU Tickets v4.20 â Dropdowns No Top Status
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.19 Rollback Dropdowns";
+  content:" â¢ v4.20 Dropdowns No Top Status";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.20 â Hide Address Status Box
+   Exact dropdown version with ONE change:
+   removes only the Inspection Status box directly under the job address.
+   ============================================================ */
+
+#foldersPage #jobProgressBody > .neu511-overview > .neu511-status-card{
+  display:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.20 No Top Status";
 }
 
 </style>
