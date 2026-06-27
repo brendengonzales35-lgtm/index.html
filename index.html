@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.12 â Stable Tested Folders
+   NEU Tickets v4.14 â Tested Inspection Dropdowns
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,35 +1036,39 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.12 Tested Folders"}
+.versionBadge:after{content:" â¢ v4.14 Tested Dropdowns"}
 
 
 
 /* ============================================================
-   NEU Tickets v4.13 â Inspection Dropdown Column
-   Left column is now per-inspection dropdowns.
-   Right column remains progress checkboxes.
+   NEU Tickets v4.14 â Real Left Inspection Dropdowns
+   This edits the main tested job overview renderer itself.
+   Left column = dropdowns. Right column = checkboxes.
    ============================================================ */
 
-.neu511-cell.neu513-inspection-cell{
+.neu511-cell.neu514-inspection-cell{
   grid-template-columns:minmax(0,1fr)!important;
   gap:7px!important;
   align-items:stretch!important;
-  min-height:78px!important;
+  min-height:82px!important;
 }
 
-.neu513-inspection-name{
+.neu514-inspection-name{
+  display:block!important;
   color:#f8fafc!important;
   font-size:12px!important;
   font-weight:950!important;
   line-height:1.2!important;
-  letter-spacing:0!important;
-  text-transform:none!important;
+  margin-bottom:0!important;
 }
 
-.neu513-inspection-select{
+.neu514-inspection-select{
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
   width:100%!important;
-  min-height:36px!important;
+  min-height:38px!important;
+  max-height:none!important;
   margin:0!important;
   padding:7px 9px!important;
   border-radius:12px!important;
@@ -1075,33 +1079,30 @@ a{
   border:1px solid rgba(148,163,184,.28)!important;
 }
 
-.neu513-inspection-select.status-red{
-  border-color:rgba(239,68,68,.50)!important;
+.neu514-inspection-select.status-red{
+  border-color:rgba(239,68,68,.55)!important;
+}
+.neu514-inspection-select.status-yellow{
+  border-color:rgba(251,191,36,.58)!important;
+}
+.neu514-inspection-select.status-blue{
+  border-color:rgba(63,102,255,.62)!important;
+}
+.neu514-inspection-select.status-green{
+  border-color:rgba(74,222,128,.58)!important;
 }
 
-.neu513-inspection-select.status-yellow{
-  border-color:rgba(251,191,36,.55)!important;
+.neu511-cell.neu514-progress-cell{
+  min-height:82px!important;
 }
 
-.neu513-inspection-select.status-blue{
-  border-color:rgba(63,102,255,.60)!important;
-}
-
-.neu513-inspection-select.status-green{
-  border-color:rgba(74,222,128,.55)!important;
-}
-
-.neu513-progress-cell{
-  min-height:78px!important;
-}
-
-.neu513-progress-cell span{
+.neu511-cell.neu514-progress-cell span{
   font-size:13px!important;
   font-weight:900!important;
 }
 
 .versionBadge:after{
-  content:" â¢ v4.13 Inspection Dropdowns";
+  content:" â¢ v4.14 Left Dropdowns";
 }
 
 </style>
@@ -2824,7 +2825,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 });if($("updateWeatherBtn"))$("updateWeatherBtn").onclick=updateWeather;if($("addNewManHourBtn"))$("addNewManHourBtn").onclick=addNewManHourLine;if($("addEditManHourBtn"))$("addEditManHourBtn").onclick=addEditManHourLine;$("createTicketBtn").onclick=createTicket;$("backTicketsBtn").onclick=backTickets;$("backEditBtn").onclick=backTickets;$("saveEditBtn").onclick=saveEdit;if($("addEditMaterialBtn"))$("addEditMaterialBtn").onclick=addMaterialToEditTicket;if($("addBuilderBtn"))$("addBuilderBtn").onclick=addBuilder;$("createFolderBtn").onclick=createFolder;$("folderBackBtn").onclick=backFolderBrowser;$("addInvBtn").onclick=addInventory;if($("saveHoursBtn"))$("saveHoursBtn").onclick=saveHours;if($("sendCurrentHoursBtn"))$("sendCurrentHoursBtn").onclick=sendCurrentHours;if($("sendLatestTwoHoursBtn"))$("sendLatestTwoHoursBtn").onclick=sendLatestTwoWeeks;$("addDriveBtn").onclick=addDrive;if($("uploadPhotoBtn"))$("uploadPhotoBtn").onclick=uploadTicketPhoto;$("addEmployeeBtn").onclick=addEmployee;$("addCreateMaterialLineBtn").onclick=addCreateMaterialLine;if($("newFolderBuilder"))$("newFolderBuilder").onchange=()=>renderJobPicker("newFolderBuilder","newFolderJob",undefined,"",true);if($("editFolderBuilder"))$("editFolderBuilder").onchange=()=>renderJobPicker("editFolderBuilder","editFolderJob",undefined,"",true);if($("moveBuilderSelect"))$("moveBuilderSelect").onchange=()=>renderMoveJobSelect("");if($("moveFolderBuilderSelect"))$("moveFolderBuilderSelect").onchange=()=>renderJobPicker("moveFolderBuilderSelect","moveFolderParentSelect",undefined,"",true);if($("confirmMoveFolderBtn"))$("confirmMoveFolderBtn").onclick=confirmMoveFolder;if($("cancelMoveFolderBtn"))$("cancelMoveFolderBtn").onclick=cancelMoveFolder;$("confirmMoveBtn").onclick=confirmMoveTicket;$("cancelMoveBtn").onclick=cancelMoveTicket;init();
 </script>
 
-<script id="neu-v4-12-tested-folders">
+<script id="neu-v4-14-tested-dropdowns">
 (function(){
   var searchText = "";
   var showCreatePanel = false;
@@ -3019,8 +3020,34 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     if(current && list.indexOf(current) < 0) list.unshift(current);
     return list;
   }
-  function checkCell(item, checks){
-    return '<label class="neu511-cell"><span>' + esc(item) + '</span><input type="checkbox" ' + (checks[item] ? 'checked' : '') + ' onchange=\'toggleJobProgressCheck(' + JSON.stringify(item) + ')\'></label>';
+  function stepStatusClass(s){
+    s = String(s || "");
+    if(s.indexOf("Final") >= 0 || s.indexOf("Partial") >= 0 || s.indexOf("Called") >= 0) return "status-yellow";
+    if(s.indexOf("Halo") >= 0) return "status-blue";
+    if(s === "Passed") return "status-green";
+    if(s === "Failed" || s === "Not Ready") return "status-red";
+    return "";
+  }
+  function setInspectionStepStatusLocal(name, value){
+    var progress = {};
+    try{progress = readJobProgress(currentFolder) || {};}catch(e){}
+    progress.inspectionSteps = progress.inspectionSteps || {};
+    progress.inspectionSteps[name] = value || "Not Ready";
+    try{
+      saveJobProgressLocal(currentFolder, progress);
+    }catch(e){
+      try{localStorage.setItem("neu_job_progress_" + currentFolder, JSON.stringify(progress));}catch(e2){}
+    }
+    renderJobOverviewV411();
+  }
+  window.setInspectionStepStatus = setInspectionStepStatusLocal;
+  function inspectionDropdownCell(item, stepStatuses){
+    var current = (stepStatuses && stepStatuses[item]) || "Not Ready";
+    var opts = statusOptions(current);
+    return '<label class="neu511-cell neu514-inspection-cell"><span class="neu514-inspection-name">' + esc(item) + '</span><select class="neu514-inspection-select ' + stepStatusClass(current) + '" onchange=\'setInspectionStepStatus(' + JSON.stringify(item) + ', this.value)\'>' + opts.map(function(s){return '<option value="' + esc(s) + '" ' + (s === current ? 'selected' : '') + '>' + esc(s) + '</option>';}).join("") + '</select></label>';
+  }
+  function progressCheckCell(item, checks){
+    return '<label class="neu511-cell neu514-progress-cell"><span>' + esc(item) + '</span><input type="checkbox" ' + (checks[item] ? 'checked' : '') + ' onchange=\'toggleJobProgressCheck(' + JSON.stringify(item) + ')\'></label>';
   }
   function renderJobOverviewV411(){
     var card = byId("jobProgressCard");
@@ -3045,13 +3072,15 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     var progress = {};
     try{progress = readJobProgress(currentFolder) || {};}catch(e){}
     var checks = progress.checks || {};
+    var stepStatuses = progress.inspectionSteps || {};
 
     var left = ["Water bond inspection","Ditch inspection","Halo inspection","Bonding inspection","Final inspection"];
     var right = ["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran"];
-    var all = left.concat(right);
-    var done = all.filter(function(x){return !!checks[x];}).length;
+    var checkedDone = right.filter(function(x){return !!checks[x];}).length;
+    var statusDone = left.filter(function(x){return stepStatuses[x] && stepStatuses[x] !== "Not Ready";}).length;
+    var done = checkedDone + statusDone;
     var rows = left.map(function(item,i){
-      return '<div class="neu511-row">' + checkCell(item, checks) + checkCell(right[i], checks) + '</div>';
+      return '<div class="neu511-row">' + inspectionDropdownCell(item, stepStatuses) + progressCheckCell(right[i], checks) + '</div>';
     }).join("");
     var options = statusOptions(status);
 
@@ -3061,7 +3090,7 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
           '<div class="neu511-kicker">Inspection Status</div>' +
           '<div class="neu511-status-line">' +
             '<div class="neu511-pill"><span class="neu511-dot ' + statusColor(status) + '"></span>' + esc(status) + '</div>' +
-            '<div class="neu511-progress-count">' + done + ' / ' + all.length + ' done</div>' +
+            '<div class="neu511-progress-count">' + done + ' / 10 updated</div>' +
           '</div>' +
           '<select id="jobProgressSelect" class="neu511-status-select" onchange="setJobProgressStatus(this.value)">' +
             options.map(function(s){return '<option value="' + esc(s) + '" ' + (s === status ? 'selected' : '') + '>' + esc(s) + '</option>';}).join("") +
@@ -3285,193 +3314,5 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 })();
 </script>
 
-
-<script id="neu-v4-13-inspection-dropdown-column">
-(function(){
-  function byId(id){return document.getElementById(id);}
-  function esc(v){
-    return String(v == null ? "" : v)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#39;");
-  }
-  function statusOptions(){
-    var list = [];
-    try{list = Array.isArray(statuses) ? statuses.slice() : [];}catch(e){}
-    if(!list.length){
-      list = ["Not Ready","Inspection Called In","Ready for Partial Inspection","Ready for Final Inspection","Ready for Halo Inspection","Passed","Failed","Not Needed"];
-    }
-    return list;
-  }
-  function statusClass(s){
-    s = String(s || "");
-    if(s.indexOf("Final") >= 0 || s.indexOf("Partial") >= 0 || s.indexOf("Called") >= 0) return "status-yellow";
-    if(s.indexOf("Halo") >= 0) return "status-blue";
-    if(s === "Passed") return "status-green";
-    if(s === "Failed" || s === "Not Ready") return "status-red";
-    return "";
-  }
-  function getProgressObject(){
-    try{return readJobProgress(currentFolder) || {};}catch(e){return {};}
-  }
-  function saveProgressObject(progress){
-    try{
-      saveJobProgressLocal(currentFolder, progress || {});
-    }catch(e){
-      try{
-        localStorage.setItem("neu_job_progress_" + currentFolder, JSON.stringify(progress || {}));
-      }catch(e2){}
-    }
-  }
-  window.setInspectionStepStatus = function(name, value){
-    var progress = getProgressObject();
-    progress.inspectionSteps = progress.inspectionSteps || {};
-    progress.inspectionSteps[name] = value || "Not Ready";
-    saveProgressObject(progress);
-    try{renderJobProgress();}catch(e){}
-  };
-
-  function dropdownCell(name, value){
-    var current = value || "Not Ready";
-    var options = statusOptions();
-    return '<label class="neu511-cell neu513-inspection-cell">' +
-      '<span class="neu513-inspection-name">' + esc(name) + '</span>' +
-      '<select class="neu513-inspection-select ' + statusClass(current) + '" onchange=\'setInspectionStepStatus(' + JSON.stringify(name) + ', this.value)\'>' +
-        options.map(function(s){return '<option value="' + esc(s) + '" ' + (s === current ? 'selected' : '') + '>' + esc(s) + '</option>';}).join("") +
-      '</select>' +
-    '</label>';
-  }
-  function progressCheckCell(name, checks){
-    return '<label class="neu511-cell neu513-progress-cell"><span>' + esc(name) + '</span><input type="checkbox" ' + (checks[name] ? 'checked' : '') + ' onchange=\'toggleJobProgressCheck(' + JSON.stringify(name) + ')\'></label>';
-  }
-  function cleanName(v){
-    try{return cleanFolderNameText(v || "");}
-    catch(e){return String(v || "").replace(/^ð\s*/,"").trim();}
-  }
-  function displayStatus(s){
-    s = String(s || "Not Ready");
-    return s === "Ready for Inspection" ? "Not Ready" : s;
-  }
-  function dotClass(s){
-    s = String(s || "");
-    if(s.indexOf("Final") >= 0 || s.indexOf("Partial") >= 0 || s.indexOf("Called") >= 0) return "yellow";
-    if(s.indexOf("Halo") >= 0) return "blue";
-    if(s === "Passed") return "green";
-    if(s === "Failed" || s === "Not Ready") return "red";
-    return "";
-  }
-  function getStatus(f){
-    try{return displayStatus(inspectionStatus(f) || "Not Ready");}
-    catch(e){return displayStatus((f && f.inspection_status) || "Not Ready");}
-  }
-
-  function renderDropdownJobOverview(){
-    var card = byId("jobProgressCard");
-    var body = byId("jobProgressBody");
-    if(!card || !body || !currentFolder){
-      if(card) hide(card);
-      return;
-    }
-
-    var f = null;
-    try{f = (data.folders || []).find(function(x){return String(x.id) === String(currentFolder);});}catch(e){}
-    if(!f){
-      hide(card);
-      return;
-    }
-
-    show(card);
-    var titleEl = byId("jobProgressTitle");
-    if(titleEl) titleEl.textContent = cleanName(f.name) || "Job Overview";
-
-    var status = getStatus(f);
-    var progress = getProgressObject();
-    var checks = progress.checks || {};
-    var stepStatuses = progress.inspectionSteps || {};
-
-    var left = ["Water bond inspection","Ditch inspection","Halo inspection","Bonding inspection","Final inspection"];
-    var right = ["Lights pulled in","Panel mounted","Whips ran","Equipment bonded","Power ran"];
-    var allRight = right;
-    var checkedDone = allRight.filter(function(x){return !!checks[x];}).length;
-    var leftDone = left.filter(function(x){return stepStatuses[x] && stepStatuses[x] !== "Not Ready";}).length;
-    var totalDone = checkedDone + leftDone;
-
-    var rows = left.map(function(item,i){
-      return '<div class="neu511-row">' +
-        dropdownCell(item, stepStatuses[item] || "Not Ready") +
-        progressCheckCell(right[i], checks) +
-      '</div>';
-    }).join("");
-
-    var topOptions = statusOptions();
-
-    body.innerHTML =
-      '<div class="neu511-overview">' +
-        '<div class="neu511-status-card">' +
-          '<div class="neu511-kicker">Overall Inspection Status</div>' +
-          '<div class="neu511-status-line">' +
-            '<div class="neu511-pill"><span class="neu511-dot ' + dotClass(status) + '"></span>' + esc(status) + '</div>' +
-            '<div class="neu511-progress-count">' + totalDone + ' / 10 updated</div>' +
-          '</div>' +
-          '<select id="jobProgressSelect" class="neu511-status-select" onchange="setJobProgressStatus(this.value)">' +
-            topOptions.map(function(s){return '<option value="' + esc(s) + '" ' + (s === status ? 'selected' : '') + '>' + esc(s) + '</option>';}).join("") +
-          '</select>' +
-        '</div>' +
-        '<div class="neu511-board">' +
-          '<div class="neu511-board-head"><div>Inspections</div><div>Job Progress</div></div>' +
-          rows +
-        '</div>' +
-        '<div class="neu511-notes">' +
-          '<div class="neu511-notes-label">Notes</div>' +
-          '<textarea id="jobProgressNotes" placeholder="Add notes about this job...">' + esc(progress.notes || "") + '</textarea>' +
-          '<button class="progressSave neu511-save" onclick="saveJobProgressNotes()">Save Overview</button>' +
-        '</div>' +
-        '<div class="neu511-mini-actions">' +
-          '<button type="button" class="gray" onclick="showPage(&quot;ticketsPage&quot;)">View Tickets</button>' +
-          '<button type="button" class="gray" onclick="openCurrentJobPhotos()">Photos</button>' +
-        '</div>' +
-      '</div>';
-  }
-
-  function patch(){
-    window.renderJobProgress = renderDropdownJobOverview;
-
-    if(typeof window.openJobFolder === "function" && !window.openJobFolder.__neu513Patch){
-      var oldOpenJob = window.openJobFolder;
-      window.openJobFolder = function(id){
-        oldOpenJob(id);
-        setTimeout(renderDropdownJobOverview, 0);
-      };
-      window.openJobFolder.__neu513Patch = true;
-    }
-
-    if(typeof window.renderFolderBrowser === "function" && !window.renderFolderBrowser.__neu513Patch){
-      var oldRenderFolders = window.renderFolderBrowser;
-      window.renderFolderBrowser = function(){
-        oldRenderFolders();
-        try{
-          if(currentFolder){renderDropdownJobOverview();}
-        }catch(e){}
-      };
-      window.renderFolderBrowser.__neu513Patch = true;
-    }
-  }
-
-  function boot(){
-    patch();
-    try{
-      if(currentFolder){renderDropdownJobOverview();}
-    }catch(e){}
-  }
-
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", boot);
-  }else{
-    boot();
-  }
-
-  window.addEventListener("load", function(){
-    setTimeout(boot, 150);
-    setTim
+</body>
+</html>
