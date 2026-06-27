@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.28 Man Hours Separator Fix"}
+.versionBadge:after{content:" â¢ v4.29 Modal Contrast + Separate Man Hours"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator Fix";
+  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator Fix";
+  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator Fix";
+  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator Fix";
+  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator Fix";
+  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,13 +1233,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator Fix";
+  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    Fixes white text on white/light ticket pills.
    ============================================================ */
 
@@ -1304,13 +1304,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator";
+  content:" â¢ v4.29 Modal Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    Ticket cards show man-hour entries separately instead of one summed total.
    ============================================================ */
 
@@ -1323,13 +1323,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator";
+  content:" â¢ v4.29 Modal Contrast";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.28 â Man Hours Separator Fix
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
    Removes the encoded bullet symbol between man-hour entries.
    ============================================================ */
 
@@ -1339,7 +1339,136 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.28 Man Hours Separator";
+  content:" â¢ v4.29 Modal Contrast";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   - Fixes white/light modal text contrast.
+   - Keeps v4.28 man-hour separator fix.
+   ============================================================ */
+
+/* Fix white-on-white text in popups/modals like Move Ticket */
+.modal,
+.modalCard,
+.dialog,
+.popup,
+.overlay .card,
+#moveTicketModal,
+[id*="Modal"],
+[class*="modal"],
+[class*="Modal"]{
+  color:#0f172a!important;
+}
+
+.modal label,
+.modalCard label,
+.dialog label,
+.popup label,
+.overlay .card label,
+#moveTicketModal label,
+[id*="Modal"] label,
+[class*="modal"] label,
+[class*="Modal"] label{
+  color:#334155!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+.modal h1,
+.modal h2,
+.modal h3,
+.modal h4,
+.modal p,
+.modalCard h1,
+.modalCard h2,
+.modalCard h3,
+.modalCard h4,
+.modalCard p,
+.dialog h1,
+.dialog h2,
+.dialog h3,
+.dialog h4,
+.dialog p,
+.popup h1,
+.popup h2,
+.popup h3,
+.popup h4,
+.popup p,
+.overlay .card h1,
+.overlay .card h2,
+.overlay .card h3,
+.overlay .card h4,
+.overlay .card p,
+[id*="Modal"] h1,
+[id*="Modal"] h2,
+[id*="Modal"] h3,
+[id*="Modal"] h4,
+[id*="Modal"] p,
+[class*="modal"] h1,
+[class*="modal"] h2,
+[class*="modal"] h3,
+[class*="modal"] h4,
+[class*="modal"] p,
+[class*="Modal"] h1,
+[class*="Modal"] h2,
+[class*="Modal"] h3,
+[class*="Modal"] h4,
+[class*="Modal"] p{
+  color:#0f172a!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+/* Keep modal inputs/selects dark and readable */
+.modal input,
+.modal select,
+.modal textarea,
+.modalCard input,
+.modalCard select,
+.modalCard textarea,
+.dialog input,
+.dialog select,
+.dialog textarea,
+.popup input,
+.popup select,
+.popup textarea,
+.overlay .card input,
+.overlay .card select,
+.overlay .card textarea,
+#moveTicketModal input,
+#moveTicketModal select,
+#moveTicketModal textarea,
+[id*="Modal"] input,
+[id*="Modal"] select,
+[id*="Modal"] textarea,
+[class*="modal"] input,
+[class*="modal"] select,
+[class*="modal"] textarea,
+[class*="Modal"] input,
+[class*="Modal"] select,
+[class*="Modal"] textarea{
+  background:#050912!important;
+  color:#f8fafc!important;
+  border-color:#334155!important;
+}
+
+.modal input::placeholder,
+.modalCard input::placeholder,
+.dialog input::placeholder,
+.popup input::placeholder,
+.overlay .card input::placeholder,
+[id*="Modal"] input::placeholder,
+[class*="modal"] input::placeholder,
+[class*="Modal"] input::placeholder{
+  color:#94a3b8!important;
+  opacity:1!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.29 Modal + Man Hours";
 }
 
 </style>
