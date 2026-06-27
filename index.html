@@ -1262,6 +1262,101 @@ input,select,textarea{
 
 .versionBadge:after{content:" â¢ v4.9 Stable Folders"}
 
+
+
+/* ============================================================
+   NEU Tickets v4.10 â Visible Checklist Fix
+   v4.4 cleaner folders hid all labels on the Folders page.
+   This restores labels/checkboxes inside the opened job overview.
+   ============================================================ */
+
+#foldersPage.neu4-clean .neu49-cell,
+#foldersPage.neu4-clean label.neu49-cell{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 28px!important;
+  gap:8px!important;
+  align-items:center!important;
+  min-height:58px!important;
+  max-height:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:visible!important;
+  margin:0!important;
+  padding:11px 10px!important;
+  border-width:0!important;
+  color:#f8fafc!important;
+  background:transparent!important;
+}
+
+#foldersPage.neu4-clean .neu49-cell:first-child{
+  border-right:1px solid rgba(148,163,184,.12)!important;
+}
+
+#foldersPage.neu4-clean .neu49-cell span{
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  color:#f8fafc!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+
+#foldersPage.neu4-clean .neu49-cell input[type="checkbox"]{
+  -webkit-appearance:auto!important;
+  appearance:auto!important;
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  width:24px!important;
+  height:24px!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  accent-color:#4ade80!important;
+  position:static!important;
+}
+
+#foldersPage.neu4-clean .neu49-notes label{
+  display:block!important;
+  max-height:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:visible!important;
+  margin-top:0!important;
+  margin-bottom:6px!important;
+  padding:0!important;
+  color:#dbe4f0!important;
+  text-transform:uppercase!important;
+  letter-spacing:.065em!important;
+  font-size:12px!important;
+  font-weight:900!important;
+}
+
+#foldersPage.neu4-clean #jobProgressSelect,
+#foldersPage.neu4-clean #jobProgressNotes{
+  display:block!important;
+  max-height:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:visible!important;
+}
+
+.neu49-board{
+  min-height:0!important;
+}
+
+.neu49-row{
+  min-height:58px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.10 Visible Checklist";
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -3810,4 +3905,62 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 })();
 </script>
 
-</body>
+
+<script id="neu-v4-10-visible-checklist-fix">
+(function(){
+  function showChecklistElements(){
+    document.querySelectorAll(".neu49-cell").forEach(function(el){
+      el.style.display = "grid";
+      el.style.opacity = "1";
+      el.style.visibility = "visible";
+      el.style.maxHeight = "none";
+      el.style.overflow = "visible";
+    });
+
+    document.querySelectorAll(".neu49-cell span,.neu49-cell input").forEach(function(el){
+      el.style.opacity = "1";
+      el.style.visibility = "visible";
+    });
+  }
+
+  function patchRender(){
+    if(typeof window.renderJobProgress === "function" && !window.renderJobProgress.__neu410VisiblePatch){
+      var oldJob = window.renderJobProgress;
+      window.renderJobProgress = function(){
+        oldJob();
+        showChecklistElements();
+      };
+      window.renderJobProgress.__neu410VisiblePatch = true;
+    }
+
+    if(typeof window.renderFolderBrowser === "function" && !window.renderFolderBrowser.__neu410VisiblePatch){
+      var oldFolders = window.renderFolderBrowser;
+      window.renderFolderBrowser = function(){
+        oldFolders();
+        showChecklistElements();
+      };
+      window.renderFolderBrowser.__neu410VisiblePatch = true;
+    }
+  }
+
+  function boot(){
+    patchRender();
+    showChecklistElements();
+    try{
+      if(typeof draw === "function") draw();
+    }catch(e){}
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", boot);
+  }else{
+    boot();
+  }
+
+  window.addEventListener("load", function(){
+    setTimeout(boot, 150);
+    setTimeout(boot, 600);
+    setTimeout(showChecklistElements, 1200);
+  });
+})();
+</script>
