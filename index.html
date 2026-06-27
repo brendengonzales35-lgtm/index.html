@@ -9,7 +9,7 @@
 :root{--navy:#06243b;--green:#8cc63f;--bg:#f3f4f6;--text:#111827;--line:#e5e7eb}
 *{box-sizing:border-box}body{margin:0;padding:14px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
 header{background:var(--navy);color:white;margin:-14px -14px 10px;padding:18px 14px;border-radius:0 0 22px 22px;box-shadow:0 2px 12px #0002}
-.logoRow{display:flex;gap:12px;align-items:center}.logo,.authLogo{width:74px;height:74px;border-radius:16px;object-fit:cover;background:white}.authLogo{width:96px;height:96px}
+.logoRow{display:flex;gap:12px;align-items:center}.logo,.authLogo{width:74px;height:74px;border-radius:16px;object-fit:contain;background:transparent;border:none;box-shadow:none;padding:0}.authLogo{width:96px;height:96px}
 h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}h3{font-size:16px;margin:12px 0 8px}
 .card{background:white;border-radius:18px;padding:14px;margin:12px 0;box-shadow:0 1px 8px #0001}
 label{font-weight:700;font-size:14px;display:block;margin-top:10px}
@@ -53,7 +53,7 @@ textarea{min-height:80px}button{background:var(--navy);color:white;border:0;font
 
 
 #splashScreen{position:fixed;inset:0;z-index:99999;background:#06243b;display:flex;align-items:center;justify-content:center;flex-direction:column;animation:splashOut .45s ease 1.65s forwards}
-.splashLogo{width:140px;height:140px;border-radius:30px;object-fit:cover;box-shadow:0 18px 50px #0006;animation:splashLogoIn .9s ease forwards}
+.splashLogo{width:140px;height:140px;border-radius:30px;object-fit:contain;box-shadow:none;animation:splashLogoIn .9s ease forwards}
 .splashTitle{color:white;font-weight:900;font-size:30px;margin-top:20px;animation:splashTextIn 1s ease forwards}
 @keyframes splashLogoIn{from{opacity:0;transform:translateY(28px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes splashTextIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.56 Recent Jobs Contrast"}
+.versionBadge:after{content:" â¢ v4.58 Logo Border Fix"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,13 +1233,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Fixes white text on white/light ticket pills.
    ============================================================ */
 
@@ -1304,13 +1304,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Ticket cards show man-hour entries separately instead of one summed total.
    ============================================================ */
 
@@ -1323,13 +1323,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Removes the encoded bullet symbol between man-hour entries.
    ============================================================ */
 
@@ -1339,13 +1339,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    - Fixes white/light modal text contrast.
    - Keeps v4.28 man-hour separator fix.
    ============================================================ */
@@ -1474,7 +1474,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Cleaner ticket cards + simple phone-friendly filters.
    ============================================================ */
 
@@ -1588,13 +1588,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Filters changed to: Not Complete, Most Recent, Needs Folder, All, Finished.
    ============================================================ */
 
@@ -1608,25 +1608,25 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Rolled back the v4.32 Create screen layout changes.
    Folders and Tickets remain from v4.31.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Keeps Create layout the same; fixes the white material cards.
    ============================================================ */
 
@@ -1696,13 +1696,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Keeps 10 material lines. Adds sticky Create button, warnings,
    and smoother Create-from-folder behavior.
    ============================================================ */
@@ -1767,13 +1767,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Removes sticky Create Ticket button only.
    Keeps required warnings + create-from-folder helpers.
    ============================================================ */
@@ -1792,13 +1792,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    First Inspections pass: cleaner cards, filters, dropdowns, open folder.
    ============================================================ */
 
@@ -1956,13 +1956,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Replaces the tall button-heavy inspection cards with compact cards.
    ============================================================ */
 
@@ -2146,13 +2146,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Inspections now reads folder.inspection_status first, matching Folders.
    ============================================================ */
 
@@ -2166,13 +2166,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Inspections now matches Folders status logic better.
    Passed wins over stale Failed status.
    ============================================================ */
@@ -2184,7 +2184,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Recent Inspection Updates starts at 4013 hough rd and future updates.
    ============================================================ */
 
@@ -2195,7 +2195,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Overall status: Passed only when Final inspection is Passed.
    Blank final inspection = In Progress.
    ============================================================ */
@@ -2217,7 +2217,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Shows Pool Steel instead of Water Bond Inspection.
    Underlying saved key is preserved so old progress data still works.
    ============================================================ */
@@ -2229,18 +2229,18 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Folder progress dropdown now displays Pool Steel, while saved key remains Water bond inspection.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Recent Inspection Updates only shows on All, not status filters.
    ============================================================ */
 
@@ -2251,7 +2251,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    - Marks existing jobs passed except 4013 hough rd.
    - Called-in inspection steps show as a small folder badge.
    - Called-in jobs show under Called In filter.
@@ -2283,20 +2283,20 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    - Existing jobs are set Passed except 4013 hough rd.
    - Passed jobs do not show stale Called In badges.
    - Called In filter only shows non-passed called-in jobs.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Removes In Progress filter tab. Ready is default again.
    Jobs may still display In Progress on the card.
    ============================================================ */
@@ -2308,7 +2308,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    First Inventory pass: cleaner cards, search, filters, and stock summary.
    ============================================================ */
 
@@ -2493,13 +2493,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    First Hours pass: cleaner saved-hour cards and live week total.
    No save/send calculation logic changed.
    ============================================================ */
@@ -2678,13 +2678,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Hours list, latest two weeks, send, edit, and delete use only the signed-in employee.
    ============================================================ */
 
@@ -2693,13 +2693,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Removes Photos from the main navigation.
    The hidden drive/photos page is kept so existing ticket/folder photo buttons still work.
    ============================================================ */
@@ -2709,13 +2709,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Top title now says NEU DASHBOARD and weather is compact on Home.
    ============================================================ */
 
@@ -2809,13 +2809,13 @@ header h1{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Keeps logo + NEU DASHBOARD in the top header.
    Removes the duplicate NEU Dashboard title from the Home card.
    ============================================================ */
@@ -2830,13 +2830,13 @@ header h1{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Replaces the visible tab row with a slide-out hamburger menu.
    Current app tabs stay inside the menu.
    ============================================================ */
@@ -2999,13 +2999,13 @@ body.neu455-menu-open{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.56 â Recent Jobs Contrast
+   NEU Tickets v4.58 â Logo Border Fix
    Fixes white-on-white Recent Jobs cards on the Home dashboard.
    ============================================================ */
 
@@ -3041,7 +3041,119 @@ body.neu455-menu-open{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.56 Recent Jobs Contrast";
+  content:" â¢ v4.58 Logo Border Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.58 â Logo Border Fix
+   Weather is now a long horizontal dashboard card and refreshes automatically.
+   ============================================================ */
+
+.neu453-dashboard-top{
+  display:block!important;
+  margin-bottom:10px!important;
+}
+
+.neu457-weather-wide{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  margin:10px 0 14px!important;
+  padding:12px 13px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(96,165,250,.24)!important;
+  background:linear-gradient(90deg,rgba(15,23,42,.92),rgba(8,13,19,.96))!important;
+  box-shadow:0 14px 35px rgba(0,0,0,.40)!important;
+  min-height:74px!important;
+}
+
+.neu457-weather-main{
+  min-width:84px;
+}
+
+.neu457-weather-wide .neu453-weather-label{
+  color:#aab4c3!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  text-transform:uppercase!important;
+  letter-spacing:.06em!important;
+  margin-bottom:4px!important;
+}
+
+.neu457-weather-wide .weatherMain{
+  color:#f8fafc!important;
+  font-size:33px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  letter-spacing:-.5px!important;
+  margin:0!important;
+}
+
+.neu457-weather-wide .weatherDetails{
+  color:#dbe4f0!important;
+  font-size:13px!important;
+  line-height:1.25!important;
+  font-weight:850!important;
+  margin:0!important;
+  overflow:hidden!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+}
+
+.neu457-weather-auto{
+  color:#93c5fd!important;
+  border:1px solid rgba(147,197,253,.35)!important;
+  background:rgba(37,99,235,.18)!important;
+  border-radius:999px!important;
+  padding:6px 8px!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  letter-spacing:.05em!important;
+}
+
+#updateWeatherBtn{
+  display:none!important;
+}
+
+@media(max-width:390px){
+  .neu457-weather-wide{
+    grid-template-columns:auto minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+  .neu457-weather-auto{
+    display:none!important;
+  }
+  .neu457-weather-wide .weatherMain{
+    font-size:29px!important;
+  }
+  .neu457-weather-wide .weatherDetails{
+    font-size:12px!important;
+  }
+}
+
+.versionBadge:after{
+  content:" â¢ v4.58 Logo Border Fix";
+}
+
+
+/* v4.58 logo cleanup */
+.logo,
+.authLogo,
+.splashLogo{
+  background:transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+  outline:none !important;
+}
+.logo,
+.authLogo{
+  object-fit:contain !important;
+  padding:0 !important;
 }
 
 </style>
@@ -3078,12 +3190,14 @@ body.neu455-menu-open{
     <h2 class="neu454-home-kicker">Daily Overview</h2>
     <p class="neu453-dashboard-sub">Home</p>
   </div>
-  <div id="weatherBox" class="weatherBox neu453-weather-mini">
+</div>
+<div id="weatherBox" class="weatherBox neu457-weather-wide">
+  <div class="neu457-weather-main">
     <div class="neu453-weather-label">&#127780;&#65039; Weather</div>
     <div id="weatherMain" class="weatherMain">--&deg;F</div>
-    <div id="weatherDetails" class="weatherDetails">Tap update.</div>
-    <button id="updateWeatherBtn" class="gray">Update</button>
   </div>
+  <div id="weatherDetails" class="weatherDetails">Auto refreshing weather...</div>
+  <div class="neu457-weather-auto">AUTO</div>
 </div>
 <div class="dashGrid">
   <div class="dashBox dashDrillCard" onclick="showDashboardJobs('open')"><div id="dashOpen" class="dashNumber">0</div><div class="dashLabel">Open Tickets</div></div>
@@ -6353,203 +6467,3 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
     LEFT.forEach(function(step){
       p.inspectionSteps[step]="Not Ready";
     });
-    p.inspectionSteps["Final inspection"]="Passed";
-    saveJobProgressLocal(id,p);
-  }
-
-  function cleanHoughProgress(id){
-    var p=readJobProgress(id)||{};
-    p.inspectionSteps=p.inspectionSteps||{};
-    if(p.inspectionSteps["Final inspection"]==="Passed")p.inspectionSteps["Final inspection"]="Not Ready";
-    saveJobProgressLocal(id,p);
-  }
-
-  async function updateFolderStatus(id,status){
-    try{
-      if(typeof supabaseClient==="undefined"||!supabaseClient)return;
-      await supabaseClient.from("folders").update({
-        inspection_status:status,
-        inspection_updated_by:window.currentEmployee?currentEmployee.name:"",
-        inspection_updated_at:new Date().toISOString()
-      }).eq("id",id);
-    }catch(e){}
-  }
-
-  function runCleanPass(){
-    try{
-      if(localStorage.getItem(KEY)==="done")return false;
-      if(typeof data==="undefined"||!Array.isArray(data.folders)||!data.folders.length)return false;
-
-      data.folders.forEach(function(f){
-        try{
-          if(typeof isJobFolder==="function"&&!isJobFolder(f))return;
-          if(isHough(f)){
-            cleanHoughProgress(f.id);
-            if(f.inspection_status==="Passed")f.inspection_status="Not Ready";
-            return;
-          }
-
-          cleanPassProgress(f.id);
-          f.inspection_status="Passed";
-          updateFolderStatus(f.id,"Passed");
-        }catch(e){}
-      });
-
-      localStorage.setItem(KEY,"done");
-      return true;
-    }catch(e){return false;}
-  }
-
-  var oldDraw=window.draw;
-  if(typeof oldDraw==="function"&&!oldDraw.__neu447Wrapped){
-    window.draw=function(){
-      runCleanPass();
-      return oldDraw.apply(this,arguments);
-    };
-    window.draw.__neu447Wrapped=true;
-  }
-
-  window.addEventListener("load",function(){
-    setTimeout(function(){
-      if(runCleanPass()){
-        try{draw();}catch(e){}
-      }
-    },900);
-  });
-
-  window.neu447PassExistingJobsCleanly=runCleanPass;
-})();
-</script>
-
-
-<script id="neu-v4-48-remove-in-progress-filter">
-(function(){
-  window.neu448InspectionFilters = "Ready, Called In, Passed, Failed, All";
-})();
-</script>
-
-
-<script id="neu-v4-49-cleaner-inventory">
-(function(){
-  window.neu449InventoryPass = "Cleaner inventory cards, filters, and search.";
-})();
-</script>
-
-
-<script id="neu-v4-50-cleaner-hours">
-(function(){
-  function bootHours(){
-    var notes=document.getElementById("hoursNotes");
-    var week=document.getElementById("hoursWeek");
-    if(notes && !notes.__neu450Wired){
-      notes.__neu450Wired=true;
-      notes.addEventListener("input",function(){try{neu450HoursPreview();}catch(e){}});
-    }
-    if(week && !week.__neu450Wired){
-      week.__neu450Wired=true;
-      week.addEventListener("change",function(){try{neu450HoursPreview();}catch(e){}});
-    }
-    try{neu450HoursPreview();}catch(e){}
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",bootHours);
-  }else{
-    bootHours();
-  }
-  window.addEventListener("load",function(){
-    setTimeout(bootHours,100);
-    setTimeout(bootHours,700);
-  });
-})();
-</script>
-
-
-<script id="neu-v4-51-employee-specific-hours">
-(function(){
-  window.neu451EmployeeSpecificHours = true;
-})();
-</script>
-
-
-<script id="neu-v4-52-hide-photos-tab">
-(function(){
-  window.neu452PhotosTabHidden = true;
-})();
-</script>
-
-
-<script id="neu-v4-53-dashboard-header">
-(function(){
-  window.neu453DashboardHeader = true;
-})();
-</script>
-
-
-<script id="neu-v4-54-one-dashboard-title">
-(function(){
-  window.neu454OneDashboardTitle = true;
-})();
-</script>
-
-
-<script id="neu-v4-55-hamburger-menu">
-(function(){
-  function byId(id){return document.getElementById(id);}
-  function setOpen(open){
-    document.body.classList.toggle("neu455-menu-open", !!open);
-    var btn=byId("neu455MenuBtn");
-    if(btn)btn.setAttribute("aria-expanded", open ? "true" : "false");
-  }
-  function toggleMenu(){
-    setOpen(!document.body.classList.contains("neu455-menu-open"));
-  }
-  function wireMenu(){
-    var btn=byId("neu455MenuBtn");
-    var close=byId("neu455MenuClose");
-    var overlay=byId("neu455MenuOverlay");
-    var drawer=byId("neu455MenuDrawer");
-    if(btn && !btn.__neu455Wired){
-      btn.__neu455Wired=true;
-      btn.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();toggleMenu();});
-    }
-    if(close && !close.__neu455Wired){
-      close.__neu455Wired=true;
-      close.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();setOpen(false);});
-    }
-    if(overlay && !overlay.__neu455Wired){
-      overlay.__neu455Wired=true;
-      overlay.addEventListener("click",function(){setOpen(false);});
-    }
-    if(drawer && !drawer.__neu455Wired){
-      drawer.__neu455Wired=true;
-      drawer.addEventListener("click",function(e){
-        var pageBtn=e.target && e.target.closest ? e.target.closest("button[data-page]") : null;
-        if(pageBtn)setTimeout(function(){setOpen(false);},60);
-      });
-    }
-    document.addEventListener("keydown",function(e){
-      if(e.key==="Escape")setOpen(false);
-    },{once:false});
-  }
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",wireMenu);
-  }else{
-    wireMenu();
-  }
-  window.addEventListener("load",function(){
-    setTimeout(wireMenu,100);
-    setTimeout(wireMenu,800);
-  });
-  window.neu455SetMenuOpen=setOpen;
-})();
-</script>
-
-
-<script id="neu-v4-56-recent-jobs-contrast">
-(function(){
-  window.neu456RecentJobsContrast = true;
-})();
-</script>
-
-</body>
-</html>
