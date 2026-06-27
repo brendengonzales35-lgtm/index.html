@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.29 Modal Contrast + Separate Man Hours"}
+.versionBadge:after{content:" â¢ v4.30 Cleaner Tickets"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,13 +1233,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast + Separate Man Hours";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    Fixes white text on white/light ticket pills.
    ============================================================ */
 
@@ -1304,13 +1304,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    Ticket cards show man-hour entries separately instead of one summed total.
    ============================================================ */
 
@@ -1323,13 +1323,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    Removes the encoded bullet symbol between man-hour entries.
    ============================================================ */
 
@@ -1339,13 +1339,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.29 Modal Contrast";
+  content:" â¢ v4.30 Cleaner Tickets";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.29 â Modal Contrast + Separate Man Hours
+   NEU Tickets v4.30 â Cleaner Tickets
    - Fixes white/light modal text contrast.
    - Keeps v4.28 man-hour separator fix.
    ============================================================ */
@@ -1471,6 +1471,126 @@ header,
   content:" â¢ v4.29 Modal + Man Hours";
 }
 
+
+
+/* ============================================================
+   NEU Tickets v4.30 â Cleaner Tickets
+   Cleaner ticket cards + simple phone-friendly filters.
+   ============================================================ */
+
+#neu430TicketFilters{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin:10px 0 14px;
+}
+
+#neu430TicketFilters button{
+  margin:0!important;
+  min-height:34px!important;
+  padding:7px 6px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+}
+
+#neu430TicketFilters button.active{
+  background:linear-gradient(180deg,#4f73ff,#2f5bea)!important;
+  color:#fff!important;
+  border-color:rgba(191,219,254,.50)!important;
+}
+
+#ticketsPage .neu430-ticket-card{
+  padding:14px!important;
+  border-radius:20px!important;
+}
+
+.neu430-ticket-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.neu430-ticket-title{
+  color:#fff;
+  font-size:22px;
+  line-height:1.05;
+  font-weight:1000;
+  letter-spacing:-.45px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.neu430-ticket-address{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.25;
+  margin-top:5px;
+}
+
+.neu430-ticket-date{
+  color:#94a3b8;
+  font-size:12px;
+  font-weight:750;
+  margin-top:5px;
+}
+
+.neu430-needs-folder{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid rgba(251,191,36,.45);
+  background:rgba(251,191,36,.12);
+  color:#fde68a;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:950;
+  white-space:nowrap;
+}
+
+.neu430-ticket-metrics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+
+.neu430-ticket-metrics .badge{
+  margin:0!important;
+}
+
+.neu430-ticket-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:13px;
+}
+
+.neu430-ticket-actions .mini{
+  margin:0!important;
+  min-height:33px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu430-ticket-actions .secondary{
+  opacity:.92;
+}
+
+.neu430-empty-tickets{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:850;
+  padding:10px 2px;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.30 Cleaner Tickets";
+}
+
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -1530,7 +1650,16 @@ header,
 <section id="createTicketPage" class="page"><div class="card"><h2>Create Ticket</h2><label>Builder</label><input id="newBuilder"><label>Job Address</label><input id="newJobAddress"><label>Date</label><input id="newDate" type="date"><label>Folder Builder</label><select id="newFolderBuilder"></select><label>Job</label><select id="newFolderJob"></select><label>Inspection Status</label><select id="newInspection"></select><label>Man Hrs</label>
 <div id="newManHoursList"></div>
 <button type="button" id="addNewManHourBtn" class="gray" onclick="addNewManHourLine()">Add Man</button><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
-<section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()"><div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">&larr; Tickets</button><div id="ticketDetail"></div></div></div>
+<section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()">
+<div id="neu430TicketFilters">
+  <button type="button" class="gray active" data-ticket-filter="open" onclick="setTicketFilter('open')">Open</button>
+  <button type="button" class="gray" data-ticket-filter="ready" onclick="setTicketFilter('ready')">Ready</button>
+  <button type="button" class="gray" data-ticket-filter="needs" onclick="setTicketFilter('needs')">Needs Folder</button>
+  <button type="button" class="gray" data-ticket-filter="completed" onclick="setTicketFilter('completed')">Completed</button>
+  <button type="button" class="gray" data-ticket-filter="all" onclick="setTicketFilter('all')">All</button>
+  <button type="button" class="gray" data-ticket-filter="photos" onclick="setTicketFilter('photos')">Has Photos</button>
+</div>
+<div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">&larr; Tickets</button><div id="ticketDetail"></div></div></div>
 <div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder Builder</label><select id="editFolderBuilder"></select><label>Job</label><select id="editFolderJob"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label>
 <div id="editManHoursList"></div>
 <button type="button" id="addEditManHourBtn" class="gray" onclick="addEditManHourLine()">Add Man</button><label>Notes</label><textarea id="editNotes"></textarea><label>Need to Complete</label><textarea id="editNeed"></textarea><button class="green" id="saveEditBtn">Save Changes</button>
@@ -3146,29 +3275,96 @@ function generateTicketPDF(id){
  setTimeout(()=>{try{w.print()}catch(e){}},500);
 }
 
+
+var neu430TicketFilter = "open";
+function setTicketFilter(mode){
+ neu430TicketFilter = mode || "open";
+ try{draw();}catch(e){}
+}
+function neu430TicketNeedsFolder(t){
+ return !(t && t.folder_id) || !(t && t.builder) || !(t && t.job_address);
+}
+function neu430TicketReady(t){
+ let s=String((t&&t.inspection_status)||"");
+ return s.indexOf("Ready")>=0 || s.indexOf("Called")>=0 || s.indexOf("Halo")>=0;
+}
+function neu430TicketHasPhotos(t){
+ try{return data.drive.some(d=>String(d.ticket_id)===String(t.id));}catch(e){return false;}
+}
+function neu430TicketMatchesSearch(t,q){
+ q=String(q||"").toLowerCase();
+ if(!q) return true;
+ return (t.builder||"").toLowerCase().includes(q) ||
+        (t.job_address||"").toLowerCase().includes(q) ||
+        (t.notes||"").toLowerCase().includes(q) ||
+        (t.need_to_complete||"").toLowerCase().includes(q) ||
+        (t.created_by_name||"").toLowerCase().includes(q);
+}
+function neu430FilteredTickets(q){
+ let mode=neu430TicketFilter || "open";
+ let list=(data.tickets||[]).slice();
+ if(mode==="open") list=list.filter(t=>!isCompleted(t));
+ if(mode==="ready") list=list.filter(t=>!isCompleted(t)&&neu430TicketReady(t));
+ if(mode==="needs") list=list.filter(t=>!isCompleted(t)&&neu430TicketNeedsFolder(t));
+ if(mode==="completed") list=list.filter(t=>isCompleted(t));
+ if(mode==="photos") list=list.filter(t=>!isCompleted(t)&&neu430TicketHasPhotos(t));
+ list=list.filter(t=>neu430TicketMatchesSearch(t,q));
+ try{
+  document.querySelectorAll("#neu430TicketFilters button").forEach(btn=>{
+   btn.classList.toggle("active",btn.getAttribute("data-ticket-filter")===mode);
+  });
+ }catch(e){}
+ return list;
+}
+function neu430TicketEmptyText(){
+ let labels={open:"No open tickets.",ready:"No ready tickets.",needs:"No tickets need a folder.",completed:"No completed tickets.",all:"No tickets yet.",photos:"No tickets with photos."};
+ return labels[neu430TicketFilter||"open"]||"No tickets.";
+}
+function neu430SafeText(v){
+ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
 function ticketCard(t,folderMode){
  let count=data.used.filter(u=>String(u.ticket_id)===String(t.id)).length;
  let photoCount=data.drive.filter(d=>String(d.ticket_id)===String(t.id)).length;
  let openCall=folderMode?`folderOpenTicket('${t.id}')`:`openTicket('${t.id}')`;
  let editCall=folderMode?`folderEditTicket('${t.id}')`:`safeEditTicket('${t.id}')`;
  let done=isCompleted(t);
- return `<div class="ticketCard proCard">
-  <div class="ticketTitle">${t.builder||"No Builder"}</div>
-  <div class="small">${t.job_address||"No address"}<br>${displayDate(t.ticket_date)} - Created By: ${t.created_by_name||"Team"}</div>
-  ${statusBadge(t.inspection_status)}
-  <span class="badge">${count} material line(s)</span><span class="badge neu427-man-hours">${manHoursInlineText(t)}</span>
-  <span class="badge">${photoCount} photo/link(s)</span><br>
-  <button type="button" class="mini green" onclick="event.preventDefault();event.stopPropagation();${openCall}">Open</button>
-  <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();${editCall}">Edit</button>
-  <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();moveTicket('${t.id}')">Move</button>
-  <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();openPhotos('${t.id}')">Photos</button>
-  <button type="button" class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteTicket('${t.id}')">Delete</button><button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();generateTicketPDF('${t.id}')">PDF</button>
-  <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();emailTicket('${t.id}')">Email</button>
-  ${done?`<button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();reopenTicket('${t.id}')">Reopen</button>`:""}
+ let title=t.builder||"No Builder";
+ let address=t.job_address||"No address";
+ let needs=neu430TicketNeedsFolder(t);
+ return `<div class="ticketCard proCard neu430-ticket-card">
+  <div class="neu430-ticket-head">
+    <div>
+      <div class="neu430-ticket-title">${neu430SafeText(title)}</div>
+      <div class="neu430-ticket-address">${neu430SafeText(address)}</div>
+      <div class="neu430-ticket-date">${displayDate(t.ticket_date)} - Created By: ${neu430SafeText(t.created_by_name||"Team")}</div>
+    </div>
+    ${needs?`<div class="neu430-needs-folder">Needs Folder</div>`:""}
+  </div>
+  <div class="neu430-ticket-metrics">
+    ${statusBadge(t.inspection_status)}
+    <span class="badge">${count} material line(s)</span>
+    <span class="badge neu427-man-hours">${manHoursInlineText(t)}</span>
+    <span class="badge">${photoCount} photo/link(s)</span>
+  </div>
+  <div class="neu430-ticket-actions">
+    <button type="button" class="mini green" onclick="event.preventDefault();event.stopPropagation();${openCall}">Open</button>
+    <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();${editCall}">Edit</button>
+    <button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();moveTicket('${t.id}')">Move</button>
+    <button type="button" class="mini gray secondary" onclick="event.preventDefault();event.stopPropagation();openPhotos('${t.id}')">Photos</button>
+    <button type="button" class="mini gray secondary" onclick="event.preventDefault();event.stopPropagation();generateTicketPDF('${t.id}')">PDF</button>
+    <button type="button" class="mini gray secondary" onclick="event.preventDefault();event.stopPropagation();emailTicket('${t.id}')">Email</button>
+    <button type="button" class="mini red" onclick="event.preventDefault();event.stopPropagation();deleteTicket('${t.id}')">Delete</button>
+    ${done?`<button type="button" class="mini gray" onclick="event.preventDefault();event.stopPropagation();reopenTicket('${t.id}')">Reopen</button>`:""}
+  </div>
  </div>`;
 }
 function drawTicketDetail(){let t=selectedTicket,used=data.used.filter(u=>String(u.ticket_id)===String(t.id)),links=data.drive.filter(d=>String(d.ticket_id)===String(t.id));$("ticketDetail").innerHTML=`<h2>${t.builder||"Ticket"}</h2><div class="info"><b>Builder</b><br>${t.builder||""}</div><div class="info"><b>Created By</b><br>${t.created_by_name||"Team"}</div><div class="info"><b>Job Address</b><br>${t.job_address||""}</div><div class="info"><b>Date</b><br>${displayDate(t.ticket_date)}</div><div class="info"><b>Inspection</b><br>${statusBadge(t.inspection_status)}</div><div class="info"><b>Man Hrs</b><br>${manHoursText(parseManHoursDetails(t.man_hours_details))}</div><div class="info"><b>Notes</b><br>${t.notes||""}</div><div class="info"><b>Materials Used</b><br>${used.length?used.map(u=>u.material_name+" - "+u.quantity+" "+(u.unit||"")).join("<br>"):"No materials."}</div><div class="info"><b>Need to Complete</b><br>${t.need_to_complete||""}</div><div class="info"><b>Photos & Drive Links</b><br>${renderPhotoLinks(links)}${renderPhotoGallery(links)}</div><button class="green" onclick="safeEditTicket('${t.id}')">Edit</button><button class="gray" onclick="moveTicket('${t.id}')">Move</button><button class="gray" onclick="openPhotos('${t.id}')">Photos</button><button class="red" onclick="deleteTicket('${t.id}')">Delete Ticket</button><button class="gray" onclick="generateTicketPDF('${t.id}')">PDF</button><button class="gray" onclick="emailTicket('${t.id}')">Email</button>`}
-function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();let shownTickets=data.tickets.filter(t=>!isCompleted(t)).filter(t=>!q||(t.builder||"").toLowerCase().includes(q)||(t.job_address||"").toLowerCase().includes(q)||(t.notes||"").toLowerCase().includes(q)||(t.need_to_complete||"").toLowerCase().includes(q)||(t.created_by_name||"").toLowerCase().includes(q));$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):'<p class="small">No tickets yet.</p>';renderFolderBrowser();let lows=lowStockItems();
+function draw(){setStatusSelect("newInspection",$("newInspection").value);renderJobPicker("newFolderBuilder","newFolderJob",undefined,$("newFolderJob")?$("newFolderJob").value:"",true);$("driveTicket").innerHTML='<option value="">Pick Ticket</option>'+data.tickets.map(t=>`<option value="${t.id}">${t.builder||"Ticket"}</option>`).join("");$("materialOptions").innerHTML=data.inventory.map(i=>`<option value="${i.name}"></option>`).join("");let q=($("ticketSearch")?$("ticketSearch").value:"").toLowerCase();
+let shownTickets=neu430FilteredTickets(q);
+$("ticketsList").innerHTML=shownTickets.length?shownTickets.map(t=>ticketCard(t,false)).join(""):`<p class="neu430-empty-tickets">${neu430TicketEmptyText()}</p>`;
+renderFolderBrowser();let lows=lowStockItems();
  let lowSummary=lows.length?`<div class="bad"><b>Low Stock Alerts (${lows.length})</b><br>${lows.map(x=>"- "+x.name+" - "+x.quantity+" "+(x.unit||"")+" left").join("<br>")}</div>`:"";
  $("inventoryList").innerHTML=lowSummary+(data.inventory.length?data.inventory.map(i=>{let low=Number(i.low_alert_qty||0)>0&&Number(i.quantity||0)<=Number(i.low_alert_qty||0);return `<div class="ticketCard ${low?"lowStock":""}"><b>${i.name}</b><br>${i.quantity} ${i.unit||""}${low?`<div class="lowStockText">LOW STOCK - Alert at ${i.low_alert_qty}</div>`:""}<br><button class="mini green" onclick="restockInventory('${i.id}')">Restock</button><button class="mini gray" onclick="editInventory('${i.id}')">Edit</button><button class="mini red" onclick="deleteInventory('${i.id}')">Delete</button></div>`}).join(""):'<p class="small">No inventory yet.</p>');renderHoursList();$("driveList").innerHTML=data.drive.length?data.drive.map(d=>{let isImg=/\.(jpg|jpeg|png|webp|gif)(\?|$)/i.test(d.url)||d.url.includes("ticket-photos");return `<div class="ticketCard"><b>${d.label||"Photo / Drive Link"}</b><br>${isImg?`<a href="${d.url}" target="_blank"><img src="${d.url}" style="width:100%;max-height:220px;object-fit:cover;border-radius:12px;margin-top:8px"></a>`:`<a class="drivePill" href="${d.url}" target="_blank">Open Drive Folder</a><button class="mini gray" onclick="navigator.clipboard.writeText(\`${d.url}\`);notice(\`Drive link copied.\`)">Copy Link</button>`}</div>`}).join(""):'<p class="small">No photos or Drive links yet.</p>';
 $("adminPanel").classList.toggle("hidden",!currentEmployee.is_admin);$("employeeList").innerHTML=data.employees.map(e=>`<p><b>${e.name}</b> - PIN ${e.pin} ${e.is_admin?"(Admin)":""}</p>`).join("");let invBtn=document.querySelector(`[data-page="inventoryPage"]`);if(invBtn){let c=lowStockItems().length;invBtn.innerHTML=c?`<span class="navIcon">&#128230;</span><br>Inventory (${c})`:`<span class="navIcon">&#128230;</span><br>Inventory`}renderInspections();renderBuilderSelect();drawDashboard();
