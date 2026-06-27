@@ -615,7 +615,7 @@ a{
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Built fresh from working v3.2.5, not from stacked patch files.
    ============================================================ */
 
@@ -1036,7 +1036,7 @@ a{
   box-shadow:none!important;
 }
 
-.versionBadge:after{content:" â¢ v4.30 Cleaner Tickets"}
+.versionBadge:after{content:" â¢ v4.31 Ticket Filters"}
 
 
 
@@ -1102,18 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Exact rollback to the left-dropdown / right-checkbox job overview.
    ============================================================ */
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
@@ -1129,13 +1129,13 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    - Folder card status now follows the inspection dropdowns.
    - Top tabs are no longer sticky; they scroll away normally.
    ============================================================ */
@@ -1157,13 +1157,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Direct renderer patch: no duplicate search/tools/card/address in open job.
    ============================================================ */
 
@@ -1180,13 +1180,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    The bottom View Tickets button now shows tickets for this job only.
    ============================================================ */
 
@@ -1233,13 +1233,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Fixes white text on white/light ticket pills.
    ============================================================ */
 
@@ -1304,13 +1304,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Ticket cards show man-hour entries separately instead of one summed total.
    ============================================================ */
 
@@ -1323,13 +1323,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Removes the encoded bullet symbol between man-hour entries.
    ============================================================ */
 
@@ -1339,13 +1339,13 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    - Fixes white/light modal text contrast.
    - Keeps v4.28 man-hour separator fix.
    ============================================================ */
@@ -1474,7 +1474,7 @@ header,
 
 
 /* ============================================================
-   NEU Tickets v4.30 â Cleaner Tickets
+   NEU Tickets v4.31 â Ticket Filter Names
    Cleaner ticket cards + simple phone-friendly filters.
    ============================================================ */
 
@@ -1588,7 +1588,27 @@ header,
 }
 
 .versionBadge:after{
-  content:" â¢ v4.30 Cleaner Tickets";
+  content:" â¢ v4.31 Ticket Filters";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v4.31 â Ticket Filter Names
+   Filters changed to: Not Complete, Most Recent, Needs Folder, All, Finished.
+   ============================================================ */
+
+#neu430TicketFilters{
+  grid-template-columns:repeat(2,1fr)!important;
+}
+
+#neu430TicketFilters button{
+  font-size:11px!important;
+  min-height:36px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.31 Ticket Filters";
 }
 
 </style>
@@ -1652,12 +1672,11 @@ header,
 <button type="button" id="addNewManHourBtn" class="gray" onclick="addNewManHourLine()">Add Man</button><label>Notes</label><textarea id="newNotes"></textarea><label>Need to Complete</label><textarea id="newNeed"></textarea><h3>Materials Used</h3><datalist id="materialOptions"></datalist><div id="createMaterialsList"></div><button type="button" class="gray" id="addCreateMaterialLineBtn">+ Add Another Material Line</button><button id="createTicketBtn">Create Ticket</button></div></section>
 <section id="ticketsPage" class="page"><div id="ticketListView"><div class="card"><h2>Tickets</h2><label>Search Tickets</label><input id="ticketSearch" placeholder="Builder or address" oninput="draw()">
 <div id="neu430TicketFilters">
-  <button type="button" class="gray active" data-ticket-filter="open" onclick="setTicketFilter('open')">Open</button>
-  <button type="button" class="gray" data-ticket-filter="ready" onclick="setTicketFilter('ready')">Ready</button>
+  <button type="button" class="gray active" data-ticket-filter="notcomplete" onclick="setTicketFilter('notcomplete')">Not Complete</button>
+  <button type="button" class="gray" data-ticket-filter="recent" onclick="setTicketFilter('recent')">Most Recent</button>
   <button type="button" class="gray" data-ticket-filter="needs" onclick="setTicketFilter('needs')">Needs Folder</button>
-  <button type="button" class="gray" data-ticket-filter="completed" onclick="setTicketFilter('completed')">Completed</button>
   <button type="button" class="gray" data-ticket-filter="all" onclick="setTicketFilter('all')">All</button>
-  <button type="button" class="gray" data-ticket-filter="photos" onclick="setTicketFilter('photos')">Has Photos</button>
+  <button type="button" class="gray" data-ticket-filter="finished" onclick="setTicketFilter('finished')">Finished</button>
 </div>
 <div id="ticketsList"></div></div></div><div id="ticketDetailView" class="hidden"><div class="card"><button class="mini gray" id="backTicketsBtn">&larr; Tickets</button><div id="ticketDetail"></div></div></div>
 <div id="ticketEditView" class="hidden"><div class="card"><button class="mini gray" id="backEditBtn">&larr; Tickets</button><h2>Edit Ticket</h2><label>Builder</label><input id="editBuilder"><label>Job Address</label><input id="editJobAddress"><label>Date</label><input id="editDate" type="date"><label>Folder Builder</label><select id="editFolderBuilder"></select><label>Job</label><select id="editFolderJob"></select><label>Inspection Status</label><select id="editInspection"></select><label>Man Hrs</label>
@@ -3276,9 +3295,9 @@ function generateTicketPDF(id){
 }
 
 
-var neu430TicketFilter = "open";
+var neu430TicketFilter = "notcomplete";
 function setTicketFilter(mode){
- neu430TicketFilter = mode || "open";
+ neu430TicketFilter = mode || "notcomplete";
  try{draw();}catch(e){}
 }
 function neu430TicketNeedsFolder(t){
@@ -3300,15 +3319,27 @@ function neu430TicketMatchesSearch(t,q){
         (t.need_to_complete||"").toLowerCase().includes(q) ||
         (t.created_by_name||"").toLowerCase().includes(q);
 }
+function neu430TicketDateValue(t){
+ let raw=(t&&t.updated_at) || (t&&t.ticket_date) || (t&&t.created_at) || "";
+ let ms=Date.parse(raw);
+ return isNaN(ms)?0:ms;
+}
+function neu430SortRecent(list){
+ return list.slice().sort((a,b)=>neu430TicketDateValue(b)-neu430TicketDateValue(a));
+}
 function neu430FilteredTickets(q){
- let mode=neu430TicketFilter || "open";
+ let mode=neu430TicketFilter || "notcomplete";
  let list=(data.tickets||[]).slice();
- if(mode==="open") list=list.filter(t=>!isCompleted(t));
- if(mode==="ready") list=list.filter(t=>!isCompleted(t)&&neu430TicketReady(t));
+
+ if(mode==="notcomplete") list=list.filter(t=>!isCompleted(t));
+ if(mode==="recent") list=neu430SortRecent(list);
  if(mode==="needs") list=list.filter(t=>!isCompleted(t)&&neu430TicketNeedsFolder(t));
- if(mode==="completed") list=list.filter(t=>isCompleted(t));
- if(mode==="photos") list=list.filter(t=>!isCompleted(t)&&neu430TicketHasPhotos(t));
+ if(mode==="all") list=neu430SortRecent(list);
+ if(mode==="finished") list=list.filter(t=>isCompleted(t));
+
+ if(mode!=="recent" && mode!=="all") list=neu430SortRecent(list);
  list=list.filter(t=>neu430TicketMatchesSearch(t,q));
+
  try{
   document.querySelectorAll("#neu430TicketFilters button").forEach(btn=>{
    btn.classList.toggle("active",btn.getAttribute("data-ticket-filter")===mode);
@@ -3317,8 +3348,14 @@ function neu430FilteredTickets(q){
  return list;
 }
 function neu430TicketEmptyText(){
- let labels={open:"No open tickets.",ready:"No ready tickets.",needs:"No tickets need a folder.",completed:"No completed tickets.",all:"No tickets yet.",photos:"No tickets with photos."};
- return labels[neu430TicketFilter||"open"]||"No tickets.";
+ let labels={
+  notcomplete:"No not-complete tickets.",
+  recent:"No recent tickets.",
+  needs:"No tickets need a folder.",
+  all:"No tickets yet.",
+  finished:"No finished tickets."
+ };
+ return labels[neu430TicketFilter||"notcomplete"]||"No tickets.";
 }
 function neu430SafeText(v){
  return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
@@ -3983,10 +4020,3 @@ if($("saveDriveScriptBtn"))$("saveDriveScriptBtn").onclick=saveDriveScriptSettin
 
   window.addEventListener("load",function(){
     setTimeout(boot,150);
-    setTimeout(boot,600);
-  });
-})();
-</script>
-
-</body>
-</html>
