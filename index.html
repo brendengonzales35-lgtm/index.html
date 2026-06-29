@@ -676,7 +676,7 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.95 Manual Notes Save";
+  content:" â¢ v4.96 Header Menu Restore";
 }
 
 
@@ -692,7 +692,7 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v4.95 Manual Notes Save";
+  content:" â¢ v4.96 Header Menu Restore";
 }
 
 
@@ -2801,7 +2801,7 @@ function generateTicketPDF(id){
 
 
 /* ============================================================
-   NEU Tickets v4.95 â Manual Overview Notes Save
+   NEU Tickets v4.96 â Restore Compact Header Menu
    Notes no longer auto-save while typing. Refresh pauses while
    notes are active, then Save Overview saves manually.
    ============================================================ */
@@ -2812,7 +2812,225 @@ function generateTicketPDF(id){
 }
 
 .versionBadge:after{
-  content:" â¢ v4.95 Manual Notes Save";
+  content:" â¢ v4.96 Header Menu Restore";
+}
+
+
+/* ============================================================
+   NEU Tickets v4.96 â Restore Compact Header Menu
+   Locks the header and hamburger back to the compact slide-out
+   drawer layout. Keeps v4.95 manual notes save.
+   ============================================================ */
+
+header.neu455-app-header{
+  position:sticky!important;
+  top:0!important;
+  z-index:2147483000!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  padding:18px 20px!important;
+  border-radius:0 0 28px 28px!important;
+  background:linear-gradient(180deg,#07111b,#03070c)!important;
+  border-bottom:1px solid rgba(148,163,184,.18)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.45)!important;
+}
+
+header.neu455-app-header .neu455-logo-row,
+header.neu455-app-header .logoRow{
+  display:flex!important;
+  align-items:center!important;
+  gap:16px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+header.neu455-app-header .neu474-logo-crop{
+  flex:0 0 72px!important;
+  width:72px!important;
+  height:72px!important;
+}
+
+header.neu455-app-header .neu455-title-wrap{
+  flex:1 1 auto!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+header.neu455-app-header h1{
+  display:block!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  margin:0!important;
+  color:#fff!important;
+  font-size:clamp(28px,7vw,48px)!important;
+  line-height:1.02!important;
+  letter-spacing:-1px!important;
+}
+
+#neu455MenuBtn.neu455-menu-btn{
+  width:78px!important;
+  min-width:78px!important;
+  max-width:78px!important;
+  height:72px!important;
+  min-height:72px!important;
+  flex:0 0 78px!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:24px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#111827!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.35)!important;
+  box-shadow:none!important;
+  font-size:34px!important;
+  line-height:1!important;
+  position:relative!important;
+  z-index:2147483602!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+
+#neu455MenuOverlay.neu455-menu-overlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483500!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  background:rgba(0,0,0,.48)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  transition:opacity .18s ease!important;
+  display:block!important;
+}
+
+body.neu455-menu-open #neu455MenuOverlay.neu455-menu-overlay{
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+
+#neu455MenuDrawer.topNav,
+#appPage #neu455MenuDrawer.topNav{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  bottom:0!important;
+  width:min(84vw,330px)!important;
+  height:100vh!important;
+  max-height:100vh!important;
+  z-index:2147483501!important;
+  display:flex!important;
+  flex-direction:column!important;
+  grid-template-columns:none!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  padding:16px!important;
+  padding-top:calc(16px + env(safe-area-inset-top))!important;
+  margin:0!important;
+  border-radius:0 24px 24px 0!important;
+  background:linear-gradient(180deg,#07111b,#03070c)!important;
+  border:0!important;
+  border-right:1px solid rgba(148,163,184,.24)!important;
+  box-shadow:20px 0 55px rgba(0,0,0,.52)!important;
+  transform:translateX(-108%)!important;
+  transition:transform .20s ease!important;
+  overflow-y:auto!important;
+  pointer-events:auto!important;
+}
+
+body.neu455-menu-open #neu455MenuDrawer.topNav,
+body.neu455-menu-open #appPage #neu455MenuDrawer.topNav{
+  transform:translateX(0)!important;
+}
+
+body.neu455-menu-open{
+  overflow:hidden!important;
+}
+
+#neu455MenuDrawer .neu455-menu-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  width:100%!important;
+  color:#f8fafc!important;
+  margin:0 0 8px!important;
+  padding:0 0 10px!important;
+  border-bottom:1px solid rgba(148,163,184,.18)!important;
+}
+
+#neu455MenuDrawer .neu455-menu-close{
+  width:44px!important;
+  height:44px!important;
+  min-height:44px!important;
+  min-width:44px!important;
+  flex:0 0 44px!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:14px!important;
+  background:#111827!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.25)!important;
+  box-shadow:none!important;
+}
+
+#neu455MenuDrawer button[data-page]{
+  width:100%!important;
+  min-height:54px!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  display:block!important;
+  text-align:left!important;
+  border-radius:16px!important;
+  background:#111827!important;
+  color:#e5e7eb!important;
+  border:1px solid rgba(148,163,184,.18)!important;
+  box-shadow:none!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+
+#neu455MenuDrawer button[data-page].active{
+  background:#1d4ed8!important;
+  color:#fff!important;
+  border-color:#3b82f6!important;
+}
+
+#neu455MenuDrawer .navIcon{
+  font-size:22px!important;
+  margin-right:8px!important;
+}
+
+@media(max-width:460px){
+  header.neu455-app-header{
+    padding:14px 16px!important;
+  }
+  header.neu455-app-header .neu474-logo-crop{
+    flex-basis:58px!important;
+    width:58px!important;
+    height:58px!important;
+  }
+  header.neu455-app-header h1{
+    font-size:clamp(24px,8vw,35px)!important;
+  }
+  #neu455MenuBtn.neu455-menu-btn{
+    width:62px!important;
+    min-width:62px!important;
+    max-width:62px!important;
+    height:58px!important;
+    min-height:58px!important;
+    flex-basis:62px!important;
+    border-radius:18px!important;
+    font-size:30px!important;
+  }
+}
+
+.versionBadge:after{
+  content:" â¢ v4.96 Header Menu Restore";
 }
 
 </style></head><body><button class="backBtn noPrint" onclick="window.close();history.back()">Back</button><h1>NEU Tickets</h1><h2>Job Report</h2><div class="box"><div class="label">Builder</div>${t.builder||""}</div><div class="box"><div class="label">Address</div>${t.job_address||""}</div><div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div><div class="box"><div class="label">Status</div>${t.inspection_status||""}</div><div class="box"><div class="label">Man Hrs</div>${manHoursText(parseManHoursDetails(t.man_hours_details))}</div><div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Materials</div>${used.length?used.map(u=>`${u.material_name} - ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials."}</div><div class="box"><div class="label">Photos / Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: ${l.url}</div>`).join(""):"No links."}</div></body></html>`;
@@ -4560,9 +4778,9 @@ if(typeof window.neu443InspectionLabel!=="function"){
 
 <script id="neu-v4-84-home-screen-auto-update">
 (function(){
-  var APP_VERSION = "4.95";
+  var APP_VERSION = "4.96";
   var VERSION_KEY = "neu_app_html_version";
-  var RELOAD_KEY = "neu_app_update_reloaded_4_95";
+  var RELOAD_KEY = "neu_app_update_reloaded_4_96";
 
   function isHomeScreenApp(){
     try{
@@ -4605,7 +4823,7 @@ if(typeof window.neu443InspectionLabel!=="function"){
   function reloadWithVersion(){
     try{
       var url = new URL(window.location.href);
-      url.searchParams.set("v", "495");
+      url.searchParams.set("v", "496");
       url.searchParams.set("t", String(Date.now()).slice(-8));
       window.location.replace(url.toString());
     }catch(e){
@@ -4644,7 +4862,7 @@ if(typeof window.neu443InspectionLabel!=="function"){
     }, 500);
   });
 
-  window.neu495ForceRefresh=window.neu494ForceRefresh=window.neu493ForceRefresh=window.neu492ForceRefresh=window.neu491ForceRefresh=window.neu490ForceRefresh=window.neu489ForceRefresh=window.neu488ForceRefresh=window.neu487ForceRefresh=window.neu486ForceRefresh=window.neu485ForceRefresh=window.neu484ForceRefresh=function(){
+  window.neu496ForceRefresh=window.neu495ForceRefresh=window.neu494ForceRefresh=window.neu493ForceRefresh=window.neu492ForceRefresh=window.neu491ForceRefresh=window.neu490ForceRefresh=window.neu489ForceRefresh=window.neu488ForceRefresh=window.neu487ForceRefresh=window.neu486ForceRefresh=window.neu485ForceRefresh=window.neu484ForceRefresh=function(){
     try{
       localStorage.removeItem(VERSION_KEY);
       sessionStorage.removeItem(RELOAD_KEY);
@@ -6471,4 +6689,116 @@ if(typeof window.neu443InspectionLabel!=="function"){
 })();
 </script>
 
+
+<script id="neu-v4-96-restore-compact-header-menu">
+(function(){
+  function byId(id){return document.getElementById(id);}
+
+  function setMenu(open){
+    try{
+      document.body.classList.toggle("neu455-menu-open", !!open);
+      var btn=byId("neu455MenuBtn");
+      if(btn)btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }catch(e){}
+  }
+
+  function showPageSafe(pageId){
+    if(!pageId)return;
+    try{
+      if(typeof showPage==="function"){
+        showPage(pageId);
+      }else{
+        document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
+        var page=byId(pageId);
+        if(page)page.classList.add("active");
+        document.querySelectorAll("#neu455MenuDrawer button[data-page]").forEach(function(b){
+          b.classList.toggle("active", b.getAttribute("data-page")===pageId);
+        });
+        if(typeof draw==="function")draw();
+      }
+    }catch(e){}
+    setMenu(false);
+  }
+
+  function wire(){
+    var btn=byId("neu455MenuBtn");
+    var close=byId("neu455MenuClose");
+    var overlay=byId("neu455MenuOverlay");
+    var drawer=byId("neu455MenuDrawer");
+
+    if(btn){
+      btn.onclick=function(e){
+        if(e){e.preventDefault();e.stopPropagation();}
+        setMenu(!document.body.classList.contains("neu455-menu-open"));
+        return false;
+      };
+      btn.ontouchend=function(e){
+        if(e){e.preventDefault();e.stopPropagation();}
+        setMenu(!document.body.classList.contains("neu455-menu-open"));
+        return false;
+      };
+    }
+
+    if(close){
+      close.onclick=function(e){
+        if(e){e.preventDefault();e.stopPropagation();}
+        setMenu(false);
+        return false;
+      };
+      close.ontouchend=close.onclick;
+    }
+
+    if(overlay){
+      overlay.onclick=function(e){
+        if(e){e.preventDefault();e.stopPropagation();}
+        setMenu(false);
+        return false;
+      };
+    }
+
+    if(drawer && !drawer.__neu496Delegated){
+      drawer.__neu496Delegated=true;
+      drawer.addEventListener("click",function(e){
+        var b=e.target && e.target.closest ? e.target.closest("button[data-page]") : null;
+        if(!b)return;
+        e.preventDefault();
+        e.stopPropagation();
+        showPageSafe(b.getAttribute("data-page"));
+      },true);
+      drawer.addEventListener("touchend",function(e){
+        var b=e.target && e.target.closest ? e.target.closest("button[data-page]") : null;
+        if(!b)return;
+        e.preventDefault();
+        e.stopPropagation();
+        showPageSafe(b.getAttribute("data-page"));
+      },{passive:false,capture:true});
+    }
+  }
+
+  function boot(){
+    wire();
+    setMenu(false);
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",boot);
+  }else{
+    boot();
+  }
+
+  window.addEventListener("load",function(){
+    setTimeout(boot,100);
+    setTimeout(wire,800);
+  });
+
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape")setMenu(false);
+  });
+
+  window.neu496SetMenuOpen=setMenu;
+  window.neu496RestoreHeaderMenu=wire;
+})();
+</script>
+
 </body>
+</html>
