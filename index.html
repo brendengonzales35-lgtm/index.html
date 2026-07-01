@@ -615,6 +615,432 @@ a{
 
 
 /* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Built fresh from working v3.2.5, not from stacked patch files.
+   ============================================================ */
+
+:root{
+  --neu511-card:#0b121b;
+  --neu511-line:rgba(148,163,184,.20);
+  --neu511-line2:rgba(148,163,184,.12);
+  --neu511-muted:#aab4c3;
+  --neu511-blue:#3f66ff;
+  --neu511-blue2:#2f5bea;
+  --neu511-green:#4ade80;
+  --neu511-yellow:#fbbf24;
+  --neu511-red:#ef4444;
+}
+
+.topNav{
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:5px!important;
+  padding:6px!important;
+  border-radius:18px!important;
+}
+.topNav button{
+  min-height:38px!important;
+  font-size:10.5px!important;
+  padding:6px 2px!important;
+  border-radius:12px!important;
+}
+.navIcon{display:none!important}
+
+#folderBackBtn{display:none!important}
+
+#foldersPage > .card:first-child{
+  padding:14px!important;
+  border-radius:22px!important;
+}
+
+#folderTitle{
+  font-size:22px!important;
+  letter-spacing:-.45px!important;
+  margin-bottom:12px!important;
+}
+
+.neu511-hidden-original{
+  display:none!important;
+}
+
+.neu511-search{
+  margin:0 0 12px;
+}
+.neu511-search input{
+  width:100%!important;
+  margin:0!important;
+  min-height:44px!important;
+  border-radius:15px!important;
+  padding:12px 14px!important;
+  font-size:15px!important;
+  font-weight:750!important;
+}
+
+.neu511-tools{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:0 0 12px;
+}
+.neu511-tools button{
+  margin:0!important;
+  min-height:38px!important;
+  border-radius:14px!important;
+  font-size:12px!important;
+  box-shadow:none!important;
+}
+.neu511-tools .active{
+  background:linear-gradient(180deg,var(--neu511-blue),var(--neu511-blue2))!important;
+  color:#fff!important;
+}
+
+.neu511-create-panel{
+  display:none;
+  border:1px solid var(--neu511-line2);
+  border-radius:18px;
+  padding:12px;
+  background:rgba(3,7,12,.28);
+  margin:0 0 12px;
+}
+.neu511-create-panel.open{
+  display:block;
+}
+.neu511-panel-label{
+  color:#dbe4f0;
+  text-transform:uppercase;
+  letter-spacing:.065em;
+  font-size:12px;
+  font-weight:900;
+  margin:10px 0 6px;
+}
+.neu511-create-panel select,
+.neu511-create-panel input,
+.neu511-create-panel button{
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  max-height:none!important;
+  width:100%!important;
+}
+
+#foldersGrid.neu511-list{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+  margin-top:12px!important;
+}
+
+.neu511-card{
+  position:relative;
+  display:grid!important;
+  grid-template-columns:46px minmax(0,1fr) auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  min-height:82px!important;
+  margin:0!important;
+  padding:12px!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  cursor:pointer!important;
+  background:linear-gradient(135deg,rgba(17,25,36,.96),rgba(8,13,19,.98))!important;
+  border:1px solid var(--neu511-line)!important;
+  color:#f8fafc!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 14px 34px rgba(0,0,0,.30)!important;
+}
+.neu511-card:active{transform:scale(.99)!important}
+.neu511-card-main,.neu511-folder-icon{pointer-events:none!important}
+.neu511-card button,.neu511-actions{pointer-events:auto!important}
+
+.neu511-folder-icon{
+  width:46px;
+  height:40px;
+  display:grid;
+  place-items:center;
+}
+.neu511-folder-icon svg{
+  width:46px;
+  height:36px;
+  display:block;
+}
+
+.neu511-card-main{
+  min-width:0;
+}
+.neu511-card-title{
+  color:#fff;
+  font-size:17px;
+  font-weight:950;
+  letter-spacing:-.35px;
+  line-height:1.16;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.neu511-card-sub{
+  color:var(--neu511-muted);
+  font-size:12px;
+  font-weight:750;
+  line-height:1.35;
+  margin-top:4px;
+}
+.neu511-status-row{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+.neu511-dot{
+  width:9px;
+  height:9px;
+  border-radius:999px;
+  display:inline-block;
+  box-shadow:0 0 14px currentColor;
+  background:#94a3b8;
+  color:#94a3b8;
+}
+.neu511-dot.green{background:var(--neu511-green);color:var(--neu511-green)}
+.neu511-dot.yellow{background:var(--neu511-yellow);color:var(--neu511-yellow)}
+.neu511-dot.blue{background:var(--neu511-blue);color:var(--neu511-blue)}
+.neu511-dot.red{background:var(--neu511-red);color:var(--neu511-red)}
+.neu511-status-text{
+  font-size:12px;
+  color:#dbeafe;
+  font-weight:850;
+}
+
+.neu511-more{
+  width:auto!important;
+  min-width:54px!important;
+  height:36px!important;
+  min-height:36px!important;
+  padding:0 10px!important;
+  margin:0!important;
+  border-radius:999px!important;
+  background:rgba(15,23,36,.90)!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+}
+
+.neu511-actions{
+  grid-column:1 / -1;
+  display:none;
+  flex-wrap:wrap;
+  gap:7px;
+  padding-top:10px;
+  border-top:1px solid var(--neu511-line2);
+}
+.neu511-card.actions-open .neu511-actions{display:flex}
+.neu511-actions .mini{
+  margin:0!important;
+  min-height:30px!important;
+  padding:6px 10px!important;
+  font-size:11px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu511-empty,.neu511-note,.neu511-count{
+  color:var(--neu511-muted);
+  font-size:13px;
+  font-weight:750;
+  padding:6px 2px;
+}
+.neu511-count{font-weight:900}
+
+.neu511-back-row{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:8px;
+  align-items:center;
+  margin-bottom:10px;
+}
+.neu511-back-row button{
+  width:auto!important;
+  margin:0!important;
+  min-height:34px!important;
+  padding:7px 12px!important;
+  font-size:12px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+.neu511-subtitle{
+  color:var(--neu511-muted);
+  font-size:12px;
+  font-weight:850;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* Job overview */
+#folderTicketsCard{display:none!important}
+#jobProgressCard{
+  margin-top:12px!important;
+  padding:14px!important;
+  border-radius:22px!important;
+}
+#jobProgressCard .progressTabs{display:none!important}
+#jobProgressTitle{
+  font-size:22px!important;
+  letter-spacing:-.45px!important;
+  margin-bottom:12px!important;
+}
+.neu511-overview{
+  display:grid;
+  gap:12px;
+}
+.neu511-status-card{
+  border:1px solid var(--neu511-line);
+  border-radius:18px;
+  padding:13px;
+  background:linear-gradient(135deg,rgba(15,23,36,.96),rgba(5,9,18,.98));
+}
+.neu511-kicker{
+  color:#9aa8bb;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.neu511-status-line{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+.neu511-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:13px;
+  font-weight:950;
+  color:#fff;
+  border:1px solid rgba(148,163,184,.20);
+  background:rgba(15,23,36,.95);
+}
+.neu511-progress-count{
+  color:var(--neu511-muted);
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.neu511-status-select{
+  width:100%!important;
+  margin-top:0!important;
+  min-height:44px!important;
+  border-radius:14px!important;
+  font-size:14px!important;
+  font-weight:850!important;
+}
+.neu511-board{
+  border:1px solid var(--neu511-line);
+  border-radius:18px;
+  overflow:hidden;
+  background:rgba(3,7,12,.30);
+}
+.neu511-board-head{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:rgba(15,23,36,.80);
+  border-bottom:1px solid var(--neu511-line2);
+}
+.neu511-board-head div{
+  padding:11px 10px;
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+.neu511-board-head div:first-child{border-right:1px solid var(--neu511-line2)}
+.neu511-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--neu511-line2);
+}
+.neu511-row:last-child{border-bottom:0}
+.neu511-cell{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 28px!important;
+  gap:8px!important;
+  align-items:center!important;
+  min-height:58px!important;
+  padding:11px 10px!important;
+  margin:0!important;
+  color:#f8fafc!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  line-height:1.2!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  max-height:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:visible!important;
+}
+.neu511-cell:first-child{border-right:1px solid var(--neu511-line2)!important}
+.neu511-cell span{
+  display:block!important;
+  color:#f8fafc!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+.neu511-cell input[type="checkbox"]{
+  -webkit-appearance:auto!important;
+  appearance:auto!important;
+  display:block!important;
+  opacity:1!important;
+  visibility:visible!important;
+  width:24px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  accent-color:var(--neu511-green)!important;
+}
+.neu511-notes-label{
+  color:#dbe4f0;
+  text-transform:uppercase;
+  letter-spacing:.065em;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+.neu511-notes textarea{
+  min-height:76px!important;
+  border-radius:15px!important;
+}
+.neu511-save{
+  margin-top:10px!important;
+  min-height:44px!important;
+}
+.neu511-mini-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.neu511-mini-actions button{
+  margin:0!important;
+  min-height:38px!important;
+  border-radius:14px!important;
+  font-size:12px!important;
+  box-shadow:none!important;
+}
+
+.versionBadge:after{content:" â¢ v5.10 Job Drive Fix"}
+
+
+
+/* ============================================================
    NEU Tickets v4.14 â Real Left Inspection Dropdowns
    This edits the main tested job overview renderer itself.
    Left column = dropdowns. Right column = checkboxes.
@@ -676,7 +1102,18 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v5.09 Direct Recent Chips";
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Exact rollback to the left-dropdown / right-checkbox job overview.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
 }
 
 
@@ -692,46 +1129,2185 @@ a{
 }
 
 .versionBadge:after{
-  content:" â¢ v5.09 Direct Recent Chips";
+  content:" â¢ v5.10 Job Drive Fix";
 }
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Direct renderer patch: no duplicate search/tools/card/address in open job.
+   ============================================================ */
+
+.neu524-hidden{
+  display:none!important;
+}
+
+#foldersPage #jobProgressTitle.neu524-hidden-title{
+  display:none!important;
+}
+
+#foldersPage #jobProgressCard{
+  margin-top:8px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   The bottom View Tickets button now shows tickets for this job only.
+   ============================================================ */
+
+.neu525-ticket-panel{
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:18px;
+  background:rgba(3,7,12,.28);
+  padding:12px;
+  margin-top:0;
+}
+
+.neu525-ticket-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.neu525-ticket-title{
+  color:#dbeafe;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+
+.neu525-ticket-count{
+  color:#aab4c3;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.neu525-no-tickets{
+  color:#aab4c3;
+  font-size:15px;
+  font-weight:900;
+  padding:10px 4px;
+}
+
+.neu525-ticket-panel .ticketCard{
+  margin:8px 0!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Fixes white text on white/light ticket pills.
+   ============================================================ */
+
+#ticketsPage .ticketCard .pill,
+#ticketsPage .ticketCard .metaPill,
+#ticketsPage .ticketCard .chip,
+#ticketsPage .ticketCard .badge,
+#ticketsPage .ticketCard span[class*="pill"],
+#ticketsPage .ticketCard span[class*="Pill"],
+#ticketsPage .ticketCard span[class*="chip"],
+#ticketsPage .ticketCard span[class*="badge"]{
+  background:rgba(15,23,42,.95)!important;
+  color:#eaf2ff!important;
+  border:1px solid rgba(148,163,184,.32)!important;
+  text-shadow:none!important;
+}
+
+#ticketsPage .ticketCard .pill *,
+#ticketsPage .ticketCard .metaPill *,
+#ticketsPage .ticketCard .chip *,
+#ticketsPage .ticketCard .badge *,
+#ticketsPage .ticketCard span[class*="pill"] *,
+#ticketsPage .ticketCard span[class*="Pill"] *,
+#ticketsPage .ticketCard span[class*="chip"] *,
+#ticketsPage .ticketCard span[class*="badge"] *{
+  color:#eaf2ff!important;
+  text-shadow:none!important;
+}
+
+/* Keep status pills readable with their colors */
+#ticketsPage .ticketCard .statusPill,
+#ticketsPage .ticketCard .ticketStatus,
+#ticketsPage .ticketCard [class*="status"],
+#ticketsPage .ticketCard [class*="Status"]{
+  color:#fff!important;
+  text-shadow:none!important;
+}
+
+/* Direct fix for the count pills visible in the Tickets screenshot */
+#ticketsPage .ticketCard{
+  color:#f8fafc!important;
+}
+
+#ticketsPage .ticketCard small,
+#ticketsPage .ticketCard .small,
+#ticketsPage .ticketCard p{
+  color:#aeb9c8!important;
+}
+
+#ticketsPage .ticketCard button{
+  color:#f8fafc!important;
+}
+
+#ticketsPage .ticketCard button.green,
+#ticketsPage .ticketCard .green{
+  color:#03130a!important;
+}
+
+#ticketsPage .ticketCard button.red,
+#ticketsPage .ticketCard .red{
+  color:#fff!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Ticket cards show man-hour entries separately instead of one summed total.
+   ============================================================ */
+
+#ticketsPage .ticketCard .neu427-man-hours{
+  background:rgba(15,23,42,.95)!important;
+  color:#eaf2ff!important;
+  border:1px solid rgba(148,163,184,.32)!important;
+  white-space:normal!important;
+  line-height:1.25!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes the encoded bullet symbol between man-hour entries.
+   ============================================================ */
+
+#ticketsPage .ticketCard .neu427-man-hours{
+  white-space:normal!important;
+  word-break:normal!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   - Fixes white/light modal text contrast.
+   - Keeps v4.28 man-hour separator fix.
+   ============================================================ */
+
+/* Fix white-on-white text in popups/modals like Move Ticket */
+.modal,
+.modalCard,
+.dialog,
+.popup,
+.overlay .card,
+#moveTicketModal,
+[id*="Modal"],
+[class*="modal"],
+[class*="Modal"]{
+  color:#0f172a!important;
+}
+
+.modal label,
+.modalCard label,
+.dialog label,
+.popup label,
+.overlay .card label,
+#moveTicketModal label,
+[id*="Modal"] label,
+[class*="modal"] label,
+[class*="Modal"] label{
+  color:#334155!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+.modal h1,
+.modal h2,
+.modal h3,
+.modal h4,
+.modal p,
+.modalCard h1,
+.modalCard h2,
+.modalCard h3,
+.modalCard h4,
+.modalCard p,
+.dialog h1,
+.dialog h2,
+.dialog h3,
+.dialog h4,
+.dialog p,
+.popup h1,
+.popup h2,
+.popup h3,
+.popup h4,
+.popup p,
+.overlay .card h1,
+.overlay .card h2,
+.overlay .card h3,
+.overlay .card h4,
+.overlay .card p,
+[id*="Modal"] h1,
+[id*="Modal"] h2,
+[id*="Modal"] h3,
+[id*="Modal"] h4,
+[id*="Modal"] p,
+[class*="modal"] h1,
+[class*="modal"] h2,
+[class*="modal"] h3,
+[class*="modal"] h4,
+[class*="modal"] p,
+[class*="Modal"] h1,
+[class*="Modal"] h2,
+[class*="Modal"] h3,
+[class*="Modal"] h4,
+[class*="Modal"] p{
+  color:#0f172a!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+/* Keep modal inputs/selects dark and readable */
+.modal input,
+.modal select,
+.modal textarea,
+.modalCard input,
+.modalCard select,
+.modalCard textarea,
+.dialog input,
+.dialog select,
+.dialog textarea,
+.popup input,
+.popup select,
+.popup textarea,
+.overlay .card input,
+.overlay .card select,
+.overlay .card textarea,
+#moveTicketModal input,
+#moveTicketModal select,
+#moveTicketModal textarea,
+[id*="Modal"] input,
+[id*="Modal"] select,
+[id*="Modal"] textarea,
+[class*="modal"] input,
+[class*="modal"] select,
+[class*="modal"] textarea,
+[class*="Modal"] input,
+[class*="Modal"] select,
+[class*="Modal"] textarea{
+  background:#050912!important;
+  color:#f8fafc!important;
+  border-color:#334155!important;
+}
+
+.modal input::placeholder,
+.modalCard input::placeholder,
+.dialog input::placeholder,
+.popup input::placeholder,
+.overlay .card input::placeholder,
+[id*="Modal"] input::placeholder,
+[class*="modal"] input::placeholder,
+[class*="Modal"] input::placeholder{
+  color:#94a3b8!important;
+  opacity:1!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.29 Modal + Man Hours";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Cleaner ticket cards + simple phone-friendly filters.
+   ============================================================ */
+
+#neu430TicketFilters{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin:10px 0 14px;
+}
+
+#neu430TicketFilters button{
+  margin:0!important;
+  min-height:34px!important;
+  padding:7px 6px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+}
+
+#neu430TicketFilters button.active{
+  background:linear-gradient(180deg,#4f73ff,#2f5bea)!important;
+  color:#fff!important;
+  border-color:rgba(191,219,254,.50)!important;
+}
+
+#ticketsPage .neu430-ticket-card{
+  padding:14px!important;
+  border-radius:20px!important;
+}
+
+.neu430-ticket-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.neu430-ticket-title{
+  color:#fff;
+  font-size:22px;
+  line-height:1.05;
+  font-weight:1000;
+  letter-spacing:-.45px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.neu430-ticket-address{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.25;
+  margin-top:5px;
+}
+
+.neu430-ticket-date{
+  color:#94a3b8;
+  font-size:12px;
+  font-weight:750;
+  margin-top:5px;
+}
+
+.neu430-needs-folder{
+  display:inline-flex;
+  align-items:center;
+  border:1px solid rgba(251,191,36,.45);
+  background:rgba(251,191,36,.12);
+  color:#fde68a;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:950;
+  white-space:nowrap;
+}
+
+.neu430-ticket-metrics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+
+.neu430-ticket-metrics .badge{
+  margin:0!important;
+}
+
+.neu430-ticket-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:13px;
+}
+
+.neu430-ticket-actions .mini{
+  margin:0!important;
+  min-height:33px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu430-ticket-actions .secondary{
+  opacity:.92;
+}
+
+.neu430-empty-tickets{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:850;
+  padding:10px 2px;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Filters changed to: Not Complete, Most Recent, Needs Folder, All, Finished.
+   ============================================================ */
+
+#neu430TicketFilters{
+  grid-template-columns:repeat(2,1fr)!important;
+}
+
+#neu430TicketFilters button{
+  font-size:11px!important;
+  min-height:36px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Rolled back the v4.32 Create screen layout changes.
+   Folders and Tickets remain from v4.31.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Keeps Create layout the same; fixes the white material cards.
+   ============================================================ */
+
+/* Create Ticket material rows */
+#createTicketPage .materialGrid,
+#ticketEditView .materialGrid{
+  background:rgba(15,23,42,.88)!important;
+  border:1px solid rgba(96,165,250,.26)!important;
+  border-radius:18px!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.18)!important;
+}
+
+#createTicketPage .materialNumber,
+#ticketEditView .materialNumber{
+  color:#eaf2ff!important;
+  opacity:1!important;
+  text-shadow:none!important;
+  font-weight:950!important;
+}
+
+#createTicketPage .materialGrid input,
+#ticketEditView .materialGrid input{
+  background:#050912!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.45)!important;
+  box-shadow:none!important;
+}
+
+#createTicketPage .materialGrid input::placeholder,
+#ticketEditView .materialGrid input::placeholder{
+  color:#9aa8bb!important;
+  opacity:1!important;
+}
+
+/* Man-hour rows match the same dark contrast */
+#createTicketPage .manHoursGrid,
+#ticketEditView .manHoursGrid{
+  background:rgba(15,23,42,.64)!important;
+  border:1px solid rgba(96,165,250,.18)!important;
+  border-radius:16px!important;
+}
+
+#createTicketPage .manHoursGrid input,
+#ticketEditView .manHoursGrid input{
+  background:#050912!important;
+  color:#f8fafc!important;
+  border-color:rgba(148,163,184,.45)!important;
+}
+
+#createTicketPage .manHoursGrid input::placeholder,
+#ticketEditView .manHoursGrid input::placeholder{
+  color:#9aa8bb!important;
+  opacity:1!important;
+}
+
+/* Keep Create page labels readable without changing layout */
+#createTicketPage label,
+#ticketEditView label{
+  color:#f8fafc!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+#createTicketPage h3,
+#ticketEditView h3{
+  color:#f8fafc!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Keeps 10 material lines. Adds sticky Create button, warnings,
+   and smoother Create-from-folder behavior.
+   ============================================================ */
+
+#createTicketPage .card{
+  padding-bottom:92px!important;
+}
+
+#createTicketPage #createTicketBtn{
+  position:sticky!important;
+  bottom:calc(10px + env(safe-area-inset-bottom))!important;
+  z-index:20!important;
+  min-height:52px!important;
+  border-radius:18px!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  box-shadow:0 16px 34px rgba(0,0,0,.38)!important;
+}
+
+#neu435CreateWarn{
+  display:none;
+  margin:12px 0 10px;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(248,113,113,.42);
+  background:rgba(127,29,29,.38);
+  color:#fee2e2;
+  font-weight:900;
+  line-height:1.35;
+}
+
+#neu435CreateWarn.show{
+  display:block;
+}
+
+#neu435CreateWarn .neu435WarnTitle{
+  font-size:13px;
+  font-weight:1000;
+  margin-bottom:4px;
+}
+
+#neu435CreateWarn ul{
+  margin:6px 0 0 18px;
+  padding:0;
+}
+
+#neu435CreateWarn li{
+  margin:2px 0;
+}
+
+#createTicketPage .neu435-missing{
+  border-color:#f87171!important;
+  box-shadow:0 0 0 3px rgba(248,113,113,.18)!important;
+}
+
+#neu435FolderCreateBtn{
+  width:100%;
+  margin:10px 0 12px!important;
+  border-radius:16px!important;
+  min-height:44px!important;
+  font-weight:1000!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
 
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes sticky Create Ticket button only.
+   Keeps required warnings + create-from-folder helpers.
+   ============================================================ */
+
+#createTicketPage .card{
+  padding-bottom:18px!important;
+}
+
+#createTicketPage #createTicketBtn{
+  position:static!important;
+  bottom:auto!important;
+  z-index:auto!important;
+  width:100%!important;
+  margin-top:14px!important;
+  box-shadow:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   First Inspections pass: cleaner cards, filters, dropdowns, open folder.
+   ============================================================ */
+
+#inspectionsPage .card{
+  border-radius:22px!important;
+}
+
+#neu437InspectionFilters{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+  margin:10px 0 14px;
+}
+
+#neu437InspectionFilters button{
+  margin:0!important;
+  min-height:36px!important;
+  padding:8px 8px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+}
+
+#neu437InspectionFilters button.active{
+  background:linear-gradient(180deg,#4f73ff,#2f5bea)!important;
+  color:#fff!important;
+  border-color:rgba(191,219,254,.50)!important;
+}
+
+#neu437InspectionFilters button[data-inspection-filter="all"]{
+  grid-column:1 / -1;
+}
+
+.neu437-insp-card{
+  padding:14px!important;
+  border-radius:20px!important;
+  cursor:pointer;
+}
+
+.neu437-insp-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.neu437-insp-title{
+  color:#fff;
+  font-size:21px;
+  line-height:1.05;
+  font-weight:1000;
+  letter-spacing:-.45px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.neu437-insp-meta{
+  color:#aeb9c8;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.3;
+  margin-top:5px;
+}
+
+.neu437-count-pill{
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:950;
+  background:rgba(15,23,42,.95);
+  color:#eaf2ff;
+  border:1px solid rgba(148,163,184,.32);
+}
+
+.neu437-status-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.neu437-status-label{
+  color:#dbeafe;
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.neu437-inspection-select{
+  width:100%!important;
+  min-height:42px!important;
+  margin:0!important;
+  padding:8px 10px!important;
+  border-radius:14px!important;
+  background:#050912!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.42)!important;
+  font-size:13px!important;
+  font-weight:900!important;
+}
+
+.neu437-inspection-select.status-red{
+  border-color:rgba(239,68,68,.55)!important;
+}
+
+.neu437-inspection-select.status-yellow{
+  border-color:rgba(251,191,36,.58)!important;
+}
+
+.neu437-inspection-select.status-blue{
+  border-color:rgba(63,102,255,.62)!important;
+}
+
+.neu437-inspection-select.status-green{
+  border-color:rgba(74,222,128,.58)!important;
+}
+
+.neu437-insp-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:13px;
+}
+
+.neu437-insp-actions .mini{
+  margin:0!important;
+  min-height:33px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu437-group-title{
+  margin:14px 0 8px!important;
+  color:#dbeafe!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+.neu437-empty{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:850;
+  padding:10px 2px;
+}
+
+.neu437-recent-card{
+  cursor:pointer;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Replaces the tall button-heavy inspection cards with compact cards.
+   ============================================================ */
+
+#inspectionsPage .summaryGrid{
+  gap:8px!important;
+  margin:8px 0 10px!important;
+}
+
+#inspectionsPage .summaryCard{
+  padding:12px!important;
+  border-radius:18px!important;
+  min-height:auto!important;
+}
+
+#inspectionsPage .summaryNum{
+  font-size:32px!important;
+  line-height:1!important;
+}
+
+#inspectionsPage .summaryLabel{
+  font-size:11px!important;
+  font-weight:950!important;
+}
+
+#neu438InspectionFilters{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+  margin:10px 0 14px;
+}
+
+#neu438InspectionFilters button{
+  margin:0!important;
+  min-height:36px!important;
+  padding:8px 7px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+}
+
+#neu438InspectionFilters button.active{
+  background:linear-gradient(180deg,#4f73ff,#2f5bea)!important;
+  color:#fff!important;
+  border-color:rgba(191,219,254,.52)!important;
+}
+
+#neu438InspectionFilters button[data-inspection-filter="all"]{
+  grid-column:1 / -1;
+}
+
+.neu438-insp-group{
+  margin:14px 0 8px!important;
+  color:#dbeafe!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+.neu438-insp-card{
+  padding:13px!important;
+  border-radius:20px!important;
+  cursor:pointer;
+}
+
+.neu438-insp-top{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.neu438-insp-title{
+  color:#fff;
+  font-size:20px;
+  line-height:1.08;
+  font-weight:1000;
+  letter-spacing:-.42px;
+}
+
+.neu438-insp-builder{
+  color:#aeb9c8;
+  font-size:13px;
+  font-weight:850;
+  line-height:1.25;
+  margin-top:4px;
+}
+
+.neu438-status-pill{
+  display:inline-flex;
+  align-items:center;
+  max-width:150px;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:10px;
+  line-height:1.05;
+  font-weight:1000;
+  text-align:center;
+  border:1px solid rgba(148,163,184,.35);
+  background:rgba(15,23,42,.92);
+  color:#eaf2ff;
+}
+
+.neu438-status-pill.ready{border-color:rgba(59,130,246,.60);background:rgba(30,64,175,.45);color:#dbeafe;}
+.neu438-status-pill.called{border-color:rgba(249,115,22,.65);background:rgba(124,45,18,.48);color:#fed7aa;}
+.neu438-status-pill.passed{border-color:rgba(34,197,94,.60);background:rgba(20,83,45,.50);color:#dcfce7;}
+.neu438-status-pill.failed{border-color:rgba(248,113,113,.62);background:rgba(127,29,29,.48);color:#fee2e2;}
+
+.neu438-insp-row{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:7px;
+  margin-top:10px;
+}
+
+.neu438-insp-row label{
+  margin:0!important;
+  color:#dbeafe!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  letter-spacing:.07em!important;
+  text-transform:uppercase!important;
+}
+
+.neu438-insp-select{
+  width:100%!important;
+  min-height:40px!important;
+  margin:0!important;
+  border-radius:14px!important;
+  background:#050912!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.42)!important;
+  font-size:13px!important;
+  font-weight:900!important;
+}
+
+.neu438-insp-meta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:10px;
+}
+
+.neu438-mini-pill{
+  display:inline-flex;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:950;
+  color:#eaf2ff;
+  background:rgba(15,23,42,.92);
+  border:1px solid rgba(148,163,184,.28);
+}
+
+.neu438-insp-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:11px;
+}
+
+.neu438-insp-actions .mini{
+  margin:0!important;
+  min-height:32px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu438-empty{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:850;
+  padding:10px 2px;
+}
+
+.neu438-recent{
+  cursor:pointer;
+  padding:12px!important;
+  border-radius:18px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Inspections now reads folder.inspection_status first, matching Folders.
+   ============================================================ */
+
+.neu438-insp-actions .mini,
+#neu438InspectionFilters button{
+  touch-action:manipulation;
+}
+
+.neu438-insp-card select{
+  touch-action:manipulation;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Inspections now matches Folders status logic better.
+   Passed wins over stale Failed status.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v4.40 Inspection Sync";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Recent Inspection Updates starts at 4013 hough rd and future updates.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v4.41 Recent Updates";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Overall status: Passed only when Final inspection is Passed.
+   Blank final inspection = In Progress.
+   ============================================================ */
+
+.neu438-status-pill.progress{
+  border-color:rgba(148,163,184,.46);
+  background:rgba(51,65,85,.48);
+  color:#e2e8f0;
+}
+
+#neu438InspectionFilters button[data-inspection-filter="all"]{
+  grid-column:auto!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.42 Final Inspection";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Shows Pool Steel instead of Water Bond Inspection.
+   Underlying saved key is preserved so old progress data still works.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v4.43 Pool Steel";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Folder progress dropdown now displays Pool Steel, while saved key remains Water bond inspection.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Recent Inspection Updates only shows on All, not status filters.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v4.45 Hide Recent Filters";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   - Marks existing jobs passed except 4013 hough rd.
+   - Called-in inspection steps show as a small folder badge.
+   - Called-in jobs show under Called In filter.
+   ============================================================ */
+
+.neu446-folder-called-pill{
+  display:inline-flex;
+  width:max-content;
+  margin-top:6px;
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:10px;
+  font-weight:950;
+  color:#fed7aa;
+  background:rgba(124,45,18,.40);
+  border:1px solid rgba(249,115,22,.55);
+}
+
+.neu446-called-pill{
+  color:#fed7aa!important;
+  background:rgba(124,45,18,.42)!important;
+  border-color:rgba(249,115,22,.58)!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v4.46 Passed + Called In";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   - Existing jobs are set Passed except 4013 hough rd.
+   - Passed jobs do not show stale Called In badges.
+   - Called In filter only shows non-passed called-in jobs.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes In Progress filter tab. Ready is default again.
+   Jobs may still display In Progress on the card.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v4.48 No In Progress Tab";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   First Inventory pass: cleaner cards, search, filters, and stock summary.
+   ============================================================ */
+
+#inventoryPage .card{
+  border-radius:22px!important;
+}
+
+#inventorySearch{
+  margin:0 0 10px!important;
+  min-height:44px!important;
+  border-radius:15px!important;
+  font-size:15px!important;
+  font-weight:750!important;
+}
+
+#neu449InventoryFilters{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin:8px 0 12px;
+}
+
+#neu449InventoryFilters button{
+  margin:0!important;
+  min-height:35px!important;
+  padding:7px 5px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  font-weight:950!important;
+  box-shadow:none!important;
+}
+
+#neu449InventoryFilters button.active{
+  background:linear-gradient(180deg,#4f73ff,#2f5bea)!important;
+  color:#fff!important;
+  border-color:rgba(191,219,254,.50)!important;
+}
+
+.neu449-inv-summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:10px 0 12px;
+}
+
+.neu449-summary-chip{
+  border:1px solid rgba(148,163,184,.18);
+  background:rgba(15,23,42,.48);
+  border-radius:16px;
+  padding:10px;
+}
+
+.neu449-summary-chip b{
+  display:block;
+  color:#fff;
+  font-size:24px;
+  line-height:1;
+  font-weight:1000;
+}
+
+.neu449-summary-chip span{
+  display:block;
+  color:#aeb9c8;
+  font-size:11px;
+  font-weight:950;
+  margin-top:5px;
+}
+
+.neu449-summary-chip.warn{
+  border-color:rgba(251,191,36,.40);
+  background:rgba(113,63,18,.22);
+}
+
+.neu449-summary-chip.bad{
+  border-color:rgba(248,113,113,.45);
+  background:rgba(127,29,29,.28);
+}
+
+.neu449-inv-card{
+  padding:13px!important;
+  border-radius:20px!important;
+}
+
+.neu449-inv-card.low{
+  border-color:rgba(251,191,36,.38)!important;
+}
+
+.neu449-inv-card.out{
+  border-color:rgba(248,113,113,.44)!important;
+}
+
+.neu449-inv-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.neu449-inv-name{
+  color:#fff;
+  font-size:18px;
+  line-height:1.12;
+  font-weight:1000;
+  letter-spacing:-.25px;
+}
+
+.neu449-inv-sub{
+  color:#aeb9c8;
+  font-size:12px;
+  font-weight:850;
+  margin-top:4px;
+}
+
+.neu449-inv-status{
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  line-height:1;
+  font-weight:1000;
+  border:1px solid rgba(148,163,184,.32);
+  background:rgba(15,23,42,.90);
+  color:#eaf2ff;
+}
+
+.neu449-inv-status.ok{
+  border-color:rgba(74,222,128,.45);
+  color:#dcfce7;
+  background:rgba(20,83,45,.42);
+}
+
+.neu449-inv-status.low{
+  border-color:rgba(251,191,36,.52);
+  color:#fde68a;
+  background:rgba(113,63,18,.40);
+}
+
+.neu449-inv-status.out{
+  border-color:rgba(248,113,113,.52);
+  color:#fee2e2;
+  background:rgba(127,29,29,.42);
+}
+
+.neu449-inv-qty{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  margin-top:10px;
+}
+
+.neu449-inv-qty span{
+  color:#fff;
+  font-size:34px;
+  line-height:1;
+  font-weight:1000;
+}
+
+.neu449-inv-qty small{
+  color:#aeb9c8;
+  font-size:13px;
+  font-weight:900;
+}
+
+.neu449-inv-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.neu449-inv-actions .mini{
+  margin:0!important;
+  min-height:32px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu449-empty{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:850;
+  padding:10px 2px;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   First Hours pass: cleaner saved-hour cards and live week total.
+   No save/send calculation logic changed.
+   ============================================================ */
+
+#hoursPage .card{
+  border-radius:22px!important;
+}
+
+#hoursPage textarea{
+  min-height:170px!important;
+  border-radius:16px!important;
+  font-size:15px!important;
+  line-height:1.35!important;
+  font-weight:750!important;
+}
+
+#hoursPage #hoursWeek{
+  min-height:44px!important;
+  border-radius:15px!important;
+  font-weight:850!important;
+}
+
+#hoursPage #saveHoursBtn,
+#hoursPage #sendCurrentHoursBtn,
+#hoursPage #sendLatestTwoHoursBtn{
+  min-height:42px!important;
+  border-radius:15px!important;
+  box-shadow:none!important;
+  margin-top:8px!important;
+}
+
+.neu450-hours-preview{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:10px 0 6px;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(96,165,250,.26);
+  background:rgba(15,23,42,.55);
+}
+
+.neu450-hours-preview span{
+  color:#aeb9c8;
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+.neu450-hours-preview b{
+  color:#fff;
+  font-size:20px;
+  font-weight:1000;
+}
+
+.neu450-hours-summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin:10px 0 12px;
+}
+
+.neu450-hours-chip{
+  border:1px solid rgba(148,163,184,.18);
+  background:rgba(15,23,42,.48);
+  border-radius:16px;
+  padding:10px;
+}
+
+.neu450-hours-chip b{
+  display:block;
+  color:#fff;
+  font-size:24px;
+  line-height:1;
+  font-weight:1000;
+}
+
+.neu450-hours-chip span{
+  display:block;
+  color:#aeb9c8;
+  font-size:10.5px;
+  font-weight:950;
+  margin-top:5px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+.neu450-hours-card{
+  padding:13px!important;
+  border-radius:20px!important;
+}
+
+.neu450-hours-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;
+  align-items:start;
+}
+
+.neu450-hours-date{
+  color:#fff;
+  font-size:20px;
+  line-height:1.1;
+  font-weight:1000;
+  letter-spacing:-.3px;
+}
+
+.neu450-hours-sub{
+  color:#aeb9c8;
+  font-size:12px;
+  font-weight:850;
+  margin-top:4px;
+}
+
+.neu450-hours-total{
+  min-width:78px;
+  text-align:center;
+  border-radius:16px;
+  border:1px solid rgba(74,222,128,.38);
+  background:rgba(20,83,45,.36);
+  padding:9px 10px;
+}
+
+.neu450-hours-total b{
+  display:block;
+  color:#dcfce7;
+  font-size:24px;
+  line-height:1;
+  font-weight:1000;
+}
+
+.neu450-hours-total span{
+  display:block;
+  color:#bbf7d0;
+  font-size:10.5px;
+  font-weight:950;
+  margin-top:3px;
+  text-transform:uppercase;
+}
+
+.neu450-hours-notes{
+  margin-top:11px;
+  padding:11px;
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.15);
+  background:rgba(3,7,12,.28);
+  color:#dbe4f0;
+  font-size:13px;
+  line-height:1.4;
+  font-weight:750;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.neu450-hours-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.neu450-hours-actions .mini{
+  margin:0!important;
+  min-height:32px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+
+.neu450-hours-empty{
+  color:#aeb9c8;
+  font-size:14px;
+  font-weight:850;
+  padding:10px 2px;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Hours list, latest two weeks, send, edit, and delete use only the signed-in employee.
+   ============================================================ */
+
+#hoursPage h2::after{
+  content:"";
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes Photos from the main navigation.
+   The hidden drive/photos page is kept so existing ticket/folder photo buttons still work.
+   ============================================================ */
+
+.topNav button[data-page="drivePage"]{
+  display:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Top title now says NEU DASHBOARD and weather is compact on Home.
+   ============================================================ */
+
+header h1{
+  text-transform:uppercase!important;
+  letter-spacing:.02em!important;
+}
+
+.neu453-dashboard-main{
+  padding:13px!important;
+}
+
+.neu453-dashboard-top{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 132px;
+  gap:10px;
+  align-items:start;
+  margin-bottom:12px;
+}
+
+.neu453-dashboard-top h2{
+  font-size:23px!important;
+  line-height:1.05!important;
+  letter-spacing:-.35px!important;
+  margin:0!important;
+}
+
+.neu453-dashboard-sub{
+  color:#aab4c3;
+  font-size:12px;
+  font-weight:900;
+  margin:5px 0 0;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+.neu453-weather-mini{
+  margin:0!important;
+  padding:9px!important;
+  border-radius:16px!important;
+  border:1px solid rgba(96,165,250,.24)!important;
+  background:rgba(3,7,12,.34)!important;
+  box-shadow:none!important;
+  min-height:0!important;
+}
+
+.neu453-weather-label{
+  color:#aab4c3;
+  font-size:10px;
+  font-weight:1000;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:3px;
+}
+
+.neu453-weather-mini .weatherMain{
+  color:#fff!important;
+  font-size:24px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  margin:0!important;
+}
+
+.neu453-weather-mini .weatherDetails{
+  color:#aab4c3!important;
+  font-size:10.5px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  margin:4px 0 6px!important;
+  max-height:25px;
+  overflow:hidden;
+}
+
+.neu453-weather-mini button{
+  min-height:28px!important;
+  padding:5px 8px!important;
+  border-radius:999px!important;
+  margin:0!important;
+  font-size:10.5px!important;
+  font-weight:1000!important;
+  box-shadow:none!important;
+}
+
+@media(max-width:390px){
+  .neu453-dashboard-top{
+    grid-template-columns:minmax(0,1fr) 118px;
+  }
+  .neu453-weather-mini .weatherMain{
+    font-size:21px!important;
+  }
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Keeps logo + NEU DASHBOARD in the top header.
+   Removes the duplicate NEU Dashboard title from the Home card.
+   ============================================================ */
+
+.neu454-home-kicker{
+  font-size:17px!important;
+  line-height:1.05!important;
+  color:#dbeafe!important;
+  text-transform:uppercase!important;
+  letter-spacing:.05em!important;
+  margin:0!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Replaces the visible tab row with a slide-out hamburger menu.
+   Current app tabs stay inside the menu.
+   ============================================================ */
+
+.neu455-app-header{
+  padding:12px 12px!important;
+  border-radius:0 0 22px 22px!important;
+}
+
+.neu455-logo-row{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  gap:10px!important;
+  align-items:center!important;
+}
+
+.neu455-title-wrap{
+  min-width:0;
+}
+
+.neu455-title-wrap h1{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.neu455-menu-btn{
+  width:48px!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:14px!important;
+  background:rgba(15,23,42,.72)!important;
+  border:1px solid rgba(148,163,184,.28)!important;
+  color:#fff!important;
+  font-size:26px!important;
+  line-height:1!important;
+  box-shadow:none!important;
+}
+
+.neu455-menu-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.58);
+  backdrop-filter:blur(2px);
+  z-index:9988;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease;
+}
+
+body.neu455-menu-open .neu455-menu-overlay{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.topNav,
+#appPage .topNav{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  bottom:0!important;
+  width:min(84vw,330px)!important;
+  height:100vh!important;
+  z-index:9989!important;
+  display:flex!important;
+  flex-direction:column!important;
+  grid-template-columns:none!important;
+  gap:8px!important;
+  padding:16px!important;
+  padding-top:calc(16px + env(safe-area-inset-top))!important;
+  border-radius:0 24px 24px 0!important;
+  background:linear-gradient(180deg,#07111b,#03070c)!important;
+  border-right:1px solid rgba(148,163,184,.20)!important;
+  box-shadow:20px 0 55px rgba(0,0,0,.58)!important;
+  transform:translateX(-105%)!important;
+  transition:transform .22s ease!important;
+  overflow-y:auto!important;
+}
+
+body.neu455-menu-open .topNav,
+body.neu455-menu-open #appPage .topNav{
+  transform:translateX(0)!important;
+}
+
+.neu455-menu-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  color:#fff;
+  padding:2px 2px 10px;
+  margin-bottom:4px;
+  border-bottom:1px solid rgba(148,163,184,.16);
+}
+
+.neu455-menu-head b{
+  font-size:22px;
+  font-weight:1000;
+  letter-spacing:-.3px;
+}
+
+.neu455-menu-close{
+  width:42px!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:13px!important;
+  background:rgba(15,23,42,.80)!important;
+  border:1px solid rgba(148,163,184,.25)!important;
+  color:#fff!important;
+  font-size:30px!important;
+  line-height:1!important;
+  box-shadow:none!important;
+}
+
+.topNav button[data-page],
+#appPage .topNav button[data-page]{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  width:100%!important;
+  min-height:48px!important;
+  margin:0!important;
+  padding:12px 13px!important;
+  border-radius:16px!important;
+  text-align:left!important;
+  background:rgba(15,23,42,.58)!important;
+  border:1px solid rgba(148,163,184,.16)!important;
+  color:#e5edf7!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  box-shadow:none!important;
+}
+
+.topNav button[data-page] br{
+  display:none!important;
+}
+
+.topNav button[data-page] .navIcon{
+  display:inline-block!important;
+  font-size:20px!important;
+  width:24px!important;
+  text-align:center!important;
+  line-height:1!important;
+}
+
+.topNav button[data-page].active,
+#appPage .topNav button[data-page].active{
+  background:linear-gradient(180deg,#2563eb,#1d4ed8)!important;
+  color:#fff!important;
+  border-color:rgba(147,197,253,.45)!important;
+}
+
+body.neu455-menu-open{
+  overflow:hidden;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Fixes white-on-white Recent Jobs cards on the Home dashboard.
+   ============================================================ */
+
+#dashboardPage #recentJobsList .recentJobCard{
+  background:linear-gradient(180deg,rgba(17,27,37,.96),rgba(8,13,19,.98))!important;
+  border:1px solid rgba(148,163,184,.20)!important;
+  color:#f8fafc!important;
+  box-shadow:0 14px 35px rgba(0,0,0,.45)!important;
+  border-radius:20px!important;
+  padding:13px!important;
+}
+
+#dashboardPage #recentJobsList .recentJobTitle{
+  color:#f8fafc!important;
+  font-size:18px!important;
+  font-weight:1000!important;
+  line-height:1.15!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+#dashboardPage #recentJobsList .recentJobMeta{
+  color:#aab4c3!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  opacity:1!important;
+}
+
+#dashboardPage #recentJobsList .recentJobCard .mini.gray{
+  background:#0f172a!important;
+  color:#f8fafc!important;
+  border:1px solid rgba(148,163,184,.35)!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Weather is now a long horizontal dashboard card and refreshes automatically.
+   ============================================================ */
+
+.neu453-dashboard-top{
+  display:block!important;
+  margin-bottom:10px!important;
+}
+
+.neu457-weather-wide{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+  width:100%!important;
+  margin:10px 0 14px!important;
+  padding:12px 13px!important;
+  border-radius:18px!important;
+  border:1px solid rgba(96,165,250,.24)!important;
+  background:linear-gradient(90deg,rgba(15,23,42,.92),rgba(8,13,19,.96))!important;
+  box-shadow:0 14px 35px rgba(0,0,0,.40)!important;
+  min-height:74px!important;
+}
+
+.neu457-weather-main{
+  min-width:84px;
+}
+
+.neu457-weather-wide .neu453-weather-label{
+  color:#aab4c3!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  text-transform:uppercase!important;
+  letter-spacing:.06em!important;
+  margin-bottom:4px!important;
+}
+
+.neu457-weather-wide .weatherMain{
+  color:#f8fafc!important;
+  font-size:33px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  letter-spacing:-.5px!important;
+  margin:0!important;
+}
+
+.neu457-weather-wide .weatherDetails{
+  color:#dbe4f0!important;
+  font-size:13px!important;
+  line-height:1.25!important;
+  font-weight:850!important;
+  margin:0!important;
+  overflow:hidden!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+}
+
+.neu457-weather-auto{
+  color:#93c5fd!important;
+  border:1px solid rgba(147,197,253,.35)!important;
+  background:rgba(37,99,235,.18)!important;
+  border-radius:999px!important;
+  padding:6px 8px!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  letter-spacing:.05em!important;
+}
+
+#updateWeatherBtn{
+  display:none!important;
+}
+
+@media(max-width:390px){
+  .neu457-weather-wide{
+    grid-template-columns:auto minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+  .neu457-weather-auto{
+    display:none!important;
+  }
+  .neu457-weather-wide .weatherMain{
+    font-size:29px!important;
+  }
+  .neu457-weather-wide .weatherDetails{
+    font-size:12px!important;
+  }
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Based on known-working hamburger version. Adds only the ticket
+   Folder button for tickets linked to a folder.
+   ============================================================ */
+
+#ticketsPage .neu430-ticket-actions .neu473-folder-btn{
+  background:rgba(20,35,58,.95)!important;
+  border:1px solid rgba(148,163,184,.34)!important;
+  color:#f8fbff!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Small patch from v4.73 working hamburger:
+   - crops logo slightly to hide the white image edge
+   - tightens material/hour/photo bubbles
+   ============================================================ */
+
+/* Header logo crop: hides baked-in white edge without touching menu */
+.neu474-logo-crop{
+  width:72px!important;
+  height:72px!important;
+  border-radius:20px!important;
+  overflow:hidden!important;
+  display:block!important;
+  background:#07111b!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  flex:0 0 auto!important;
+}
+
+.neu474-logo-crop .neu474-logo-img{
+  width:calc(100% + 16px)!important;
+  height:calc(100% + 16px)!important;
+  max-width:none!important;
+  margin:-8px!important;
+  object-fit:cover!important;
+  display:block!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  border-radius:18px!important;
+}
+
+/* Safety: remove any CSS border/background from other logo instances */
+.logo,
+.authLogo,
+.splashLogo{
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+
+/* Ticket bubble spacing fix */
+#ticketsPage .neu430-ticket-metrics{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin-top:13px!important;
+}
+
+#ticketsPage .neu430-ticket-metrics .statusBadge,
+#ticketsPage .neu430-ticket-metrics .neu474-metric{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  flex:0 1 auto!important;
+  min-height:32px!important;
+  margin:0!important;
+  padding:6px 10px!important;
+  box-sizing:border-box!important;
+  border-radius:999px!important;
+  line-height:1.05!important;
+  white-space:nowrap!important;
+}
+
+#ticketsPage .neu430-ticket-metrics .neu474-material,
+#ticketsPage .neu430-ticket-metrics .neu474-photos{
+  padding-left:10px!important;
+  padding-right:10px!important;
+}
+
+#ticketsPage .neu430-ticket-metrics .neu474-hours{
+  width:fit-content!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+  line-height:1.12!important;
+}
+
+#ticketsPage .neu430-ticket-metrics .statusBadge{
+  gap:7px!important;
+}
+
+#ticketsPage .neu430-ticket-metrics .statusDot{
+  flex:0 0 10px!important;
+}
+
+@media(max-width:430px){
+  #ticketsPage .neu430-ticket-metrics{
+    gap:7px!important;
+  }
+  #ticketsPage .neu430-ticket-metrics .statusBadge,
+  #ticketsPage .neu430-ticket-metrics .neu474-metric{
+    min-height:31px!important;
+    padding:6px 9px!important;
+    font-size:11.5px!important;
+  }
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes material/hour/photo bubbles and the Open button from
+   ticket list cards. Tap anywhere on the card to open it.
+   ============================================================ */
+
+#ticketsPage .neu475-click-ticket{
+  cursor:pointer!important;
+  -webkit-tap-highlight-color:rgba(59,130,246,.18)!important;
+}
+
+#ticketsPage .neu475-click-ticket:active{
+  transform:scale(.992);
+}
+
+#ticketsPage .neu430-ticket-metrics{
+  margin-top:12px!important;
+}
+
+#ticketsPage .neu430-ticket-actions{
+  margin-top:14px!important;
+}
+
+#ticketsPage .neu430-ticket-actions .mini{
+  position:relative!important;
+  z-index:2!important;
+}
+
+/* Keep status badge neat now that the other bubbles are gone */
+#ticketsPage .neu430-ticket-metrics .statusBadge{
+  margin:0!important;
+  width:auto!important;
+  max-width:100%!important;
+}
+
+/* Hide old metric classes if any cached/dynamic markup appears */
+#ticketsPage .neu430-ticket-metrics .neu474-material,
+#ticketsPage .neu430-ticket-metrics .neu474-hours,
+#ticketsPage .neu430-ticket-metrics .neu474-photos,
+#ticketsPage .neu430-ticket-metrics .neu470-material,
+#ticketsPage .neu430-ticket-metrics .neu470-hours,
+#ticketsPage .neu430-ticket-metrics .neu470-photos{
+  display:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes only the visible AUTO label. Weather still auto-updates.
+   ============================================================ */
+
+.neu457-weather-auto,
+#weatherBox .neu457-weather-auto{
+  display:none!important;
+}
+
+.neu457-weather-wide{
+  grid-template-columns:auto minmax(0,1fr)!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
 
 </style>
 
@@ -2784,91 +5360,479 @@ function generateTicketPDF(id){
  let used=data.used.filter(u=>String(u.ticket_id)===String(id));
  let links=data.drive.filter(d=>String(d.ticket_id)===String(id));
  let report=`<!doctype html><html><head><title>NEU Ticket Report</title><style>body{font-family:Arial;padding:24px;color:#111}h1{color:#06243b}.box{border:1px solid #ddd;border-radius:10px;padding:12px;margin:12px 0}.label{font-weight:bold;color:#06243b}.backBtn{background:#06243b;color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin-bottom:16px}@media print{.noPrint{display:none}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ============================================================
-   NEU Tickets v5.09 â Direct Recent Job Chips
-   Chips are built directly inside the Recent Jobs HTML.
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Rollback to v4.76 plus ONLY the Work Hours overhanging bubble fix.
+   No hamburger/menu changes.
    ============================================================ */
 
-#recentJobsList .recentJob{
-  display:grid!important;
-  grid-template-columns:1fr auto!important;
-  align-items:center!important;
-  gap:12px!important;
+#hoursPage .card{
+  overflow:hidden!important;
 }
 
-#recentJobsList .neu509-chip-row{
-  display:flex!important;
-  flex-direction:row!important;
-  flex-wrap:wrap!important;
-  align-items:center!important;
-  gap:6px!important;
-  margin:9px 0 7px!important;
+#hoursPage #hoursWeek,
+#hoursPage #hoursNotes,
+#hoursPage #neu450HoursPreview{
   width:100%!important;
-  clear:both!important;
-}
-
-#recentJobsList .neu509-chip{
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
+  max-width:100%!important;
+  min-width:0!important;
+  inline-size:100%!important;
+  max-inline-size:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
   box-sizing:border-box!important;
-  width:auto!important;
-  min-width:36px!important;
-  height:27px!important;
-  padding:0 10px!important;
-  border-radius:999px!important;
-  background:rgba(15,23,42,.96)!important;
-  border:1px solid rgba(148,163,184,.36)!important;
-  color:#dbeafe!important;
-  font-size:11px!important;
-  line-height:1!important;
-  font-weight:950!important;
-  letter-spacing:.05em!important;
-  white-space:nowrap!important;
-  text-align:center!important;
-  box-shadow:0 0 0 1px rgba(2,6,23,.25)!important;
 }
 
-#recentJobsList .neu509-chip.done{
-  background:rgba(6,95,70,.30)!important;
-  border-color:rgba(16,185,129,.72)!important;
-  color:#bbf7d0!important;
-}
-
-#recentJobsList .neu509-chip.work{
-  background:rgba(154,52,18,.30)!important;
-  border-color:rgba(249,115,22,.72)!important;
-  color:#fed7aa!important;
-}
-
-#recentJobsList .neu509-chip.bad{
-  background:rgba(127,29,29,.32)!important;
-  border-color:rgba(239,68,68,.72)!important;
-  color:#fecaca!important;
+#hoursPage #hoursWeek{
+  display:block!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
 }
 
 .versionBadge:after{
-  content:" â¢ v5.09 Direct Recent Chips";
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Recent Jobs now switches to Tickets before opening detail.
+   No hamburger/menu changes.
+   ============================================================ */
+
+#dashboardPage .recentJobCard.neu480-recent-open{
+  cursor:pointer!important;
+  -webkit-tap-highlight-color:rgba(59,130,246,.18)!important;
+}
+
+#dashboardPage .recentJobCard.neu480-recent-open button{
+  position:relative!important;
+  z-index:2!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Dashboard Recent Jobs now opens the linked Folder/Job instead
+   of opening ticket detail. No hamburger/menu changes.
+   ============================================================ */
+
+#dashboardPage .recentJobCard.neu481-recent-folder-open{
+  cursor:pointer!important;
+  -webkit-tap-highlight-color:rgba(59,130,246,.18)!important;
+}
+
+#dashboardPage .recentJobCard.neu481-recent-folder-open button{
+  position:relative!important;
+  z-index:2!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Folder/job progress only:
+   - adds Halo to top of right check-off list
+   - renames Halo inspection to Equipotential Bond Inspection
+   - removes Bonding inspection from left inspection list
+   ============================================================ */
+
+.neu482-empty-cell{
+  visibility:hidden!important;
+  min-height:44px!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Fixes the hamburger by forcing the drawer/overlay back to the
+   working slide-out behavior. No job progress changes.
+   ============================================================ */
+
+#neu455MenuBtn{
+  position:relative!important;
+  z-index:2147483602!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+
+#neu455MenuOverlay.neu455-menu-overlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483500!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  background:rgba(0,0,0,.46)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  transition:opacity .18s ease!important;
+}
+
+body.neu455-menu-open #neu455MenuOverlay.neu455-menu-overlay{
+  opacity:1!important;
+  pointer-events:auto!important;
+}
+
+#neu455MenuDrawer.topNav,
+#appPage #neu455MenuDrawer.topNav{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  bottom:0!important;
+  width:min(84vw,330px)!important;
+  height:100vh!important;
+  z-index:2147483501!important;
+  display:flex!important;
+  flex-direction:column!important;
+  grid-template-columns:none!important;
+  gap:8px!important;
+  padding:16px!important;
+  padding-top:calc(16px + env(safe-area-inset-top))!important;
+  border-radius:0 24px 24px 0!important;
+  background:linear-gradient(180deg,#07111b,#03070c)!important;
+  border-right:1px solid rgba(148,163,184,.24)!important;
+  box-shadow:20px 0 55px rgba(0,0,0,.52)!important;
+  transform:translateX(-105%)!important;
+  transition:transform .20s ease!important;
+  overflow-y:auto!important;
+  pointer-events:auto!important;
+}
+
+body.neu455-menu-open #neu455MenuDrawer.topNav,
+body.neu455-menu-open #appPage #neu455MenuDrawer.topNav{
+  transform:translateX(0)!important;
+}
+
+body.neu455-menu-open{
+  overflow:hidden!important;
+}
+
+#neu455MenuDrawer .neu455-menu-head{
+  display:flex!important;
+}
+
+#neu455MenuDrawer button[data-page]{
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Adds PWA/Home Screen cache refresh support.
+   No visual/menu/job-progress changes.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   - shared live updates for non-inventory app data
+   - shared job progress/checklist support
+   - stronger folder name cleanup
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   - fixed Sign Out button
+   - shared polling refresh except employee inventory
+   - returns Update Weather button
+   - remembers last weather location
+   ============================================================ */
+
+#neu486WeatherUpdateBtn{
+  margin-top:10px!important;
+  min-height:38px!important;
+  border-radius:15px!important;
+  box-shadow:none!important;
+  font-size:13px!important;
+  font-weight:1000!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Forces job overview dropdowns, checkboxes, and notes to save
+   directly to shared folders.job_progress.
+   Inventory remains employee-specific.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Makes the Update Weather button permanent and visible inside
+   the dashboard weather card.
+   ============================================================ */
+
+#weatherBox.neu457-weather-wide{
+  grid-template-columns:auto minmax(0,1fr)!important;
+}
+
+#weatherBox #neu486WeatherUpdateBtn,
+#weatherBox .neu488-weather-button{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  grid-column:1 / -1!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:8px 0 0!important;
+  min-height:40px!important;
+  border-radius:15px!important;
+  box-sizing:border-box!important;
+  box-shadow:none!important;
+  font-size:13px!important;
+  font-weight:1000!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Fixes overview sync by using the real app globals, not window.*
+   Inventory remains employee-specific.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Job/folder status now says Passed only when Final inspection
+   is marked Passed. Otherwise it says In Progress, except Final
+   Failed says Failed.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Recent Jobs now uses folder Final-inspection status, and
+   weather no longer shows location instructions.
+   ============================================================ */
+
+#weatherDetails{
+  -webkit-line-clamp:3!important;
+}
+
+#weatherBox #neu486WeatherUpdateBtn,
+#weatherBox .neu488-weather-button{
+  cursor:pointer!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   - Create Ticket returns Home after save
+   - Create form clears completely after save
+   - Job dropdown has a Search Jobs filter
+   - More cleanup for weird mojibake symbols
+   ============================================================ */
+
+#newFolderJobSearch{
+  margin-bottom:8px!important;
+}
+
+#newFolderJobSearch::placeholder{
+  color:#9aa8bb!important;
+  opacity:1!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Replaces the long native Pick Job dropdown with a searchable
+   tap-to-select job picker.
+   ============================================================ */
+
+.neu493-job-picker{
+  position:relative!important;
+}
+
+#newFolderJob.neu493-hidden-select{
+  position:absolute!important;
+  left:-9999px!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+#newFolderJobSearch.neu493-job-search{
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+.neu493-job-results{
+  margin-top:8px!important;
+  border:1px solid rgba(148,163,184,.28)!important;
+  border-radius:16px!important;
+  background:#070d14!important;
+  box-shadow:0 14px 36px rgba(0,0,0,.32)!important;
+  overflow:hidden!important;
+}
+
+.neu493-job-result{
+  display:block!important;
+  width:100%!important;
+  padding:13px 14px!important;
+  min-height:48px!important;
+  border:0!important;
+  border-bottom:1px solid rgba(148,163,184,.16)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#f8fbff!important;
+  text-align:left!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+
+.neu493-job-result:last-child{
+  border-bottom:0!important;
+}
+
+.neu493-job-result small{
+  display:block!important;
+  margin-top:3px!important;
+  color:#aeb9c9!important;
+  font-size:12px!important;
+  font-weight:800!important;
+}
+
+.neu493-job-empty{
+  padding:13px 14px!important;
+  color:#aeb9c9!important;
+  font-weight:850!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Built from clean v4.93. Keeps header/menu untouched.
+   Notes do not auto-save; Save Overview saves manually.
+   ============================================================ */
+
+#jobProgressNotes.neu497-notes-active{
+  outline:2px solid rgba(59,130,246,.65)!important;
+  box-shadow:0 0 0 4px rgba(59,130,246,.14)!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Email Ticket now uses one stable subject per job/folder so
+   repeated ticket emails group into the same email conversation.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Email Ticket uses a stable Re: subject per job/folder to help
+   email apps place updates under one conversation.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Removes visible Create Ticket inspection status, fixes folder
+   View Tickets, and cleans email body while keeping Drive Links.
+   ============================================================ */
+
+#newInspection.neu500-hidden-inspection{
+  display:none!important;
+}
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   Recent Jobs now shows one card per job/folder instead of one
+   card for every ticket created under the same job.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
+}
+
+
+/* ============================================================
+   NEU Tickets v5.10 â Job Drive Folder Fix
+   New job folders save in the app and create/find the matching
+   Google Drive folder/link when Drive Auto-Folder URL is saved.
+   ============================================================ */
+
+.versionBadge:after{
+  content:" â¢ v5.10 Job Drive Fix";
 }
 
 </style></head><body><button class="backBtn noPrint" onclick="window.close();history.back()">Back</button><h1>NEU Tickets</h1><h2>Job Report</h2><div class="box"><div class="label">Builder</div>${t.builder||""}</div><div class="box"><div class="label">Address</div>${t.job_address||""}</div><div class="box"><div class="label">Date</div>${displayDate(t.ticket_date)}</div><div class="box"><div class="label">Status</div>${t.inspection_status||""}</div><div class="box"><div class="label">Man Hrs</div>${manHoursText(parseManHoursDetails(t.man_hours_details))}</div><div class="box"><div class="label">Notes</div>${(t.notes||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Need To Complete</div>${(t.need_to_complete||"").replaceAll("\\n","<br>")}</div><div class="box"><div class="label">Materials</div>${used.length?used.map(u=>`${u.material_name} - ${u.quantity} ${u.unit||""}`).join("<br>"):"No materials."}</div><div class="box"><div class="label">Photos / Links</div>${links.length?links.map(l=>`<div>${l.label||"Link"}: ${l.url}</div>`).join(""):"No links."}</div></body></html>`;
@@ -4616,9 +7580,9 @@ if(typeof window.neu443InspectionLabel!=="function"){
 
 <script id="neu-v4-84-home-screen-auto-update">
 (function(){
-  var APP_VERSION = "5.09";
+  var APP_VERSION = "5.10";
   var VERSION_KEY = "neu_app_html_version";
-  var RELOAD_KEY = "neu_app_update_reloaded_5_09";
+  var RELOAD_KEY = "neu_app_update_reloaded_5_10";
 
   function isHomeScreenApp(){
     try{
@@ -4661,7 +7625,7 @@ if(typeof window.neu443InspectionLabel!=="function"){
   function reloadWithVersion(){
     try{
       var url = new URL(window.location.href);
-      url.searchParams.set("v", "509");
+      url.searchParams.set("v", "510");
       url.searchParams.set("t", String(Date.now()).slice(-8));
       window.location.replace(url.toString());
     }catch(e){
@@ -4700,7 +7664,7 @@ if(typeof window.neu443InspectionLabel!=="function"){
     }, 500);
   });
 
-  window.neu509ForceRefresh=window.neu501ForceRefresh=window.neu500ForceRefresh=window.neu499ForceRefresh=window.neu498ForceRefresh=window.neu497ForceRefresh=window.neu493ForceRefresh=window.neu492ForceRefresh=window.neu491ForceRefresh=window.neu490ForceRefresh=window.neu489ForceRefresh=window.neu488ForceRefresh=window.neu487ForceRefresh=window.neu486ForceRefresh=window.neu485ForceRefresh=window.neu484ForceRefresh=function(){
+  window.neu510ForceRefresh=window.neu501ForceRefresh=window.neu500ForceRefresh=window.neu499ForceRefresh=window.neu498ForceRefresh=window.neu497ForceRefresh=window.neu493ForceRefresh=window.neu492ForceRefresh=window.neu491ForceRefresh=window.neu490ForceRefresh=window.neu489ForceRefresh=window.neu488ForceRefresh=window.neu487ForceRefresh=window.neu486ForceRefresh=window.neu485ForceRefresh=window.neu484ForceRefresh=function(){
     try{
       localStorage.removeItem(VERSION_KEY);
       sessionStorage.removeItem(RELOAD_KEY);
@@ -6938,121 +9902,43 @@ if(typeof window.neu443InspectionLabel!=="function"){
 </script>
 
 
-
-<script id="neu-v5-09-direct-recent-job-chips">
+<script id="neu-v5-01-unique-recent-jobs">
 (function(){
   function byId(id){return document.getElementById(id);}
-
   function appData(){
     try{if(typeof data!=="undefined")return data;}catch(e){}
     try{return window.data||null;}catch(e){return null;}
   }
-
   function esc(v){
-    return String(v==null?"":v)
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#39;");
+    return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
   }
-
   function clean(v){
     try{
       if(typeof neu492CleanSymbols==="function")return neu492CleanSymbols(v);
       if(typeof cleanFolderNameText==="function")return cleanFolderNameText(v);
     }catch(e){}
-    return String(v==null?"":v)
-      .replace(/[ï¿½\uFFFD]/g,"")
-      .replace(/Ã+/g,"")
-      .replace(/^\s*(?:ð|Ã°Å¸[^A-Za-z0-9]*|Ã°|Å¸)+\s*/ig,"")
-      .replace(/\s+/g," ")
-      .trim();
+    return String(v==null?"":v).replace(/[ï¿½\uFFFD]/g,"").replace(/Ã+/g,"").replace(/^\s*(?:ð|Ã°Å¸[^A-Za-z0-9]*|Ã°|Å¸)+\s*/ig,"").replace(/\s+/g," ").trim();
   }
-
-  function parseProgress(v){
-    if(!v)return {};
-    if(typeof v==="object")return v||{};
-    if(typeof v==="string"){
-      try{return JSON.parse(v)||{};}catch(e){return {};}
-    }
-    return {};
-  }
-
-  function progressForFolder(f){
-    try{
-      var shared=parseProgress(f && f.job_progress);
-      if(f && f.id && typeof readJobProgress==="function"){
-        var local=readJobProgress(f.id)||{};
-        return {
-          checks:Object.assign({},shared.checks||{},local.checks||{}),
-          inspectionSteps:Object.assign({},shared.inspectionSteps||{},local.inspectionSteps||{}),
-          notes:local.notes || shared.notes || ""
-        };
-      }
-      return shared;
-    }catch(e){return {};}
-  }
-
-  function statusClass(status){
-    status=String(status||"Not Ready");
-    if(status==="Passed")return "done";
-    if(status==="Failed")return "bad";
-    if(status && status!=="Not Ready")return "work";
-    return "";
-  }
-
-  function statusText(status){
-    status=String(status||"Not Ready");
-    if(status==="Passed" || status==="Failed" || status==="Not Ready")return status;
-    if(/^ready for/i.test(status))return "Ready";
-    if(/called/i.test(status))return "Called";
-    return status.replace(/^Ready for /i,"").replace(/ Inspection$/i,"");
-  }
-
-  function chip(initials,label,status){
-    var cls=statusClass(status);
-    var title=label+": "+statusText(status);
-    return '<span class="neu509-chip '+esc(cls)+'" title="'+esc(title)+'" aria-label="'+esc(title)+'">'+esc(initials)+'</span>';
-  }
-
-  function chipRow(f){
-    if(!f)return "";
-    var p=progressForFolder(f)||{};
-    var steps=p.inspectionSteps||{};
-    return '<div class="neu509-chip-row" data-neu509-folder="'+esc(String(f.id||""))+'">'+
-      chip("PS","Pool Steel",steps["Water bond inspection"]||"Not Ready")+
-      chip("D","Ditch",steps["Ditch inspection"]||"Not Ready")+
-      chip("EB","Equip Bond",steps["Halo inspection"]||"Not Ready")+
-      chip("F","Final",steps["Final inspection"]||"Not Ready")+
-    '</div>';
-  }
-
-  function folderById(id){
-    var d=appData();
-    try{return d && Array.isArray(d.folders) ? d.folders.find(function(f){return String(f.id)===String(id);}) : null;}catch(e){return null;}
-  }
-
-  function folderForTicket(t){
-    try{return folderById(t && t.folder_id);}catch(e){return null;}
-  }
-
   function dateMs(v){
     if(!v)return 0;
     var n=Date.parse(v);
     return isNaN(n)?0:n;
   }
-
+  function folderById(id){
+    var d=appData();
+    try{return d && Array.isArray(d.folders) ? d.folders.find(function(f){return String(f.id)===String(id);}) : null;}catch(e){return null;}
+  }
+  function folderForTicket(t){
+    try{return folderById(t && t.folder_id);}catch(e){return null;}
+  }
   function ticketSortTime(t){
     return Math.max(dateMs(t && t.created_at),dateMs(t && t.updated_at),dateMs(t && t.ticket_date));
   }
-
   function ticketIsComplete(t){
     try{if(typeof isCompleted==="function")return isCompleted(t);}catch(e){}
     var s=String(t && t.status || "").toLowerCase();
     return s==="complete" || s==="completed" || s==="finished";
   }
-
   function groupKey(t){
     var f=folderForTicket(t);
     if(f && f.id)return "folder:"+String(f.id);
@@ -7061,8 +9947,7 @@ if(typeof window.neu443InspectionLabel!=="function"){
     if(addr || builder)return "loose:"+builder+"|"+addr;
     return "ticket:"+String(t && t.id || "");
   }
-
-  function recentGroups(activeTickets){
+  function makeGroups(activeTickets){
     var d=appData()||{tickets:[],folders:[]};
     var source=(activeTickets && activeTickets.length ? activeTickets : (d.tickets||[]));
     var groups={};
@@ -7079,116 +9964,389 @@ if(typeof window.neu443InspectionLabel!=="function"){
     }catch(e){}
     return Object.keys(groups).map(function(k){return groups[k];}).sort(function(a,b){return (b.when||0)-(a.when||0);}).slice(0,5);
   }
-
   function statusForGroup(g){
     try{if(g.folder && typeof neu491FolderFinalStatus==="function")return neu491FolderFinalStatus(g.folder);}catch(e){}
     try{if(g.folder && typeof neu490FinalOnlyStatusForFolder==="function")return neu490FinalOnlyStatusForFolder(g.folder);}catch(e){}
     try{if(typeof neu490FinalOnlyStatusForTicket==="function")return neu490FinalOnlyStatusForTicket(g.ticket);}catch(e){}
     return "In Progress";
   }
-
   function badge(status){
     try{if(typeof neu491StatusBadge==="function")return neu491StatusBadge(status);}catch(e){}
     try{if(typeof statusBadge==="function")return statusBadge(status);}catch(e){}
     var cls=status==="Passed"?"statusPassed":status==="Failed"?"statusFailed":"statusCalled";
     return '<span class="statusBadge '+cls+'"><span class="statusDot '+cls+'"></span>'+esc(status||"In Progress")+'</span>';
   }
-
   function openButton(g){
     if(g.folder && g.folder.id){
-      return '<button type="button" class="mini gray" data-neu509-folder="'+esc(String(g.folder.id))+'" onclick="event.preventDefault();event.stopPropagation();openFolder(this.dataset.neu509Folder)">Open</button>';
+      return '<button type="button" class="mini gray" data-neu501-folder="'+esc(String(g.folder.id))+'" onclick="event.preventDefault();event.stopPropagation();openFolder(this.dataset.neu501Folder)">Open</button>';
     }
     if(g.ticket && g.ticket.id){
-      return '<button type="button" class="mini gray" data-neu509-ticket="'+esc(String(g.ticket.id))+'" onclick="event.preventDefault();event.stopPropagation();showPage(&quot;ticketsPage&quot;);var b=this;setTimeout(function(){openTicket(b.dataset.neu509Ticket)},0)">Open</button>';
+      return '<button type="button" class="mini gray" data-neu501-ticket="'+esc(String(g.ticket.id))+'" onclick="event.preventDefault();event.stopPropagation();showPage(&quot;ticketsPage&quot;);var b=this;setTimeout(function(){openTicket(b.dataset.neu501Ticket)},0)">Open</button>';
     }
     return '';
   }
-
   function titleForGroup(g){
     if(g.folder)return clean(g.folder.name)||clean(g.ticket && g.ticket.job_address)||"Job";
     return clean(g.ticket && g.ticket.job_address)||clean(g.ticket && g.ticket.builder)||"Job";
   }
-
   function builderForGroup(g){
     if(g.folder)return clean(g.folder.builder_name)||clean(g.ticket && g.ticket.builder)||"No builder";
     return clean(g.ticket && g.ticket.builder)||"No builder";
   }
-
-  function renderRecentJobsV509(activeTickets){
+  function renderUniqueRecentJobs(activeTickets){
     var el=byId("recentJobsList");
     if(!el)return;
-
-    var groups=recentGroups(activeTickets);
+    var groups=makeGroups(activeTickets);
     if(!groups.length){
       el.innerHTML='<p class="small">No active jobs yet.</p>';
       return;
     }
-
     el.innerHTML=groups.map(function(g){
       var status=statusForGroup(g);
-      return '<div class="recentJob neu509-recent-job">'+
-        '<div class="recentJobMain">'+
-          '<div class="recentJobTitle">'+esc(titleForGroup(g))+'</div>'+
-          '<div class="small">'+esc(builderForGroup(g))+'</div>'+
-          (g.folder?chipRow(g.folder):"")+
-          badge(status)+
-        '</div>'+
-        '<div class="recentJobAction">'+openButton(g)+'</div>'+
-      '</div>';
+      return '<div class="recentJob neu501-recent-job"><div class="recentJobMain"><div class="recentJobTitle">'+esc(titleForGroup(g))+'</div><div class="small">'+esc(builderForGroup(g))+'</div>'+badge(status)+'</div><div class="recentJobAction">'+openButton(g)+'</div></div>';
     }).join("");
   }
-
-  window.neu509RecentGroups=recentGroups;
-  window.neu509ChipRow=chipRow;
-  window.neu509RenderRecentJobs=renderRecentJobsV509;
-  window.renderRecentJobs=renderRecentJobsV509;
-
+  window.neu501RecentJobGroups=makeGroups;
+  window.neu501RenderRecentJobs=renderUniqueRecentJobs;
+  window.renderRecentJobs=renderUniqueRecentJobs;
   try{
     if(typeof drawDashboard==="function"){
       var oldDrawDashboard=drawDashboard;
-      window.drawDashboard=function(){
-        var d=appData()||{tickets:[]};
-        try{
-          if(byId("dashOpen")){
-            var active=(d.tickets||[]).filter(function(t){return !(typeof isCompleted==="function" && isCompleted(t));});
-            byId("dashOpen").textContent=active.length;
-            try{byId("dashLow").textContent=(typeof lowStockItems==="function"?lowStockItems():[]).length;}catch(e){}
-            try{byId("dashHalo").textContent=(d.tickets||[]).filter(function(t){return t.inspection_status==="Ready for Halo Inspection";}).length;}catch(e){}
-            try{byId("dashFinal").textContent=(d.tickets||[]).filter(function(t){return t.inspection_status==="Ready for Final Inspection";}).length;}catch(e){}
-            renderRecentJobsV509(active);
-            return;
-          }
-        }catch(e){}
-        try{oldDrawDashboard.apply(this,arguments);}catch(e2){}
-        try{renderRecentJobsV509();}catch(e3){}
-      };
+      if(!oldDrawDashboard.__neu501Wrapped){
+        window.drawDashboard=function(){
+          var r=oldDrawDashboard.apply(this,arguments);
+          try{renderUniqueRecentJobs();}catch(e){}
+          return r;
+        };
+        window.drawDashboard.__neu501Wrapped=true;
+      }
     }
   }catch(e){}
-
-  function forceRender(){
-    try{renderRecentJobsV509();}catch(e){}
-  }
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",function(){
-      setTimeout(forceRender,300);
-      setTimeout(forceRender,1200);
-      setTimeout(forceRender,2500);
-    });
-  }else{
-    setTimeout(forceRender,300);
-    setTimeout(forceRender,1200);
-    setTimeout(forceRender,2500);
-  }
-
   try{
-    window.addEventListener("load",function(){
-      setTimeout(forceRender,600);
-      setTimeout(forceRender,2000);
-    });
+    setTimeout(function(){renderUniqueRecentJobs();},250);
+    window.addEventListener("load",function(){setTimeout(function(){renderUniqueRecentJobs();},600);});
   }catch(e){}
 })();
 </script>
 
-</body>
-</html>
+
+<script id="neu-v5-10-job-drive-folder-fix">
+(function(){
+  function byId(id){return document.getElementById(id);}
+
+  function appData(){
+    try{if(typeof data!=="undefined")return data;}catch(e){}
+    try{return window.data||null;}catch(e){return null;}
+  }
+
+  function appSupabase(){
+    try{if(typeof supabaseClient!=="undefined" && supabaseClient)return supabaseClient;}catch(e){}
+    try{return window.supabaseClient||null;}catch(e){return null;}
+  }
+
+  function currentBuilderName(){
+    var v="";
+    try{v=(byId("folderBuilderSelect")&&byId("folderBuilderSelect").value||"").trim();}catch(e){}
+    if(v)return v;
+    try{if(typeof currentFolderBuilder!=="undefined" && currentFolderBuilder)return String(currentFolderBuilder).trim();}catch(e){}
+    try{
+      var t=(byId("folderTitle")&&byId("folderTitle").textContent||"").trim();
+      if(t && t!=="Folders" && t!=="Job")return t;
+    }catch(e){}
+    return "";
+  }
+
+  function jobInputName(){
+    try{return (byId("folderName")&&byId("folderName").value||"").trim();}catch(e){return "";}
+  }
+
+  function clean(v){
+    try{
+      if(typeof cleanFolderNameText==="function")return cleanFolderNameText(v);
+      if(typeof neu492CleanSymbols==="function")return neu492CleanSymbols(v);
+    }catch(e){}
+    return String(v==null?"":v).replace(/[ï¿½\uFFFD]/g,"").replace(/Ã+/g,"").replace(/\s+/g," ").trim();
+  }
+
+  function norm(v){
+    return clean(v).toLowerCase().replace(/\s+/g," ").trim();
+  }
+
+  function folderBuilder(f){
+    try{
+      if(typeof browserBuilderName==="function")return browserBuilderName(f)||"";
+    }catch(e){}
+    return clean(f && f.builder_name);
+  }
+
+  function sameJob(f,builder,job){
+    if(!f)return false;
+    return norm(folderBuilder(f)||f.builder_name)===norm(builder) && norm(f.name)===norm(job);
+  }
+
+  function existingJob(builder,job){
+    var d=appData();
+    try{
+      return d && Array.isArray(d.folders) ? d.folders.find(function(f){return sameJob(f,builder,job);}) : null;
+    }catch(e){return null;}
+  }
+
+  function builderParentId(builder){
+    try{
+      if(typeof findBuilderFolder==="function"){
+        var f=findBuilderFolder(builder);
+        return f && f.id ? f.id : null;
+      }
+    }catch(e){}
+    return null;
+  }
+
+  function driveScriptUrl(){
+    try{return (localStorage.getItem("neu_drive_script_url")||"").trim();}catch(e){return "";}
+  }
+
+  function normalizeDriveResult(res){
+    if(!res)return null;
+    var url=res.url || res.folderUrl || res.driveUrl || res.webViewLink || res.webUrl || "";
+    var id=res.id || res.folderId || "";
+    if(url || id){
+      if(!url && id)url="https://drive.google.com/drive/folders/"+encodeURIComponent(id);
+      return {ok:true,url:url,id:id,raw:res};
+    }
+    return null;
+  }
+
+  async function callDriveCreate(builder,job){
+    var scriptUrl=driveScriptUrl();
+    if(!scriptUrl)throw new Error("Drive Auto-Folder URL is not saved. Open Settings and save the Apps Script Web App URL.");
+    if(typeof callDriveScriptJsonp!=="function")throw new Error("Drive helper is not loaded.");
+
+    var attempts=[
+      {action:"createJobFolder",builderName:builder,jobName:job,parentId:NEU_DRIVE_PARENT_FOLDER_ID},
+      {action:"createFolder",builderName:builder,jobName:job,parentId:NEU_DRIVE_PARENT_FOLDER_ID},
+      {builderName:builder,jobName:job,parentId:NEU_DRIVE_PARENT_FOLDER_ID},
+      {folderName:builder+" / "+job,parentId:NEU_DRIVE_PARENT_FOLDER_ID}
+    ];
+
+    var lastError="";
+    for(var i=0;i<attempts.length;i++){
+      try{
+        var res=await callDriveScriptJsonp(scriptUrl,attempts[i]);
+        var normalized=normalizeDriveResult(res);
+        if((res && res.ok && normalized) || normalized)return normalized;
+        if(res && res.error)lastError=res.error;
+      }catch(e){
+        lastError=(e&&e.message)?e.message:String(e);
+      }
+    }
+    throw new Error(lastError || "Google Drive folder was not created.");
+  }
+
+  async function saveDriveUrl(folderId,url){
+    var sb=appSupabase();
+    if(!sb || !folderId || !url)return false;
+    var up=await sb.from("folders").update({drive_url:url}).eq("id",folderId);
+    if(up && up.error)throw new Error("Drive folder was created, but saving the link failed. Run the folders.drive_url SQL.");
+    return true;
+  }
+
+  function updateLocalFolder(folderId,driveUrl,row){
+    var d=appData();
+    if(!d || !Array.isArray(d.folders))return;
+    var found=d.folders.find(function(f){return String(f.id)===String(folderId);});
+    if(found){
+      if(driveUrl)found.drive_url=driveUrl;
+    }else if(row){
+      d.folders.push(row);
+    }
+  }
+
+  async function ensureDriveLinkForFolder(folder,builder,job){
+    if(!folder || !folder.id)return "";
+    if(folder.drive_url)return folder.drive_url;
+    if(!driveScriptUrl()){
+      try{notice("Job saved in app. Drive Auto-Folder URL is not saved in Settings, so no Google Drive folder was created.");}catch(e){}
+      return "";
+    }
+    try{notice("Creating Google Drive job folder...");}catch(e){}
+    var d=await callDriveCreate(builder,job);
+    if(d && d.url){
+      await saveDriveUrl(folder.id,d.url);
+      folder.drive_url=d.url;
+      updateLocalFolder(folder.id,d.url);
+      return d.url;
+    }
+    return "";
+  }
+
+  async function createOrFindJobFolder(builder,job){
+    var sb=appSupabase();
+    if(!sb)throw new Error("Supabase is not ready.");
+    var existing=existingJob(builder,job);
+    if(existing){
+      var existingUrl=await ensureDriveLinkForFolder(existing,builder,job);
+      return {folder:existing,created:false,driveUrl:existingUrl||existing.drive_url||""};
+    }
+
+    var row={name:job,parent_id:null,builder_name:builder};
+    try{
+      if(typeof currentFolderBuilder!=="undefined" && currentFolderBuilder){
+        row.parent_id=builderParentId(builder);
+      }
+    }catch(e){}
+
+    var r=await sb.from("folders").insert(row).select().single();
+    if(r && r.error)throw new Error((r.error.message||String(r.error))+". If it mentions builder_name, run the Supabase folder builder SQL.");
+    var folder=r.data;
+    updateLocalFolder(folder.id,"",folder);
+
+    var driveUrl="";
+    try{
+      driveUrl=await ensureDriveLinkForFolder(folder,builder,job);
+    }catch(e){
+      try{error("App job was saved, but Google Drive failed: "+((e&&e.message)?e.message:e));}catch(x){}
+    }
+
+    return {folder:folder,created:true,driveUrl:driveUrl};
+  }
+
+  async function createFolderV510(){
+    var builder=currentBuilderName();
+    var job=jobInputName();
+
+    if(!builder)return error("Pick a builder before saving a new job.");
+    if(!job)return error("Enter the job name / address before saving.");
+
+    try{
+      if(typeof getBuilders==="function" && typeof saveBuilders==="function"){
+        var builders=getBuilders();
+        builders.push(builder);
+        saveBuilders(builders);
+      }
+    }catch(e){}
+
+    try{
+      var result=await createOrFindJobFolder(builder,job);
+      if(byId("folderName"))byId("folderName").value="";
+
+      try{currentFolderBuilder=builder;}catch(e){}
+      try{currentFolder=null;}catch(e){}
+
+      if(byId("folderBuilderSelect"))byId("folderBuilderSelect").value=builder;
+
+      try{await loadAll();}catch(e){}
+      try{currentFolderBuilder=builder;}catch(e){}
+      try{currentFolder=null;}catch(e){}
+      if(byId("folderBuilderSelect"))byId("folderBuilderSelect").value=builder;
+      try{
+        if(typeof renderFoldersV411==="function")renderFoldersV411();
+        else if(typeof draw==="function")draw();
+      }catch(e){}
+
+      var msg=result.created ? "Job folder saved." : "That job already exists.";
+      if(result.driveUrl)msg+=" Google Drive link is saved.";
+      else msg+=" No Google Drive link was saved.";
+      try{notice(msg);}catch(e){}
+      return false;
+    }catch(e){
+      try{error("Job folder did not save: "+((e&&e.message)?e.message:e));}catch(x){}
+      return false;
+    }
+  }
+
+  function folderForTicket(t){
+    var d=appData();
+    try{
+      return d && Array.isArray(d.folders) ? d.folders.find(function(f){return String(f.id)===String(t && t.folder_id || "");}) : null;
+    }catch(e){return null;}
+  }
+
+  function replySubject(t){
+    var f=folderForTicket(t);
+    var job=(f && clean(f.name)) || clean(t && t.job_address) || clean(t && t.builder) || "NEU Job";
+    return "Re: NEU Ticket - "+job;
+  }
+
+  window.neu510CreateOrFindJobFolder=createOrFindJobFolder;
+  window.neu510CreateDriveJobFolder=callDriveCreate;
+  window.neu510CreateFolder=createFolderV510;
+
+  window.createFolder=createFolderV510;
+
+  function wire(){
+    var btn=byId("createFolderBtn");
+    if(btn)btn.onclick=function(e){
+      if(e){e.preventDefault();e.stopPropagation();}
+      return createFolderV510();
+    };
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",wire);
+  }else{
+    wire();
+  }
+  try{window.addEventListener("load",function(){setTimeout(wire,300);setTimeout(wire,1000);});}catch(e){}
+
+  // Keep the cleaned email format, but include the job's Drive folder link when it exists.
+  window.emailTicket=function(id){
+    var t=null;
+    try{t=typeof ticket==="function" ? ticket(id) : null;}catch(e){t=null;}
+    if(!t){
+      try{if(typeof error==="function")error("Ticket not found.");}catch(e){}
+      return false;
+    }
+
+    var d=appData()||{};
+    var used=[];
+    var links=[];
+    var f=folderForTicket(t);
+
+    try{used=(d.used||[]).filter(function(u){return String(u.ticket_id)===String(id);});}catch(e){}
+    try{links=(d.drive||[]).filter(function(x){return String(x.ticket_id)===String(id);});}catch(e){}
+
+    var jobName=(f && clean(f.name)) || clean(t.job_address) || "Job";
+    var builder=clean((f && f.builder_name) || t.builder || "");
+    var manHours="";
+    try{manHours=manHoursText(parseManHoursDetails(t.man_hours_details));}catch(e){manHours=String(t.man_hours||"");}
+
+    var body="";
+    body+="NEU ELECTRICAL SOLUTIONS\n\n";
+    body+="Job: "+jobName+"\n";
+    if(builder)body+="Builder: "+builder+"\n";
+    body+="Created By: "+(t.created_by_name||"Team")+"\n";
+    body+="Job Address: "+(t.job_address||jobName||"")+"\n";
+    if(t.ticket_date && typeof displayDate==="function")body+="Date: "+displayDate(t.ticket_date)+"\n";
+    body+="Man Hrs: "+manHours+"\n\n";
+
+    body+="Notes:\n"+(t.notes||"")+"\n\n";
+
+    body+="Materials:\n";
+    if(used.length){
+      used.forEach(function(u){
+        body+="- "+(u.material_name||"Material")+" - "+(u.quantity||"")+" "+(u.unit||"")+"\n";
+      });
+    }else{
+      body+="- No materials.\n";
+    }
+
+    body+="\nNeed to Complete:\n"+(t.need_to_complete||"")+"\n\n";
+
+    body+="Drive Links:\n";
+    var wroteDrive=false;
+    if(f && f.drive_url){
+      body+="- Job Photos Folder: "+f.drive_url+"\n";
+      wroteDrive=true;
+    }
+    if(links.length){
+      links.forEach(function(l){
+        if(l && l.url){
+          body+="- "+(l.label||"Drive")+": "+l.url+"\n";
+          wroteDrive=true;
+        }
+      });
+    }
+    if(!wroteDrive)body+="- No Drive links.\n";
+
+    var mailto="mailto:?subject="+encodeURIComponent(replySubject(t))+"&body="+encodeURIComponent(body);
+    try{window.location.href=mailto;}catch(e){lo
